@@ -48,9 +48,26 @@ uint8_t UART3_RxPacket[100];				//定义接收数据包数组，数据包格式"
 uint8_t UART3_RxFlag;					//定义接收数据包标志位
 char UART3_RxString[100];				//定义接收数据包数组，数据包格式"@MSG\r\n"
 
+typedef struct {
+	uint16_t v[8];   // v[0]..v[7] 对应原来的 AD1..AD8
+} ADC_Values_t;
 
+ADC_Values_t AD; // 全局结构体实例，保存8路ADC采样结果
 
-
+/* 为兼容原有代码中的 AD1..AD8 名称，保留宏映射 */
+#define AD1 (AD.v[0])
+#define AD2 (AD.v[1])
+#define AD3 (AD.v[2])
+#define AD4 (AD.v[3])
+#define AD5 (AD.v[4])
+#define AD6 (AD.v[5])
+#define AD7 (AD.v[6])
+#define AD8 (AD.v[7])
+/**
+  * @brief This function implements main function.
+  * @note 
+  * @param
+  */
 int main(void)
 {
     IcResourceInit();     // ?????
@@ -100,6 +117,36 @@ void screen_init()//屏幕初始化
 {
 	Lcd_Init();
 	LCD_Fill ( 1, 1, 320, 240, BLACK );//本来是花屏，刷新后为白屏
+}
+
+
+void ADC_Conversion_IRQ()//ADC中断处理
+{
+  if(ADC_GetFlagStatus(ADC, ADC_Flag_ADCIF))//判断ADC标志位
+  {
+    ADC_ClearFlag(ADC, ADC_Flag_ADCIF);//清除ADC标志位
+    ADC_Flag = SET;//自定义标志位置起
+  }
+}
+
+
+void ADC_Conversion(void) // ADC采集
+{
+    // ADC通道映射表
+    uint8_t ADC_Channel_Table[8] = {
+        ADC_Channel_0, ADC_Channel_1, ADC_Channel_10, ADC_Channel_11,
+        ADC_Channel_12, ADC_Channel_13, ADC_Channel_14, ADC_Channel_15
+    };
+
+    for (int i = 0; i < 8; i++) {
+        ADC_SetChannel(ADC, ADC_Channel_Table[i]);   // 选择通道
+        ADC_SoftwareStartConv(ADC);                  // 软件触发ADC
+        while (ADC_Flag == RESET);                   // 等待ADC转换完成
+        ADC_Flag = RESET;
+
+        AD.v[i] = ADC_GetConversionValue(ADC);       // 存入结构体数组
+        LCD_ShowIntNum(270, 20*(i+1), AD.v[i], 6, RED, WHITE, 16); // 显示
+    }
 }
 
 
