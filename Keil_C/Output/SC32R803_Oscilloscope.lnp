@@ -1,0 +1,28 @@
+--cpu Cortex-M0+
+"..\output\sc_it.o"
+"..\output\compctrldefine.o"
+"..\output\callbackfunction.o"
+"..\output\sysfunvardefine.o"
+"..\output\sc_init.o"
+"..\output\main.o"
+"..\output\system_sc32f1xxx.o"
+"..\output\wave_show_gy.o"
+"..\output\picture.o"
+"..\output\tft_lcd.o"
+"..\output\lcdfont.o"
+"..\Drivers\TKDriverNew\C\SC_M0+_HighSensitive_lib_T2_V1.0.lib"
+"..\output\tkdriver.o"
+"..\Drivers\TKDriverNew\C\SC_M0+_HighSensitive_lib_Slider_V1.0.lib"
+"..\Drivers\TKDriverNew\C\SC_M0+_HighSensitive_lib_Basic_V1.0.lib"
+"..\output\sc32f1xxx_tim.o"
+"..\output\sc32f1xxx_adc.o"
+"..\output\sc32f1xxx_spi.o"
+"..\output\sc32f1xxx_uart.o"
+"..\output\sc32f1xxx_rcc.o"
+"..\output\sc32f1xxx_option.o"
+"..\output\sc32f1xxx_gpio.o"
+"..\output\startup_sc32r803.o"
+--strict --scatter "..\Output\SC32R803_Oscilloscope.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "..\List\SC32R803_Oscilloscope.map" -o ..\Output\SC32R803_Oscilloscope.axf

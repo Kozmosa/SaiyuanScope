@@ -1,0 +1,11 @@
+..\output\sc32f1xxx_gpio.o: ..\FWLib\SC32F1XXX_Lib\src\sc32f1xxx_gpio.c
+..\output\sc32f1xxx_gpio.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_gpio.h
+..\output\sc32f1xxx_gpio.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx.h
+..\output\sc32f1xxx_gpio.o: ..\FWLib\SC32F1XXX_Lib\inc\SC32R803.h
+..\output\sc32f1xxx_gpio.o: ..\CMSIS\core_cm0plus.h
+..\output\sc32f1xxx_gpio.o: D:\STM32\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\sc32f1xxx_gpio.o: ..\CMSIS\cmsis_version.h
+..\output\sc32f1xxx_gpio.o: ..\CMSIS\cmsis_compiler.h
+..\output\sc32f1xxx_gpio.o: ..\CMSIS\cmsis_armcc.h
+..\output\sc32f1xxx_gpio.o: ..\CMSIS\mpu_armv7.h
+..\output\sc32f1xxx_gpio.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32.h
