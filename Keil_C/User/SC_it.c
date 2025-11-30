@@ -19,7 +19,7 @@
 #include "HeadFiles\SC_itExtern.h"
 #include "SCDriver_List.h"
 #include "TFT_Lcd.h"
-
+#include "Data_Acquisition.h"
 
 uint16_t TIM0_count;//定时器0，1ms中断一次，count加1
 uint16_t Encoder_Count=10000;//旋转编码器计数
@@ -107,8 +107,49 @@ void BTM_IRQHandler(void)
 
 void DMA0_IRQHandler(void)
 {
+    // 检查是否是传输完成中断 (TCIF)
+    if(DMA_GetFlagStatus(DMA0, DMA_FLAG_TCIF) == SET)
+    {
+        // 清除中断标志
+        DMA_ClearFlag(DMA0, DMA_FLAG_TCIF); 
 
-
+        // 暂时停止 DMA，准备重构配置
+        DMA_Cmd(DMA0, DISABLE);
+        
+        // --- 状态机：切换通道 ---
+        if(Current_Ch_Index == 0)
+        {
+            // === 通道 1 采集完毕，现在切换到通道 2 ===
+            
+            // A. 切换 ADC 物理通道
+            ADC_SetChannel(ADC, DAQ_CH2_ADC_CH);
+            
+            // B. 修改 DMA 目标地址 -> 指向缓冲区后半部分
+            DMA_SetDstAddress(DMA0, (uint32_t)&Acq_Data.Buffer[DAQ_SAMPLE_DEPTH]);
+            
+            // C. 重装计数器
+            DMA_SetCurrDataCounter(DMA0, DAQ_SAMPLE_DEPTH); 
+            
+            // D. 更新状态
+            Current_Ch_Index = 1;
+            
+            // E. 重新启动 DMA 和 ADC
+            DMA_Cmd(DMA0, ENABLE);
+            ADC_SoftwareStartConv(ADC); // 触发新通道转换
+        }
+        else
+        {
+            // === 通道 2 采集完毕，一轮双通道采集结束 ===
+            
+            // A. 停止采集流程
+            // DMA 保持 Disable 状态，不再开启
+            
+            // B. 置位完成标志，通知 main() 函数处理数据
+            Acq_Done_Flag = 1;
+            
+            // 注意：此时 DMA 和 ADC 均暂停，等待 Data_Acquisition_Start_Next() 唤醒
+        }
+    }
 }
 
 volatile FlagStatus ADC_Flag = RESET;
@@ -292,7 +333,7 @@ void LEDPWM_IRQHandler(void)
 void ADC_IRQHandler(void)
 {
 
-ADC_Conversion_IRQ();
+
 }
 
 void CMP0_1_2_IRQHandler(void)

@@ -1,0 +1,932 @@
+L 1 "..\FWLib\SC32F1XXX_Lib\src\sc32f1xxx_spi1_twi1.c"
+N/**
+N ******************************************************************************
+N * @file    sc32f1xxx_spi1_twi1.c
+N * @author  SOC AE Team
+N * @version V1.9-BetaV0
+N * @date    2025-06-20
+N * @brief   SPI1_TWI1 function module
+N ******************************************************************************
+N * @attention
+N *
+N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N *intended for use with SinOne products. No other uses are authorized. This 
+N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N *all applicable laws, including copyright laws. 
+N *2.The software which is for guidance only aims at providing customers with 
+N *coding information regarding their products in order for them to save time. 
+N *As a result, SinOne shall not be held liable for any direct, indirect or 
+N *consequential damages with respect to any claims arising from the content of 
+N *such software and/or the use made by customers of the coding information 
+N *contained herein in connection with their products.
+N *
+N *  COPYRIGHT 2025 SinOne Microelectronics
+N ******************************************************************************
+N */
+N
+N/* Includes ------------------------------------------------------------------*/
+N#if defined(SC32f15xx)||defined(SC32R601)
+X#if 0L||0L
+S#include "sc32f1xxx_spi1_twi1.h"
+S
+S
+S/** @defgroup spi1_twi1_Group1 Configuration of the spi1_twi1 computation unit functions
+S *  @brief   Configuration of the spi1_twi1 computation unit functions
+S *
+S@verbatim
+S ===============================================================================
+S                     ##### spi1_twi1 configuration functions #####
+S ===============================================================================
+S@endverbatim
+S  * @{
+S  */
+S
+S/**
+S * @brief  DeInitialize the SPIx peripheral registers to their default reset values.
+S * @param  SPIx_TWIx[out]:where x can be select the SPIx or TWIx  peripheral.  
+S *           - SPI1: select the SPI1 peripheral.
+S *           - TWI1: select the TWI1 peripheral.
+S
+S * @retval None
+S */
+Svoid SPI1_TWI1_DeInit(SPITWI_TypeDef* SPIx_TWIx)
+S{
+S 
+S
+S    /* Enable SPI0 reset state */
+S    RCC_APB1PeriphResetCmd(RCC_APB1Periph_SPI1_TWI1, ENABLE);
+S    /* Release SPI0 from reset state */
+S    RCC_APB1PeriphResetCmd(RCC_APB1Periph_SPI1_TWI1, DISABLE);
+S
+S}
+S
+S/**
+S  * @brief  Fills each SPI_InitStruct member with its default value.
+S  * @param  SPI1_InitStruct[out]: Pointer to structure SPI1_InitTypeDef, to be initialized. 
+S  * @retval None
+S  */
+Svoid SPI1_StructInit(SPI1_InitTypeDef* SPI1_InitStruct)
+S{
+S  /* Set the default configuration */
+S  SPI1_InitStruct->SPI1_Mode = SPI1_Mode_Slave;
+S  SPI1_InitStruct->SPI1_DataSize = SPI1_DataSize_8B;
+S  SPI1_InitStruct->SPI1_FirstBit = SPI1_FirstBit_LSB;
+S  SPI1_InitStruct->SPI1_CPHA = SPI1_CPHA_1Edge;
+S  SPI1_InitStruct->SPI1_CPOL = SPI1_CPOL_Low;
+S  SPI1_InitStruct->SPI1_Prescaler = SPI1_TWI1_Prescaler_4;
+S}
+S
+S
+S/**
+S * @brief  Initializes the peripheral SPIx register with the parameters specified in SPI_InitStruct
+S * @param  SPIx[out]:where can to select the SPI1 peripheral.  
+S *           - SPI1: select the SPI1 peripheral.
+S  * @param  SPI1_InitStruct[out]: Pointer to structure SPI1_InitTypeDef, to be initialized. 
+S * @retval None
+S */
+Svoid SPI1_Init(SPITWI_TypeDef* SPIx, SPI1_InitTypeDef* SPI1_InitStruct)
+S{
+S
+S  uint32_t tmpreg;
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(SPIx));
+S  assert_param(IS_SPI1_Mode(SPI1_InitStruct->SPI1_Mode));
+S  assert_param(IS_SPI1_DATASIZE(SPI1_InitStruct->SPI1_DataSize));
+S  assert_param(IS_SPI1_CPHA(SPI1_InitStruct->SPI1_CPHA));
+S  assert_param(IS_SPI1_CPOL(SPI1_InitStruct->SPI1_CPOL));
+S  assert_param(IS_SPI1_TWI1_Prescaler(SPI1_InitStruct->SPI1_Prescaler));
+S  assert_param(IS_SPI1_FIRSTBIT(SPI1_InitStruct->SPI1_FirstBit));
+S if(SPIx==SPITWI_SPI1)
+S {
+S  /*---------------------------- SPIx SPI1_CON Configuration ------------------------*/
+S  /* Get the SPIx SPI0_CON value */
+S  tmpreg = SPITWI_TWI1->SPI1_TWI1_CON;
+S  /* Clear MSTR, SPMD, DORD, CPOL, SPR bits */
+S  tmpreg &= (uint32_t) ~(SPI1_CON_MSTR | SPI1_CON_SPMD | SPI1_CON_DORD |
+S                         SPI1_CON_CPHA | SPI1_CON_CPOL | SPI1_TWI1_CON_SPOS);
+S  /* Configure SPIx: mode, data size, first transmitted bit,clock predivision , CPOL and CPHA */
+S  /* Set MSTR bits to SPI0_Mode value */
+S  /* Set SPMD bit according to SPI1_DataSize value */
+S  /* Set DORD bit according to SPI1_FirstBit value */
+S  /* Set CPOL bit according to SPI1_CPOL value */
+S  /* Set CPHA bit according to SPI1_CPHA value */
+S  /* Set SPR according to SPI0_Prescaler value */
+S	tmpreg |= WorkeMode_SPI1 ;
+S  tmpreg |= (uint32_t)(SPI1_InitStruct->SPI1_Mode | SPI1_InitStruct->SPI1_DataSize |
+S                       SPI1_InitStruct->SPI1_FirstBit | SPI1_InitStruct->SPI1_CPHA |
+S                       SPI1_InitStruct->SPI1_CPOL | SPI1_InitStruct->SPI1_Prescaler);
+S  /* Write to SPIx SPI0_CON */
+S  SPITWI_TWI1->SPI1_TWI1_CON = tmpreg;
+S}
+S}
+S
+S/**
+S * @brief  Enables or disables the specified SPI peripheral.
+S * @param  SPIx[out]:where can to select the SPI1 peripheral.  
+S *           - SPI1: select the SPI1 peripheral.
+S * @param  NewState[in]:new state of the SPIx peripheral. 
+S *                  - DISABLE:Function disable
+S *                  - ENABLE:Function enable   
+S * @retval None
+S */
+Svoid SPI1_Cmd(SPITWI_TypeDef* SPIx, FunctionalState NewState)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(SPIx));
+S  assert_param(IS_FUNCTIONAL_STATE(NewState));
+S  if(SPIx==SPITWI_SPI1)
+S	{
+S	
+S  if(NewState != DISABLE)
+S  {
+S    /* Enable the SPI TX Function */
+S    SPIx->SPI1_TWI1_CON |= SPI1_TWI1_CON_QTWEN;
+S  }
+S  else
+S  {
+S    /* Disable the SPI TX Function */
+S    SPIx->SPI1_TWI1_CON &= (uint16_t)~SPI1_TWI1_CON_QTWEN;
+S  }
+S}
+S}
+S
+S/**
+S * @brief  Set the working mode of the SPI.
+S * @param  SPIx[out]:where can to select the SPI1 peripheral.  
+S *           - SPI1: select the SPI1 peripheral.
+S * @param  SPI1_Mode[in]:specifies the data transfer direction in bidirectional mode.
+S *             - SPI1_Mode_Slave:SPI Mode select Slave   
+S *             - SPI1_Mode_Master:SPI Mode select Master 
+S * @retval None
+S */
+Svoid SPI1_SetMode(SPITWI_TypeDef* SPIx, SPI1_Mode_TypeDef SPI1_Mode)
+S{
+S  uint32_t tmpreg;
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(SPIx));
+S  if(SPIx==SPITWI_SPI1)
+S	{
+S  tmpreg = SPIx->SPI1_TWI1_CON;
+S  /* Clear MSTR bit */
+S  tmpreg &= (uint32_t)~SPI1_CON_MSTR;
+S  /* Cogfig MSTR bit */
+S  tmpreg |= (uint32_t)SPI1_Mode;
+S  /* Set new MSTR bit value */
+S  SPIx->SPI1_TWI1_CON |= tmpreg;
+S	}
+S}
+S
+S/**
+S * @brief  Configures the data size for the selected SPI.
+S * @param  SPIx[out]:where can to select the SPI1 peripheral.  
+S *           - SPI1: select the SPI1 peripheral.
+S  * @param  SPI1_DataSize[in]:specifies the SPI data size. 
+S  *               - SPI1_DataSize_8B:Set data frame format to 8bit    
+S  *               - SPI1_DataSize_16B:Set data frame format to 16bit  
+S  * @retval None
+S  */
+Svoid SPI1_DataSizeConfig(SPITWI_TypeDef* SPIx, SPI1_DataSize_TypeDef SPI1_DataSize)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(SPIx));
+S  assert_param(IS_SPI1_DATASIZE(SPI1_DataSize));
+S  if(SPIx==SPITWI_SPI1)
+S	{
+S  /* Clear SPMD bit */
+S  SPIx->SPI1_TWI1_CON &= (uint32_t)~SPI1_CON_SPMD;
+S  /* Set new SPMD bit value */
+S  SPIx->SPI1_TWI1_CON |= (uint32_t)SPI1_DataSize;
+S	}
+S}
+S
+S/**
+S * @}
+S */
+S/* End of SPI1_TWI1_Group1.	*/
+S
+S/** @defgroup SPI1_Group2 Data transfers functions
+S *  @brief   Data transfers functions
+S *
+S@verbatim
+S ===============================================================================
+S                      ##### Data transfers functions #####
+S ===============================================================================
+S@endverbatim
+S  * @{
+S  */
+S
+S
+S/**
+S * @brief  Transmits multiple data through the SPIx peripheral FIFO.
+S * @param  SPIx[out]:where can to select the SPI1 peripheral.  
+S *           - SPI1: select the SPI1 peripheral.
+S * @param  Data[in]: the datas to transmit.
+S * @retval None
+S */
+Svoid SPI1_SendData(SPITWI_TypeDef* SPIx, uint16_t Data)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(SPIx));
+S	  if(SPIx==SPITWI_SPI1)
+S	{
+S  /* Transmit  Data */
+S  SPIx->SPI1_TWI1_DATA = (uint16_t)Data;
+S  }
+S}
+S
+S/**
+S * @brief  SPIx receives data through FIFO.
+S * @param  SPIx[out]:where can to select the SPI1 peripheral.  
+S *           - SPI1: select the SPI1 peripheral.
+S * @retval The received data.
+S */
+Suint16_t SPI1_ReceiveData(SPITWI_TypeDef* SPIx)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(SPIx));
+S	return (uint16_t) SPIx->SPI1_TWI1_DATA;
+S}
+S
+S/**
+S * @}
+S */
+S/* End of SPI1_Group2.	*/
+S
+S/** @defgroup SPI_Group3 Interrupts, DMA and flags management functions
+S *  @brief   Interrupts, DMA and flags management functions
+S *
+S@verbatim
+S ===============================================================================
+S            ##### Interrupts, DMA and flags management functions #####
+S ===============================================================================
+S@endverbatim
+S  * @{
+S  */
+S/**
+S * @brief  Enables or disables the TWI's DMA interface.
+S * @param  SPIx_TWIx[out]:where  can  to select the TWI1 or SPI11 peripheral. 
+S *                  - SPI1:Timer peripheral select SPII1
+S *                  - TWI1:Timer peripheral select TWI1
+S * @param  TWI_DMAReq[in]:specifies the DMA request. 
+S *                - SPI1_TWI1_DMAReq_RX:SPI1_TWI1 DMA Request  Receive 
+S *                - SPI1_TWI1_DMAReq_TX :SPI1_TWI1 DMA Request: Transmit 
+S * @param  NewState[in]:new state of the DMA Request sources. 
+S *                  - DISABLE:Function disable
+S *                  - ENABLE:Function enable 
+S * @retval None
+S */
+Svoid SPI1_DMACmd(SPITWI_TypeDef* SPIx, SPI1_DMAReq_TypeDef SPI1_DMAReq, FunctionalState NewState)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(SPIx));
+S  assert_param(IS_SPI1_DMAReq(SPI1_DMAReq));
+S  assert_param(IS_FUNCTIONAL_STATE(NewState));
+S	if(SPIx == SPITWI_SPI1)
+S	{
+S		if(NewState != DISABLE)
+S		{
+S			/* Enable the selected TWI DMA requests */
+S			SPIx->SPI1_TWI1_IDE |= SPI1_DMAReq;
+S		}
+S		else
+S		{
+S			/* Disable the selected TWI DMA requests */
+S			SPIx->SPI1_TWI1_IDE &= (uint8_t)~SPI1_DMAReq;
+S		}
+S  }
+S}
+S/**
+S * @brief  Enables or disables the specified SPI interrupts.
+S * @param  SPIx[out]:where can to select the SPI1 peripheral.  
+S *           - SPI1: select the SPI1 peripheral.
+S * @param  SPI1_IT[in]:specifies the SPI interrupts sources to be enabled or disabled.
+S *               - SPI1_IT_INT:SPI total interruption  
+S *               - SPI1_IT_TBIE:SPI TX buffer is empty Interrupt 
+S * @param  NewState[in]: new state of the SPI interrupts.
+S *               - DISABLE:Function disable
+S *               - ENABLE:Function enable 
+S * @retval None
+S */
+Svoid SPI1_ITConfig(SPITWI_TypeDef* SPIx, uint16_t SPI1_IT, FunctionalState NewState)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(SPIx));
+S  assert_param(IS_SPI1_IT(SPI1_IT));
+S  assert_param(IS_FUNCTIONAL_STATE(NewState));
+S	if(SPIx==SPITWI_SPI1)
+S	{
+S  if(NewState != DISABLE)
+S  {
+S    /* Enable the Interrupt sources */
+S    SPIx->SPI1_TWI1_IDE |= SPI1_IT;
+S  }
+S  else
+S  {
+S    /* Disable the Interrupt sources */
+S    SPIx->SPI1_TWI1_IDE &= (uint16_t)~SPI1_IT;
+S  }
+S  }
+S}
+S
+S/**
+S * @brief  Checks whether the specified SPI flag is set or not.
+S * @param  SPIx[out]:where can to select the SPI1 peripheral.  
+S *           - SPI1: select the SPI1 peripheral.
+S * @param  SPI_FLAG[in]: specifies the flag to check. 
+S *         - SPI1_Flag_QTWIF:Interrupt flag 
+S *         - SPI1_Flag_TXEIF:TX buffer is empty flag 
+S *         - SPI1_Flag_WCOL:Write conflict flag   
+S * @retval The new state of INT_Flag (SET or RESET).
+S *                  -  RESET:Flag reset
+S *                  -  SET :Flag up
+S */
+SFlagStatus SPI1_GetFlagStatus(SPITWI_TypeDef* SPIx, SPI1_FLAG_TypeDef SPI1_FLAG)
+S{
+S  ITStatus bitstatus = RESET;
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(SPIx));
+S  assert_param(IS_SPI1_FLAG(SPI1_FLAG));
+S  if(SPIx==SPITWI_SPI1)
+S	{
+S  if((SPIx->SPI1_TWI1_STS & SPI1_FLAG) != (uint16_t)RESET)
+S  {
+S    bitstatus = SET;
+S  }
+S  else
+S  {
+S    bitstatus = RESET;
+S  }
+S	}
+S  return bitstatus;
+S 
+S}
+S/**
+S * @brief  Clears the SPIx's pending flags.
+S * @param  SPIx[out]:where can to select the SPI1 peripheral.  
+S *           - SPI1: select the SPI1 peripheral.
+S * @param  SPI1_FLAG[in]:specifies the flag bit to clear.
+S *         - SPI1_Flag_QTWIF:Interrupt flag 
+S *         - SPI1_Flag_TXEIF:TX buffer is empty flag 
+S *         - SPI1_Flag_WCOL:Write conflict flag   
+S * @retval None
+S */
+Svoid SPI1_ClearFlag(SPITWI_TypeDef* SPIx, uint32_t SPI1_FLAG)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(SPIx));
+S  /* Clear the flags */
+S	  if(SPIx==SPITWI_SPI1)
+S	{
+S  SPIx->SPI1_TWI1_STS = (uint16_t)SPI1_FLAG;
+S	}
+S}
+S/**
+S * @}
+S */
+S/* End of SPI_Group3.	*/
+S/** @defgroup TWI1_Group4 Configuration of the TWI1 computation unit functions
+S *  @brief   Configuration of the TWI1 computation unit functions
+S *
+S@verbatim
+S ===============================================================================
+S                     ##### TWI1 configuration functions #####
+S ===============================================================================
+S@endverbatim
+S  * @{
+S  */
+S/**
+S  * @brief  Fills each TWI_InitStruct member with its default value.
+S  * @param  TWI_InitStruct[out]: Pointer to structure TWI_InitTypeDef, to be initialized. 
+S  * @retval None
+S  */
+Svoid TWI1_StructInit(TWI1_InitTypeDef* TWI1_InitStruct)
+S{
+S  /* Set the default configuration */
+S  TWI1_InitStruct->TWI1_Ack = TWI1_Ack_Enable;
+S  TWI1_InitStruct->TWI1_Prescaler = SPI1_TWI1_Prescaler_4096;
+S  TWI1_InitStruct->TWI1_Stretch = TWI1_Stretch_Disable;
+S  TWI1_InitStruct->TWI1_GeneralCall = TWI1_GeneralCall_Disable;
+S  TWI1_InitStruct->TWI1_SlaveAdress = 0x00;
+S}
+S/**
+S * @brief  Initializes the peripheral TWIx register with the parameters specified in TWI_InitStruct
+S * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S *                  - TWI1:Timer peripheral select TWI1
+S * @param  TWI_InitStruct[out]: Pointer to structure TWI_InitTypeDef, to be initialized. 
+S * @retval None
+S */
+Svoid TWI1_Init(SPITWI_TypeDef* TWIx, TWI1_InitTypeDef* TWI_InitStruct)
+S{
+S  uint32_t tmpreg;
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S  assert_param(IS_TWI1_ACK(TWI_InitStruct->TWI1_Ack));
+S  assert_param(IS_SPI1_TWI1_Prescaler(TWI_InitStruct->TWI1_Prescaler));
+S  assert_param(IS_TWI1_STRETCH(TWI_InitStruct->TWI1_Stretch));
+S  assert_param(IS_TWI1_GENERALCALL(TWI_InitStruct->TWI1_GeneralCall));
+S  /*---------------------------- TWIx TWI_CON Configuration ------------------------*/
+S	 if(TWIx==SPITWI_TWI1)
+S {
+S  /* Get the TWIx TWI_CON value */
+S  tmpreg = TWIx->SPI1_TWI1_CON;
+S  /* Clear AA, TWCK, STRETCH bits */
+S  tmpreg &= (uint32_t) ~(TWI1_CON_AA | SPI1_TWI1_CON_QTWCK_Msk | TWI1_CON_STRETCH|SPI1_TWI1_CON_MODE_Msk);
+S  /* Configure TWIx: Ack, Clock division and Slave Clock Stretch */
+S  /* Set AA bits to TWI_Ack value */
+S  /* Set TWCK bits according to TWI_DataSize value */
+S  /* Set STRETCH bit according to TWI_Stretch value */
+S  tmpreg |= (uint32_t)(TWI_InitStruct->TWI1_Ack | TWI_InitStruct->TWI1_Prescaler |
+S                       TWI_InitStruct->TWI1_Stretch|WorkeMode_TWI1);
+S  /* Write to TWIx TWI_CON */
+S  TWIx->SPI1_TWI1_CON = tmpreg;
+S  /*---------------------------- TWIx TWI_ADD Configuration ------------------------*/
+S  /* Get the TWIx TWI_ADD value */
+S  tmpreg = TWIx->TWI1_ADD;
+S  /* Clear GC, TWCK, STRETCH bits */
+S  tmpreg &= (uint32_t) ~(TWI1_ADD_GC | TWI1_ADD_QTWADD);
+S  /* Configure TWIx: General Call and Slave Slave Address */
+S  /* Set AA bits to TWI_GC value */
+S  /* Set TWA according to TWI_SlaveAdress value */
+S  tmpreg |= (uint32_t)(TWI_InitStruct->TWI1_GeneralCall | (TWI_InitStruct->TWI1_SlaveAdress & 0xFE));
+S
+S  /* Write to TWIx TWI_ADD */
+S  TWIx->TWI1_ADD = tmpreg;
+S}
+S}
+S
+S/**
+S * @brief  Enables or disables the specified TWI peripheral.
+S * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S *                  - TWI1:Timer peripheral select TWI1
+S * @param  NewState[in]:new state of the TWIx peripheral. 
+S *                  - DISABLE:Function disable
+S *                  - ENABLE:Function enable  
+S * @retval None
+S */
+Svoid TWI1_Cmd(SPITWI_TypeDef* TWIx, FunctionalState NewState)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S  assert_param(IS_FUNCTIONAL_STATE(NewState));
+S		if(TWIx==SPITWI_TWI1)
+S	{
+S  if(NewState != DISABLE)
+S  {
+S    /* Enable the SPI TX Function */
+S    TWIx->SPI1_TWI1_CON |= SPI1_TWI1_CON_QTWEN;
+S  }
+S  else
+S  {
+S    /* Disable the SPI TX Function */
+S    TWIx->SPI1_TWI1_CON &= (uint16_t)~SPI1_TWI1_CON_QTWEN;
+S  }
+S  }
+S}
+S
+S
+S/**
+S  * @brief  Enables or disables the specified TWI acknowledge feature.
+S * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S *                  - TWI1:Timer peripheral select TWI1
+S  * @param  NewState[in]: new state of the TWI Acknowledgement.
+S  *                  - DISABLE:Function disable
+S  *                  - ENABLE:Function enable  
+S  * @retval None.
+S  */
+Svoid TWI1_AcknowledgeConfig(SPITWI_TypeDef* TWIx, FunctionalState NewState)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S  assert_param(IS_FUNCTIONAL_STATE(NewState));
+S	if(TWIx==SPITWI_TWI1)
+S	{
+S  if(NewState != DISABLE)
+S  {
+S    /* Enable the acknowledgement */
+S    TWIx->SPI1_TWI1_CON |= TWI1_CON_AA;
+S  }
+S  else
+S  {
+S    /* Disable the acknowledgement */
+S    TWIx->SPI1_TWI1_CON &= (uint16_t)~TWI1_CON_AA;
+S  }
+S  }
+S}
+S
+S/**
+S  * @brief  Enables or disables the specified TWI general call feature.
+S * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S *                  - TWI1:Timer peripheral select TWI1
+S  * @param  NewState[in]: new state of the TWI General call.
+S  *                  - DISABLE:Function disable
+S  *                  - ENABLE:Function enable 
+S  * @retval None
+S  */
+Svoid TWI1_GeneralCallCmd(SPITWI_TypeDef* TWIx, FunctionalState NewState)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S  assert_param(IS_FUNCTIONAL_STATE(NewState));
+S	if(TWIx==SPITWI_TWI1)
+S	{
+S  if(NewState != DISABLE)
+S  {
+S    /* Enable general call */
+S    TWIx->TWI1_ADD |= TWI_ADD_GC;
+S  }
+S  else
+S  {
+S    /* Disable general call */
+S    TWIx->TWI1_ADD &= (uint16_t)~TWI_ADD_GC;
+S  }
+S  }
+S}
+S
+S/**
+S  * @brief  Enables or disables the specified TWI Clock stretching.
+S * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S *                  - TWI1:Timer peripheral select TWI1
+S  * @param  NewState[in]: new state of the TWIx Clock stretching.
+S  *                  - DISABLE:Function disable
+S  *                  - ENABLE:Function enable 
+S  * @retval None
+S  */
+Svoid TWI1_StretchClockConfig(SPITWI_TypeDef* TWIx, FunctionalState NewState)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S  assert_param(IS_FUNCTIONAL_STATE(NewState));
+S	if(TWIx==SPITWI_TWI1)
+S	{
+S  if(NewState != DISABLE)
+S  {
+S    /* Enable the selected TWI Clock stretching */
+S    TWIx->SPI1_TWI1_CON |= TWI1_CON_STRETCH;
+S  }
+S  else
+S  {
+S    /* Disable the selected TWI Clock stretching */
+S    TWIx->SPI1_TWI1_CON &= (uint16_t)~((uint16_t)TWI1_CON_STRETCH);
+S  }
+S  }
+S}
+S
+S/**
+S  * @brief  Example Set the number of Nbytes.
+S * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S *                  - TWI1:Timer peripheral select TWI1
+S  * @param  Nbytes[in]: Number of bytes to be sent or received.
+S  *          This parameter can be less than 256.
+S  * @retval None
+S  */
+Svoid TWI1_SetNbytes(SPITWI_TypeDef* TWIx, uint8_t Nbytes)
+S{
+S	  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S  if(TWIx==SPITWI_TWI1)
+S	{
+S	TWIx->SPI1_TWI1_STS = (uint32_t)(Nbytes << TWI1_STS_NBYTES_Pos);
+S	}
+S}
+S
+S
+S/**
+S  * @brief  Obtain the number of remaining Nbytes.
+S * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S *                  - TWI1:Timer peripheral select TWI1
+S  * @retval Number of bytes to be sent or received.
+S  */
+Suint8_t TWI1_GetNbytes(SPITWI_TypeDef* TWIx)
+S{
+S	uint8_t tmpnum;
+S	if(TWIx==SPITWI_TWI1)
+S	{
+S	
+S	
+S	  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S
+S	tmpnum = (uint8_t)(TWIx->SPI1_TWI1_STS >> TWI_STS_NBYTES_Pos);
+S	
+S	
+S	}
+S	return tmpnum;
+S}
+S
+S/** @defgroup TWI_Group5 Data transfers functions
+S *  @brief   Data transfers functions
+S *
+S@verbatim
+S ===============================================================================
+S                      ##### Data transfers functions #####
+S ===============================================================================
+S@endverbatim
+S  * @{
+S  */
+S
+S
+S/**
+S  * @brief  Generates TWIx communication START condition.
+S * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S *                  - TWI1:Timer peripheral select TWI1
+S  * @param  NewState[in]:new state of the TWI START condition generation. 
+S  *                  - DISABLE:Function disable
+S  *                  - ENABLE:Function enable 
+S  * @retval None.
+S  */
+Svoid TWI1_GenerateSTART(SPITWI_TypeDef* TWIx, FunctionalState NewState)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S  assert_param(IS_FUNCTIONAL_STATE(NewState));
+S		if(TWIx==SPITWI_TWI1)
+S	{
+S  if(NewState != DISABLE)
+S  {
+S    /* Generate a START condition */
+S    TWIx->SPI1_TWI1_CON |= TWI_CON_STA;
+S  }
+S  else
+S  {
+S    /* Disable the START condition generation */
+S    TWIx->SPI1_TWI1_CON &= (uint16_t)~TWI_CON_STA;
+S  }
+S  }
+S}
+S
+S/**
+S  * @brief  Generates TWIx communication STOP condition.
+S  * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S  *                  - TWI1:Timer peripheral select TWI1
+S  * @param  NewState[in]:new state of the TWI STOP condition generation.
+S  *                  - DISABLE:Function disable
+S  *                  - ENABLE:Function enable 
+S  * @retval None.
+S  */
+Svoid TWI1_GenerateSTOP(SPITWI_TypeDef* TWIx, FunctionalState NewState)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S  assert_param(IS_FUNCTIONAL_STATE(NewState));
+S  if(TWIx==SPITWI_TWI1)
+S	{
+S  if(NewState != DISABLE)
+S  {
+S    /* Generate a STOP condition */
+S    TWIx->SPI1_TWI1_CON |= TWI1_CON_STOP;
+S  }
+S  else
+S  {
+S    /* Disable the STOP condition generation */
+S    TWIx->SPI1_TWI1_CON &= (uint16_t)~TWI1_CON_STOP;
+S  }
+S  }
+S}
+S
+S/**
+S  * @brief  Sends an address word to the specified slave TWI device.
+S * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S *                  - TWI1:Timer peripheral select TWI1
+S  * @param  Address[in]: specifies the slave address which will be transmitted
+S  * @param  TWI_Command[in]:specifies whether the TWI device will be a Transmitter or a Receiver.
+S  *                  - TWI_Command_Write:TWI Command:Write   
+S  *                  - TWI_Command_Read:TWI Command:Read   
+S  * @retval None.
+S  */
+Svoid TWI1_Send7bitAddress(SPITWI_TypeDef* TWIx, uint8_t Address, TWI1_Command_TypeDef TWI1_Command)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S  assert_param(IS_TWI1_COMMAND(TWI1_Command));
+S	  if(TWIx==SPITWI_TWI1)
+S	{
+S  /* Test on the direction to set/reset the read/write bit */
+S	if(TWI1_Command != TWI1_Command_Write)
+S	{
+S		/* Set the address bit0 for read */
+S    Address |= TWI1_Command_Read;
+S	}
+S	else
+S	{
+S		/* Reset the address bit0 for write */
+S    Address &= (uint8_t)~((uint8_t)TWI1_Command_Read);
+S	}
+S
+S  /* Send the address */
+S  TWIx->SPI1_TWI1_DATA = Address;
+S}
+S}
+S
+S/**
+S * @}
+S */
+S
+S
+S/**
+S * @brief  Send a data through the peripheral TWIx.
+S * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S *                  - TWI1:Timer peripheral select TWI1
+S * @param  Data[in]: the data to transmit.
+S * @retval None
+S */
+Svoid TWI1_SendData(SPITWI_TypeDef* TWIx, uint16_t Data)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S	if(TWIx==SPITWI_TWI1)
+S	{
+S  /* Transmit Data */
+S  TWIx->SPI1_TWI1_DATA = Data;
+S	}
+S}
+S
+S/**
+S * @brief  Returns the most recent data received via TWIx.
+S * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S *                  - TWI1:Timer peripheral select TWI1
+S * @retval the most recent data received via TWIx.
+S */
+Suint8_t TWI1_ReceiveData(SPITWI_TypeDef* TWIx)
+S{
+S	if(TWIx==SPITWI_TWI1)
+S	{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S  /* Receive Data */
+S 
+S	} 
+S	return (uint8_t)TWIx->SPI1_TWI1_DATA;
+S}
+S
+S/**
+S * @}
+S */
+S
+S/**
+S * @brief  Get whether the specified TWI State Machine.
+S * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S *                  - TWI1:Timer peripheral select TWI1
+S * @retval The new state  Machine of TWIx.
+S *                  - TWI1_Slave_Idle 
+S *                  - TWI1_Slave_ReceivedaAddress 
+S *                  - TWI1_Slave_ReceivedaData  
+S *                  - TWI1_Slave_SendData                  
+S *                  - TWI1_Master_Idle 
+S *                  - TWI1_Master_SendAddress 
+S *                  - TWI1_Master_SendData  
+S */
+STWI1_StateMachine_TypeDef TWI1_GetStateMachine(SPITWI_TypeDef* TWIx)
+S{
+S	  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S	
+S	return (TWI1_StateMachine_TypeDef)(TWIx->SPI1_TWI1_STS & TWI1_STS_STATE);
+S}
+S
+S
+S
+S/**
+S * @}
+S */
+S/* End of TWI1_Group5.	*/
+S
+S/** @defgroup TWI1_Group6 Interrupts and flags management functions
+S *  @brief   Interrupts and flags management functions
+S *
+S@verbatim
+S ===============================================================================
+S            ##### Interrupts, DMA and flags management functions #####
+S ===============================================================================
+S@endverbatim
+S  * @{
+S  */
+S/**
+S * @brief  Enables or disables the specified TWI interrupts.
+S * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S *                  - TWI1:Timer peripheral select TWI1
+S * @param  TWI1_IT[in]:specifies the TWI interrupts sources to be enabled or disabled.  
+S *                  - TWI1_IT_INT: TWI Interrupt 
+S * @param  NewState[in]: new state of the TWI interrupts.
+S *                  - DISABLE:Function disable
+S *                  - ENABLE:Function enable  
+S *        
+S * @retval None
+S */
+Svoid TWI1_ITConfig(SPITWI_TypeDef* TWIx, uint16_t TWI1_IT, FunctionalState NewState)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S  assert_param(IS_TWI1_IT(TWI1_IT));
+S  assert_param(IS_FUNCTIONAL_STATE(NewState));
+S		if(TWIx==SPITWI_TWI1)
+S	{
+S  if(NewState != DISABLE)
+S  {
+S    /* Enable the Interrupt sources */
+S    TWIx->SPI1_TWI1_IDE |= TWI1_IT;
+S  }
+S  else
+S  {
+S    /* Disable the Interrupt sources */
+S    TWIx->SPI1_TWI1_IDE &= (uint16_t)~TWI1_IT;
+S  }
+S }
+S}
+S
+S/**
+S * @brief  Checks whether the specified TWI flag is set or not.
+S * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S *                  - TWI1:Timer peripheral select TWI1
+S * @param  TWI1_FLAG[in]: specifies the flag to check. 
+S *                  - TWI1_FLAG_QTWIF:Interrupt flag 
+S *                  - TWI1_FLAG_TXRXnE:Transmit/receive completion flag 
+S *                  - TWI1_FLAG_GCA:Generic Call flags  
+S *                  - TWI1_FLAG_TMSTR:Flag to identify master or slave 
+S * @retval The new state of TWI_FLAG (SET or RESET).
+S *                  -  RESET:Flag reset
+S *                  -  SET :Flag up
+S */
+SFlagStatus TWI1_GetFlagStatus(SPITWI_TypeDef* TWIx, TWI1_FLAG_TypeDef TWI1_FLAG)
+S{
+S  ITStatus bitstatus = RESET;
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S  assert_param(IS_TWI1_FLAG(TWI1_FLAG));
+S  if(TWIx==SPITWI_TWI1)
+S	{
+S  if((TWIx->SPI1_TWI1_STS & TWI1_FLAG) != (uint16_t)RESET)
+S  {
+S    bitstatus = SET;
+S  }
+S  else
+S  {
+S    bitstatus = RESET;
+S  }
+S	}
+S  return bitstatus;
+S}
+S
+S/**
+S * @brief  Clears the TWIx's pending flags.
+S * @param  TWIx[out]:where can to select the TWI1 peripheral. 
+S *                  - TWI1:Timer peripheral select TWI1
+S * @param  TWI1_FLAG[in]: specifies the flag bit to clear.
+S *                  - TWI1_FLAG_QTWIF:Interrupt flag 
+S *                  - TWI1_FLAG_TXRXnE:Transmit/receive completion flag 
+S *                  - TWI1_FLAG_GCA:Generic Call flags  
+S * @retval None
+S */
+Svoid TWI1_ClearFlag(SPITWI_TypeDef* TWIx, TWI1_FLAG_TypeDef TWI1_FLAG)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(TWIx));
+S  /* Clear the flags */
+S	if(TWIx==SPITWI_TWI1)
+S	{
+S		/* Clear the flags */
+S    TWIx->SPI1_TWI1_STS |= ( uint16_t ) TWI1_FLAG;
+S	}
+S}
+S
+S
+S/**
+S * @brief  Configures the TIMx Pin Remap
+S * @param  SPIx_TWIx[out]:where  can  to select the TWI1 or SPI11 peripheral. 
+S *                  - SPI1:Timer peripheral select SPII1
+S *                  - TWI1:Timer peripheral select TWI1
+S * @param  TWI_Remap[in]:specifies the TIM input remapping source.
+S *                  - SPI1_TWI1_PinRemap_Default:TIM Pin Remap  Disable  
+S *                  - SPI1_TWI1_PinRemap_A:TIM Pin Remap: Remap mode A  
+S *                  - SPI1_TWI1_PinRemap_B:TIM Pin Remap: Remap mode B  
+S *                  - SPI1_TWI1_PinRemap_C:TIM Pin Remap: Remap mode C 
+S * @retval None
+S */
+Svoid SPI1_TWI1_PinRemapConfig(SPITWI_TypeDef* SPIx_TWIx, SPI1_TWI1_PinRemap_TypeDef SPI1_TWI1_Remap)
+S{
+S  uint32_t tmpreg ;
+S  /* Check the parameters */
+S  assert_param(IS_SPI1_TWI1_ALL_PERIPH(SPIx_TWIx));
+S  
+S  tmpreg = SPIx_TWIx->SPI1_TWI1_CON;
+S
+S  tmpreg &= (uint32_t)(~SPI1_TWI1_CON_SPOS);
+S
+S  tmpreg |= SPI1_TWI1_Remap;
+S
+S  SPIx_TWIx->SPI1_TWI1_CON = tmpreg;
+S}
+N#endif
+N/**
+N * @}
+N */
+N/* End of TWI_Group6.	*/
+N
+N/**
+N * @}
+N */
+N
+N/**
+N * @}
+N */
+N
+N/************************ (C) COPYRIGHT SOC Microelectronics *****END OF FILE****/

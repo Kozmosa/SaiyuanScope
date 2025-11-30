@@ -1,266 +1,51 @@
 L 1 "..\User\Wave_Show_gy.c"
-N#include "sc32_conf.h"
-L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32_conf.h" 1
+N#include "Wave_Show_gy.h"
+L 1 "..\User\Wave_Show_gy.h" 1
+N#ifndef __WAVE_SHOW_GY_H
+N#define __WAVE_SHOW_GY_H
+N
+N#include "sc32.h"           
+L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32.h" 1
 N/**
 N ******************************************************************************
-N * @file    sc32_conf.h
+N * @file    SC32.h
 N * @author  SOC AE Team
 N * @version V1.9-BetaV0
 N * @date    2025-06-20
-N * @brief   This file includes all the header files for peripheral functions
-N ******************************************************************************
-N * @attention
-N *
-N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
-N *intended for use with SinOne products. No other uses are authorized. This 
-N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
-N *all applicable laws, including copyright laws. 
-N *2.The software which is for guidance only aims at providing customers with 
-N *coding information regarding their products in order for them to save time. 
-N *As a result, SinOne shall not be held liable for any direct, indirect or 
-N *consequential damages with respect to any claims arising from the content of 
-N *such software and/or the use made by customers of the coding information 
-N *contained herein in connection with their products.
-N *
-N *  COPYRIGHT 2025 SinOne Microelectronics
-N ******************************************************************************
+N * @brief   The macro definition of `assert_param(expr)` is used to check whether 
+N            the expression `expr` evaluates to true. If the expression is false, it calls 
+N            the `assert_failed` function to report an assertion failure.
+N  ******************************************************************************
+N  * @attention
+N  *
+N  *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N  *intended for use with SinOne products. No other uses are authorized. This 
+N  *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N  *all applicable laws, including copyright laws. 
+N  *2.The software which is for guidance only aims at providing customers with 
+N  *coding information regarding their products in order for them to save time. 
+N  *As a result, SinOne shall not be held liable for any direct, indirect or 
+N  *consequential damages with respect to any claims arising from the content of 
+N  *such software and/or the use made by customers of the coding information 
+N  *contained herein in connection with their products.
+N  *
+N  *  COPYRIGHT 2025 SinOne Microelectronics
+N  ******************************************************************************
 N */
-N#ifndef _sc32_CONF_H_
-N#define _sc32_CONF_H_
-N#include "sc32f1xxx.h"
-L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx.h" 1
-N/**
-N ******************************************************************************
-N * @file    SC32F1XXX.h
-N * @author  SOC SA Team
-N * @version V1.9-BetaV0
-N * @date    2025-06-20
-N * @brief   CMSIS SC32F1xxx Device Peripheral Access Layer Header File.
-N *          The file is the unique include file that the application programmer
-N *          is using in the C source code, usually in main.c. This file contains:
-N *           - Configuration section that allows to select:
-N *           - The SC32F1xxx device used in the target application
-N *
-N ******************************************************************************
-N * @attention
-N *
-N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
-N *intended for use with SinOne products. No other uses are authorized. This 
-N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
-N *all applicable laws, including copyright laws. 
-N *2.The software which is for guidance only aims at providing customers with 
-N *coding information regarding their products in order for them to save time. 
-N *As a result, SinOne shall not be held liable for any direct, indirect or 
-N *consequential damages with respect to any claims arising from the content of 
-N *such software and/or the use made by customers of the coding information 
-N *contained herein in connection with their products.
-N *
-N *  COPYRIGHT 2025 SinOne Microelectronics
-N ******************************************************************************
-N */
-N
-N
 N/** @addtogroup CMSIS_Device
-N  * @{
-N  */
-N
-N/** @addtogroup sc32f1xxx
-N  * @{
-N  */
-N
-N#ifndef SC32F1XXX_H
-N#define SC32F1XXX_H
-N
-N
-N#ifdef __cplusplus
-Sextern "C" {
-N#endif /* __cplusplus */
-N
-N/** @addtogroup Library_configuration_section
-N  * @{
-N  */
-N
-N#if !defined  (SC32F1)
-X#if !0L
-N#define SC32F1
-N#endif /* SC32F1 */
-N
-N
-N#if defined(SC32f10xx)
-X#if 0L
-S  #include "SC32f10xx.h"
-N#elif defined(SC32R803)
-X#elif 1L
-N  #include "SC32R803.h"
-L 1 "..\FWLib\SC32F1XXX_Lib\inc\SC32R803.h" 1
-N/**
-N ******************************************************************************
-N * @file    sc32r803.h
-N * @author  SOC SA Team
-N * @version V1.9-BetaV0
-N * @date    2025-06-20
-N * @brief   CMSIS Cortex-M0+ Device Peripheral Access Layer Header File.
-N *          This file contains all the peripheral register's definitions, bits
-N *          definitions and memory mapping for sc32r803 devices.
-N *
-N *          This file contains:
-N *           - Data structures and the address mapping for all peripherals
-N *           - Peripheral's registers declarations and bits definition
-N *           - Macros to access peripheral's registers hardware
-N ******************************************************************************
-N * @attention
-N *
-N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
-N *intended for use with SinOne products. No other uses are authorized. This 
-N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
-N *all applicable laws, including copyright laws. 
-N *2.The software which is for guidance only aims at providing customers with 
-N *coding information regarding their products in order for them to save time. 
-N *As a result, SinOne shall not be held liable for any direct, indirect or 
-N *consequential damages with respect to any claims arising from the content of 
-N *such software and/or the use made by customers of the coding information 
-N *contained herein in connection with their products.
-N *
-N *  COPYRIGHT 2025 SinOne Microelectronics
-N ******************************************************************************
+N* @{
 N*/
 N
-N/** @addtogroup CMSIS_Device
+N/** @addtogroup sc32
 N  * @{
 N  */
 N
-N/** @addtogroup SC32R803
-N  * @{
-N  */
-N
-N#ifndef SC32R803_H
-N#define SC32R803_H
-N
-N
+N#ifndef SC32_H
+N#define SC32_H
 N
 N#ifdef __cplusplus
 S extern "C" {
-N#endif /* __cplusplus */
-N
-N/** @addtogroup Configuration_section_for_CMSIS
-N  * @{
-N  */
-N#if !defined  (LXT_VALUE) 
-X#if !0L 
-N  #define LXT_VALUE    ((uint32_t)32768) /*!< Default value of the External oscillator in Hz */
-N#endif /* LXT_VALUE */
-N#if !defined  (HXT_VALUE) 
-X#if !0L 
-N  #define HXT_VALUE    ((uint32_t)16000000) /*!< Default value of the External oscillator in Hz */
-N#endif /* HXT_VALUE */
-N#if !defined  (HIRC_VALUE) 
-X#if !0L 
-N  #define HIRC_VALUE    ((uint32_t)64000000) /*!< Default value of the External oscillator in Hz */
-N#endif /* HIRC_VALUE */
-N#if !defined  (LIRC_VALUE) 
-X#if !0L 
-N  #define LIRC_VALUE    ((uint32_t)32000) /*!< Default value of the External oscillator in Hz */
-N#endif /* LIRC_VALUE */
-N/**
-N  * @brief Configuration of the Cortex-M0+ Processor and Core Peripherals
-N   */
-N#define __CM0PLUS_REV             0U /*!< Core Revision r0p0                            */
-N#define __MPU_PRESENT             1U /*!< Coretex Mo+  provides an MPU                  */
-N#define __VTOR_PRESENT            1U /*!< Vector  Table  Register supported             */
-N#define __NVIC_PRIO_BITS          2U /*!< SC32R803 uses 2 Bits for the Priority Levels 			*/
-N#define __Vendor_SysTickConfig    0U /*!< Set to 1 if different SysTick Config is used  */
-N
-N/**
-N  * @}
-N  */
-N
-N/** @addtogroup Peripheral_interrupt_number_definition
-N  * @{
-N  */
-N
-N/**
-N * @brief SC32R803 Interrupt Number Definition, according to the selected device
-N *        in @ref Library_configuration_section
-N */
-N
-N/*!< Interrupt Number Definition */
-Ntypedef enum
-N{
-N/******  Cortex-M0+ Processor Exceptions Numbers ***************************************************************/
-N  NonMaskableInt_IRQn         = -14,    /*!< 2 Non Maskable Interrupt                                          */
-N  HardFault_IRQn              = -13,    /*!< 3 Cortex-M Hard Fault Interrupt                                   */
-N  SVC_IRQn                    = -5,     /*!< 11 Cortex-M SV Call Interrupt                                     */
-N  PendSV_IRQn                 = -2,     /*!< 14 Cortex-M Pend SV Interrupt                                     */
-N  SysTick_IRQn                = -1,     /*!< 15 Cortex-M System Tick Interrupt                                 */
-N/******  SC32R803 specific Interrupt Numbers ****************************************************************/
-N  INT0_IRQn                  = 0,      /*!< INT  0 Interrupt                                                 */
-N  INT1_7_IRQn                = 1,      /*!< INT Line from 1 to 7  Interrupt                                  */
-N  INT8_11_IRQn               = 2,      /*!< INT Line from 8 to 11  Interrupt                                 */
-N  INT12_15_IRQn              = 3,      /*!< INT Line from 12 to 15  Interrupt                                */
-N  RCC_IRQn                    = 4,      /*!< RCC shut down Interrupts                                          */
-N  BTM_IRQn                    = 6,      /*!< BTM  Interrupts                                                   */
-N  UART0_2_4_IRQn              = 7,      /*!< UART0 and UART2 Interrupts                                        */
-N  UART1_3_5_IRQn              = 8,      /*!< UART1 and UART3 Interrupts                                        */
-N  TWIx_QSPIx_0_2_IRQn         = 9,      /*!< TWIx_QSPIx_0_2_IRQn Interrupts                                    */
-N  TWIx_QSPIx_1_3_IRQn         = 10,     /*!< TWIx_QSPIx_1_3 Interrupts                                           */
-N  DMA0_IRQn                   = 11,     /*!< DMA0 Interrupts                                                   */
-N  DMA1_IRQn                   = 12,     /*!< DMA1 Interrupts                                                   */
-N  DMA2_IRQn                   = 13,     /*!< DMA2 Interrupts                                                   */
-N  DMA3_IRQn                   = 14,     /*!< DMA3 Interrupts                                                   */
-N  TIMER0_IRQn                 = 15,     /*!< TIMER0 global Interrupts                                          */
-N  TIMER1_IRQn                 = 16,     /*!< TIMER1 global Interrupt                                           */
-N  TIMER2_IRQn                 = 17,     /*!< TIMER2 global Interrupt                                           */
-N  TIMER3_IRQn                 = 18,     /*!< TIMER3 global Interrupt                                           */
-N  TIMER4_5_IRQn               = 19,     /*!< TIMER4 and TIMER5 global Interrupt                                */
-N  TIMER6_7_IRQn               = 20,     /*!< TIMER6 global TIMER7 Interrupt                                    */
-N  PWM0_IRQn                   = 21,     /*!< PWM0 Interrupt                                                    */
-N  LEDPWM_IRQn                 = 22,     /*!< LEDPWM Interrupt                                                  */
-N  CAN_IRQn                    = 28,     /*!< CAN  Interrupt                                                    */
-N  ADC_IRQn                    = 29,     /*!< ADC  Interrupt                                            	       */
-N  CMP_IRQn                    = 30,     /*!< CMP  Interrupt                                            	       */
-N  TK_IRQn                     = 31,     /*!< TouchKey  Interrupt                                               */
-N} IRQn_Type;
-N
-N/**
-N  * @}
-N  */
-N
-N#include "core_cm0plus.h"               /* Cortex-M0+ processor and core peripherals */
-L 1 "..\CMSIS\core_cm0plus.h" 1
-N/**************************************************************************//**
-N * @file     core_cm0plus.h
-N * @brief    CMSIS Cortex-M0+ Core Peripheral Access Layer Header File
-N * @version  V5.0.6
-N * @date     28. May 2018
-N ******************************************************************************/
-N/*
-N * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
-N *
-N * SPDX-License-Identifier: Apache-2.0
-N *
-N * Licensed under the Apache License, Version 2.0 (the License); you may
-N * not use this file except in compliance with the License.
-N * You may obtain a copy of the License at
-N *
-N * www.apache.org/licenses/LICENSE-2.0
-N *
-N * Unless required by applicable law or agreed to in writing, software
-N * distributed under the License is distributed on an AS IS BASIS, WITHOUT
-N * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-N * See the License for the specific language governing permissions and
-N * limitations under the License.
-N */
-N
-N#if   defined ( __ICCARM__ )
-X#if   0L
-S  #pragma system_include         /* treat file as system include file for MISRA check */
-S#elif defined (__clang__)
-X#elif 0L
-S  #pragma clang system_header   /* treat file as system include file */
 N#endif
-N
-N#ifndef __CORE_CM0PLUS_H_GENERIC
-N#define __CORE_CM0PLUS_H_GENERIC
 N
 N#include <stdint.h>
 L 1 "D:\STM32\ARM\ARMCC\Bin\..\include\stdint.h" 1
@@ -593,7 +378,339 @@ N
 N#endif /* __stdint_h */
 N
 N/* end of stdint.h */
-L 35 "..\CMSIS\core_cm0plus.h" 2
+L 43 "..\FWLib\SC32F1XXX_Lib\inc\sc32.h" 2
+N
+N/* Exported macro ------------------------------------------------------------*/
+N#ifdef  USE_FULL_ASSERT
+S/**
+S  * @brief  The assert_param macro is used for function's parameters check.
+S  * @param  expr: If expr is false, it calls assert_failed function
+S  *         which reports the name of the source file and the source
+S  *         line number of the call that failed.
+S  *         If expr is true, it returns no value.
+S  * @retval None
+S  */
+S#define assert_param(expr) ((expr) ? (void)0 : assert_failed((uint8_t *)__FILE__, __LINE__))
+S/* Exported functions ------------------------------------------------------- */
+Svoid assert_failed(uint8_t* file, uint32_t line);
+N#else
+N#define assert_param(expr) ((void)0U)
+N#endif /* USE_FULL_ASSERT */
+N
+N
+N#ifdef __cplusplus
+S}
+N#endif /* __cplusplus */
+N
+N#endif /* SC32_H */
+N
+N/**
+N  * @}
+N  */
+N
+N/**
+N* @}
+N*/
+N
+N/************************ (C) COPYRIGHT SIN ONE CHIP *****END OF FILE****/
+L 5 "..\User\Wave_Show_gy.h" 2
+N#include "TFT_Lcd.h"        
+L 1 "..\Apps\TFT_Lcd.h" 1
+N//************************************************************
+N//  Copyright (c)
+N//	FileName	  : TFT_Lcd.h
+N//	Function	  : TFT LCD Display
+N//  Instructions  :
+N//  Date          : 2023/09/01
+N// 	Version		  : V1.0
+N//*************************************************************
+N#ifndef __TFT_LCD_H
+N#define __TFT_LCD_H
+N
+N#include "SC_Init.h"
+L 1 "..\User\SC_Init.h" 1
+N/**
+N *****************************************************************************************************
+N  * @copyright	(c)  Shenzhen Saiyuan Microelectronics Co., Ltd
+N  * @file	         SC_Init.h
+N  * @author	 
+N  * @version 	     
+N  * @date	         2024.03.11
+N  * @brief	         Contains the MCU initialization function and its H file
+N  * @details         
+N *****************************************************************************************************
+N * @attention
+N *
+N *****************************************************************************************************
+N */
+N
+N#ifndef _SC_INIT_H_
+N#define _SC_INIT_H_
+N
+N#include "sc32_conf.h"
+L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32_conf.h" 1
+N/**
+N ******************************************************************************
+N * @file    sc32_conf.h
+N * @author  SOC AE Team
+N * @version V1.9-BetaV0
+N * @date    2025-06-20
+N * @brief   This file includes all the header files for peripheral functions
+N ******************************************************************************
+N * @attention
+N *
+N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N *intended for use with SinOne products. No other uses are authorized. This 
+N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N *all applicable laws, including copyright laws. 
+N *2.The software which is for guidance only aims at providing customers with 
+N *coding information regarding their products in order for them to save time. 
+N *As a result, SinOne shall not be held liable for any direct, indirect or 
+N *consequential damages with respect to any claims arising from the content of 
+N *such software and/or the use made by customers of the coding information 
+N *contained herein in connection with their products.
+N *
+N *  COPYRIGHT 2025 SinOne Microelectronics
+N ******************************************************************************
+N */
+N#ifndef _sc32_CONF_H_
+N#define _sc32_CONF_H_
+N#include "sc32f1xxx.h"
+L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx.h" 1
+N/**
+N ******************************************************************************
+N * @file    SC32F1XXX.h
+N * @author  SOC SA Team
+N * @version V1.9-BetaV0
+N * @date    2025-06-20
+N * @brief   CMSIS SC32F1xxx Device Peripheral Access Layer Header File.
+N *          The file is the unique include file that the application programmer
+N *          is using in the C source code, usually in main.c. This file contains:
+N *           - Configuration section that allows to select:
+N *           - The SC32F1xxx device used in the target application
+N *
+N ******************************************************************************
+N * @attention
+N *
+N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N *intended for use with SinOne products. No other uses are authorized. This 
+N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N *all applicable laws, including copyright laws. 
+N *2.The software which is for guidance only aims at providing customers with 
+N *coding information regarding their products in order for them to save time. 
+N *As a result, SinOne shall not be held liable for any direct, indirect or 
+N *consequential damages with respect to any claims arising from the content of 
+N *such software and/or the use made by customers of the coding information 
+N *contained herein in connection with their products.
+N *
+N *  COPYRIGHT 2025 SinOne Microelectronics
+N ******************************************************************************
+N */
+N
+N
+N/** @addtogroup CMSIS_Device
+N  * @{
+N  */
+N
+N/** @addtogroup sc32f1xxx
+N  * @{
+N  */
+N
+N#ifndef SC32F1XXX_H
+N#define SC32F1XXX_H
+N
+N
+N#ifdef __cplusplus
+Sextern "C" {
+N#endif /* __cplusplus */
+N
+N/** @addtogroup Library_configuration_section
+N  * @{
+N  */
+N
+N#if !defined  (SC32F1)
+X#if !0L
+N#define SC32F1
+N#endif /* SC32F1 */
+N
+N
+N#if defined(SC32f10xx)
+X#if 0L
+S  #include "SC32f10xx.h"
+N#elif defined(SC32R803)
+X#elif 1L
+N  #include "SC32R803.h"
+L 1 "..\FWLib\SC32F1XXX_Lib\inc\SC32R803.h" 1
+N/**
+N ******************************************************************************
+N * @file    sc32r803.h
+N * @author  SOC SA Team
+N * @version V1.9-BetaV0
+N * @date    2025-06-20
+N * @brief   CMSIS Cortex-M0+ Device Peripheral Access Layer Header File.
+N *          This file contains all the peripheral register's definitions, bits
+N *          definitions and memory mapping for sc32r803 devices.
+N *
+N *          This file contains:
+N *           - Data structures and the address mapping for all peripherals
+N *           - Peripheral's registers declarations and bits definition
+N *           - Macros to access peripheral's registers hardware
+N ******************************************************************************
+N * @attention
+N *
+N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N *intended for use with SinOne products. No other uses are authorized. This 
+N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N *all applicable laws, including copyright laws. 
+N *2.The software which is for guidance only aims at providing customers with 
+N *coding information regarding their products in order for them to save time. 
+N *As a result, SinOne shall not be held liable for any direct, indirect or 
+N *consequential damages with respect to any claims arising from the content of 
+N *such software and/or the use made by customers of the coding information 
+N *contained herein in connection with their products.
+N *
+N *  COPYRIGHT 2025 SinOne Microelectronics
+N ******************************************************************************
+N*/
+N
+N/** @addtogroup CMSIS_Device
+N  * @{
+N  */
+N
+N/** @addtogroup SC32R803
+N  * @{
+N  */
+N
+N#ifndef SC32R803_H
+N#define SC32R803_H
+N
+N
+N
+N#ifdef __cplusplus
+S extern "C" {
+N#endif /* __cplusplus */
+N
+N/** @addtogroup Configuration_section_for_CMSIS
+N  * @{
+N  */
+N#if !defined  (LXT_VALUE) 
+X#if !0L 
+N  #define LXT_VALUE    ((uint32_t)32768) /*!< Default value of the External oscillator in Hz */
+N#endif /* LXT_VALUE */
+N#if !defined  (HXT_VALUE) 
+X#if !0L 
+N  #define HXT_VALUE    ((uint32_t)16000000) /*!< Default value of the External oscillator in Hz */
+N#endif /* HXT_VALUE */
+N#if !defined  (HIRC_VALUE) 
+X#if !0L 
+N  #define HIRC_VALUE    ((uint32_t)64000000) /*!< Default value of the External oscillator in Hz */
+N#endif /* HIRC_VALUE */
+N#if !defined  (LIRC_VALUE) 
+X#if !0L 
+N  #define LIRC_VALUE    ((uint32_t)32000) /*!< Default value of the External oscillator in Hz */
+N#endif /* LIRC_VALUE */
+N/**
+N  * @brief Configuration of the Cortex-M0+ Processor and Core Peripherals
+N   */
+N#define __CM0PLUS_REV             0U /*!< Core Revision r0p0                            */
+N#define __MPU_PRESENT             1U /*!< Coretex Mo+  provides an MPU                  */
+N#define __VTOR_PRESENT            1U /*!< Vector  Table  Register supported             */
+N#define __NVIC_PRIO_BITS          2U /*!< SC32R803 uses 2 Bits for the Priority Levels 			*/
+N#define __Vendor_SysTickConfig    0U /*!< Set to 1 if different SysTick Config is used  */
+N
+N/**
+N  * @}
+N  */
+N
+N/** @addtogroup Peripheral_interrupt_number_definition
+N  * @{
+N  */
+N
+N/**
+N * @brief SC32R803 Interrupt Number Definition, according to the selected device
+N *        in @ref Library_configuration_section
+N */
+N
+N/*!< Interrupt Number Definition */
+Ntypedef enum
+N{
+N/******  Cortex-M0+ Processor Exceptions Numbers ***************************************************************/
+N  NonMaskableInt_IRQn         = -14,    /*!< 2 Non Maskable Interrupt                                          */
+N  HardFault_IRQn              = -13,    /*!< 3 Cortex-M Hard Fault Interrupt                                   */
+N  SVC_IRQn                    = -5,     /*!< 11 Cortex-M SV Call Interrupt                                     */
+N  PendSV_IRQn                 = -2,     /*!< 14 Cortex-M Pend SV Interrupt                                     */
+N  SysTick_IRQn                = -1,     /*!< 15 Cortex-M System Tick Interrupt                                 */
+N/******  SC32R803 specific Interrupt Numbers ****************************************************************/
+N  INT0_IRQn                  = 0,      /*!< INT  0 Interrupt                                                 */
+N  INT1_7_IRQn                = 1,      /*!< INT Line from 1 to 7  Interrupt                                  */
+N  INT8_11_IRQn               = 2,      /*!< INT Line from 8 to 11  Interrupt                                 */
+N  INT12_15_IRQn              = 3,      /*!< INT Line from 12 to 15  Interrupt                                */
+N  RCC_IRQn                    = 4,      /*!< RCC shut down Interrupts                                          */
+N  BTM_IRQn                    = 6,      /*!< BTM  Interrupts                                                   */
+N  UART0_2_4_IRQn              = 7,      /*!< UART0 and UART2 Interrupts                                        */
+N  UART1_3_5_IRQn              = 8,      /*!< UART1 and UART3 Interrupts                                        */
+N  TWIx_QSPIx_0_2_IRQn         = 9,      /*!< TWIx_QSPIx_0_2_IRQn Interrupts                                    */
+N  TWIx_QSPIx_1_3_IRQn         = 10,     /*!< TWIx_QSPIx_1_3 Interrupts                                           */
+N  DMA0_IRQn                   = 11,     /*!< DMA0 Interrupts                                                   */
+N  DMA1_IRQn                   = 12,     /*!< DMA1 Interrupts                                                   */
+N  DMA2_IRQn                   = 13,     /*!< DMA2 Interrupts                                                   */
+N  DMA3_IRQn                   = 14,     /*!< DMA3 Interrupts                                                   */
+N  TIMER0_IRQn                 = 15,     /*!< TIMER0 global Interrupts                                          */
+N  TIMER1_IRQn                 = 16,     /*!< TIMER1 global Interrupt                                           */
+N  TIMER2_IRQn                 = 17,     /*!< TIMER2 global Interrupt                                           */
+N  TIMER3_IRQn                 = 18,     /*!< TIMER3 global Interrupt                                           */
+N  TIMER4_5_IRQn               = 19,     /*!< TIMER4 and TIMER5 global Interrupt                                */
+N  TIMER6_7_IRQn               = 20,     /*!< TIMER6 global TIMER7 Interrupt                                    */
+N  PWM0_IRQn                   = 21,     /*!< PWM0 Interrupt                                                    */
+N  LEDPWM_IRQn                 = 22,     /*!< LEDPWM Interrupt                                                  */
+N  CAN_IRQn                    = 28,     /*!< CAN  Interrupt                                                    */
+N  ADC_IRQn                    = 29,     /*!< ADC  Interrupt                                            	       */
+N  CMP_IRQn                    = 30,     /*!< CMP  Interrupt                                            	       */
+N  TK_IRQn                     = 31,     /*!< TouchKey  Interrupt                                               */
+N} IRQn_Type;
+N
+N/**
+N  * @}
+N  */
+N
+N#include "core_cm0plus.h"               /* Cortex-M0+ processor and core peripherals */
+L 1 "..\CMSIS\core_cm0plus.h" 1
+N/**************************************************************************//**
+N * @file     core_cm0plus.h
+N * @brief    CMSIS Cortex-M0+ Core Peripheral Access Layer Header File
+N * @version  V5.0.6
+N * @date     28. May 2018
+N ******************************************************************************/
+N/*
+N * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+N *
+N * SPDX-License-Identifier: Apache-2.0
+N *
+N * Licensed under the Apache License, Version 2.0 (the License); you may
+N * not use this file except in compliance with the License.
+N * You may obtain a copy of the License at
+N *
+N * www.apache.org/licenses/LICENSE-2.0
+N *
+N * Unless required by applicable law or agreed to in writing, software
+N * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+N * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+N * See the License for the specific language governing permissions and
+N * limitations under the License.
+N */
+N
+N#if   defined ( __ICCARM__ )
+X#if   0L
+S  #pragma system_include         /* treat file as system include file for MISRA check */
+S#elif defined (__clang__)
+X#elif 0L
+S  #pragma clang system_header   /* treat file as system include file */
+N#endif
+N
+N#ifndef __CORE_CM0PLUS_H_GENERIC
+N#define __CORE_CM0PLUS_H_GENERIC
+N
+N#include <stdint.h>
 N
 N#ifdef __cplusplus
 S extern "C" {
@@ -6889,84 +7006,6 @@ N
 N/*!< Includes ----------------------------------------------------------------*/
 N#include "sc32f1xxx.h"
 N#include "sc32.h"
-L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32.h" 1
-N/**
-N ******************************************************************************
-N * @file    SC32.h
-N * @author  SOC AE Team
-N * @version V1.9-BetaV0
-N * @date    2025-06-20
-N * @brief   The macro definition of `assert_param(expr)` is used to check whether 
-N            the expression `expr` evaluates to true. If the expression is false, it calls 
-N            the `assert_failed` function to report an assertion failure.
-N  ******************************************************************************
-N  * @attention
-N  *
-N  *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
-N  *intended for use with SinOne products. No other uses are authorized. This 
-N  *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
-N  *all applicable laws, including copyright laws. 
-N  *2.The software which is for guidance only aims at providing customers with 
-N  *coding information regarding their products in order for them to save time. 
-N  *As a result, SinOne shall not be held liable for any direct, indirect or 
-N  *consequential damages with respect to any claims arising from the content of 
-N  *such software and/or the use made by customers of the coding information 
-N  *contained herein in connection with their products.
-N  *
-N  *  COPYRIGHT 2025 SinOne Microelectronics
-N  ******************************************************************************
-N */
-N/** @addtogroup CMSIS_Device
-N* @{
-N*/
-N
-N/** @addtogroup sc32
-N  * @{
-N  */
-N
-N#ifndef SC32_H
-N#define SC32_H
-N
-N#ifdef __cplusplus
-S extern "C" {
-N#endif
-N
-N#include <stdint.h>
-N
-N/* Exported macro ------------------------------------------------------------*/
-N#ifdef  USE_FULL_ASSERT
-S/**
-S  * @brief  The assert_param macro is used for function's parameters check.
-S  * @param  expr: If expr is false, it calls assert_failed function
-S  *         which reports the name of the source file and the source
-S  *         line number of the call that failed.
-S  *         If expr is true, it returns no value.
-S  * @retval None
-S  */
-S#define assert_param(expr) ((expr) ? (void)0 : assert_failed((uint8_t *)__FILE__, __LINE__))
-S/* Exported functions ------------------------------------------------------- */
-Svoid assert_failed(uint8_t* file, uint32_t line);
-N#else
-N#define assert_param(expr) ((void)0U)
-N#endif /* USE_FULL_ASSERT */
-N
-N
-N#ifdef __cplusplus
-S}
-N#endif /* __cplusplus */
-N
-N#endif /* SC32_H */
-N
-N/**
-N  * @}
-N  */
-N
-N/**
-N* @}
-N*/
-N
-N/************************ (C) COPYRIGHT SIN ONE CHIP *****END OF FILE****/
-L 39 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_rcc.h" 2
 N
 N/** @addtogroup sc32f1xxx_StdPeriph_Driver
 N * @{
@@ -17764,148 +17803,7 @@ S#include "sc32f1xxx_qep.h"
 N#endif
 N#endif
 N
-L 2 "..\User\Wave_Show_gy.c" 2
-N#include "system_sc32f1xxx.h"
-L 1 "..\FWLib\SC32F1XXX_Lib\inc\system_sc32f1xxx.h" 1
-N/**
-N******************************************************************************
-N * @file    SYSTEM_sc32f1xxx.h
-N * @author  SOC SA Team
-N * @version V1.9-BetaV0
-N * @date    2025-06-20
-N * @brief   CMSIS Cortex-M0+ Device System Source File for sc32f1xxx devices.
-N ******************************************************************************
-N * @attention
-N *
-N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
-N *intended for use with SinOne products. No other uses are authorized. This 
-N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
-N *all applicable laws, including copyright laws. 
-N *2.The software which is for guidance only aims at providing customers with 
-N *coding information regarding their products in order for them to save time. 
-N *As a result, SinOne shall not be held liable for any direct, indirect or 
-N *consequential damages with respect to any claims arising from the content of 
-N *such software and/or the use made by customers of the coding information 
-N *contained herein in connection with their products.
-N *
-N *  COPYRIGHT 2025 SinOne Microelectronics
-N ******************************************************************************
-N */
-N
-N/** @addtogroup CMSIS
-N  * @{
-N  */
-N
-N/** @addtogroup sc32f10xx_system
-N  * @{
-N  */
-N
-N/**
-N  * @brief Define to prevent recursive inclusion
-N  */
-N#ifndef SYSTEM_SOC0003_H
-N#define SYSTEM_SOC0003_H
-N
-N#ifdef __cplusplus
-S extern "C" {
-N#endif
-N
-N/** @addtogroup sc32f1xxx_System_Includes
-N  * @{
-N  */
-N
-N/**
-N  * @}
-N  */
-N
-N
-N/** @addtogroup sc32f1xxx_System_Exported_types
-N  * @{
-N  */
-Nextern uint32_t SystemCoreClock;         /*!< System Clock Frequency (Core Clock) */
-N
-Nextern const uint32_t AHBPrescTable[16];  /*!<  AHB prescalers table values */
-Nextern const uint32_t APBPrescTable[8];   /*!< APB prescalers table values */
-N
-N/**
-N  * @}
-N  */
-N
-N/** @addtogroup sc32f1xxx_System_Exported_Constants
-N  * @{
-N  */
-N
-N/**
-N  * @}
-N  */
-N
-N/** @addtogroup sc32f1xxx_System_Exported_Macros
-N  * @{
-N  */
-N
-N/**
-N  * @}
-N  */
-N
-N/** @addtogroup sc32f1xxx_System_Exported_Functions
-N  * @{
-N  */
-N
-Nextern void SystemInit(void);
-Nextern void SystemCoreClockUpdate(void);
-N/**
-N  * @}
-N  */
-N
-N#ifdef __cplusplus
-S}
-N#endif
-N
-N#endif /*SYSTEM_SC32F1XXX_H */
-N
-N/**
-N  * @}
-N  */
-N
-N/**
-N  * @}
-N  */
-N/************************ (C) COPYRIGHT SOC Microelectronics *****END OF FILE****/
-L 3 "..\User\Wave_Show_gy.c" 2
-N#include "TFT_Lcd.h"
-L 1 "..\Apps\TFT_Lcd.h" 1
-N//************************************************************
-N//  Copyright (c)
-N//	FileName	  : TFT_Lcd.h
-N//	Function	  : TFT LCD Display
-N//  Instructions  :
-N//  Date          : 2023/09/01
-N// 	Version		  : V1.0
-N//*************************************************************
-N#ifndef __TFT_LCD_H
-N#define __TFT_LCD_H
-N
-N#include "SC_Init.h"
-L 1 "..\User\SC_Init.h" 1
-N/**
-N *****************************************************************************************************
-N  * @copyright	(c)  Shenzhen Saiyuan Microelectronics Co., Ltd
-N  * @file	         SC_Init.h
-N  * @author	 
-N  * @version 	     
-N  * @date	         2024.03.11
-N  * @brief	         Contains the MCU initialization function and its H file
-N  * @details         
-N *****************************************************************************************************
-N * @attention
-N *
-N *****************************************************************************************************
-N */
-N
-N#ifndef _SC_INIT_H_
-N#define _SC_INIT_H_
-N
-N#include "sc32_conf.h"
+L 20 "..\User\SC_Init.h" 2
 N
 Nvoid SC_Init(void);
 Nvoid SC_NVIC_Init(void);
@@ -21811,88 +21709,232 @@ Nvoid Draw_Circle(uint16_t x0,uint16_t y0,uint8_t r,uint16_t color);
 Nvoid drawCurve(uint8_t yOffset,short int rawValue);
 Nvoid LCD_ShowChinese12x12(uint16_t x,uint16_t y,uint8_t *s,uint16_t fc,uint16_t bc,uint8_t sizey);
 N#endif
-L 4 "..\User\Wave_Show_gy.c" 2
-N#include "lcdfont.h"
-L 1 "..\Apps\lcdfont.h" 1
-N#ifndef __LCDFONT_H
-N#define __LCDFONT_H 	   
+L 6 "..\User\Wave_Show_gy.h" 2
+N#include "Data_Acquisition.h" 
+L 1 "..\User\Data_Acquisition.h" 1
+N#ifndef __DATA_ACQUISITION_H
+N#define __DATA_ACQUISITION_H
 N
-Ntypedef struct 
-N{
-N	unsigned char Index[2];	
-N	unsigned char Msk[32];
-N//	unsigned char Msk[24];
-N}typFNT_GB16; 
+N#include "sc32.h"
+N#include "sc32f1xxx_adc.h"
+N#include "sc32f1xxx_dma.h"
+N#include "sc32f1xxx_gpio.h"
+N#include "sc32f1xxx_rcc.h"
 N
-Nextern const unsigned char ascii_1608[][16];
-Nextern const unsigned char ascii_3216[][64];
-Nextern const typFNT_GB16 tfont16[6];
+N// 配置区域
+N#define DAQ_SAMPLE_DEPTH    500
+N#define DAQ_TOTAL_BUF_SIZE  (DAQ_SAMPLE_DEPTH * 2)
 N
+N#define DAQ_CH1_GPIO_PORT   GPIOA
+N#define DAQ_CH1_PIN         GPIO_Pin_0 
+N#define DAQ_CH1_ADC_CH      ADC_Channel_0
+N
+N#define DAQ_CH2_GPIO_PORT   GPIOA
+N#define DAQ_CH2_PIN         GPIO_Pin_1 
+N#define DAQ_CH2_ADC_CH      ADC_Channel_1
+N
+Ntypedef struct {
+N    uint16_t Buffer[DAQ_TOTAL_BUF_SIZE]; 
+X    uint16_t Buffer[(500 * 2)]; 
+N} Data_Acq_Buffer_t;
+N
+Nextern Data_Acq_Buffer_t Acq_Data;
+Nextern volatile uint8_t  Acq_Done_Flag;
+N// ... 其他 extern ...
+N
+Nextern volatile uint8_t Current_Ch_Index; 
+N
+N
+N// ... 函数声明 ...
+Nvoid Data_Acquisition_Init(void);
+Nvoid Data_Acquisition_Start_Next(void);
+N
+N#endif /* __DATA_ACQUISITION_H */
+L 7 "..\User\Wave_Show_gy.h" 2
+N
+N// ================= ?????? =================
+N// ?? TFT_Lcd.h ????????,??????
+N#ifndef CYAN
+N#define CYAN      0x07FF
+N#endif
+N#ifndef YELLOW
+S#define YELLOW    0xFFE0
+N#endif
+N#ifndef BLACK
+S#define BLACK     0x0000
+N#endif
+N#ifndef BLUE
+S#define BLUE      0x001F
 N#endif
 N
+N// ================= ?????? =================
+N#define WAVE_X_START      0     
+N#define WAVE_DISP_WIDTH   240   
+N#define WAVE_DISP_HEIGHT  200   
+N#define WAVE_CENTER_Y     100   
 N
-L 5 "..\User\Wave_Show_gy.c" 2
-N#include "Picture.h"
-L 1 "..\Apps\Picture.h" 1
-N//************************************************************
-N//  Copyright (c)
-N//	FileName	  : Picture.h
-N//	Function	  : TFT LCD Display
-N//  Instructions  :
-N//  Date          : 2023/09/01
-N// 	Version		  : V1.0
-N//*************************************************************
-N#ifndef __PICTURE_H
-N#define __PICTURE_H
+N// ================= ???? =================
+N#define WAVE_COLOR_CH1    YELLOW  
+N#define WAVE_COLOR_CH2    CYAN    
+N#define WAVE_COLOR_BG     BLACK   
 N
-Nextern const unsigned char SOC_GImage[6968];
-Nextern const unsigned char SOC_NameGlmage[2964];
+N// ================= ???? =================
+Nvoid Wave_Show_Init(void);      
+Nvoid Wave_Show_Update(void);    
 N
-Nextern const unsigned char gImage_preset[968];
-Nextern const unsigned char gImage_rinseadd[968];
-Nextern const unsigned char gImage_temp[968];
-Nextern const unsigned char gImage_speed[968];
-N	
-Nextern const unsigned char gImage_doorlock[450];
-Nextern const unsigned char gImage_childlock[450];
-Nextern const unsigned char gImage_downlight[450];
+Nvoid LCD_DrawGrid(uint16_t width, uint16_t height, uint16_t grid_w, uint16_t grid_h, uint16_t color);
 N
-Nextern const unsigned char gImage_wash[968];
-Nextern const unsigned char gImage_rinse[968];
-Nextern const unsigned char gImage_drain[968];
-Nextern const unsigned char gImage_Softener[968];
+W "..\User\Wave_Show_gy.h" 40 30 last line of file ends without a newline
+N#endif /* __WAVE_SHOW_GY_H */
+L 2 "..\User\Wave_Show_gy.c" 2
 N
-N//extern const unsigned char gImage_aa[112000];
-N#endif
-L 6 "..\User\Wave_Show_gy.c" 2
+N// ??????
+Nextern int16_t Vertical1_offset; 
+Nextern int16_t Vertical2_offset; 
+N
+N// ??????
+Nstatic uint16_t Old_Y_Ch1[WAVE_DISP_WIDTH]; 
+Xstatic uint16_t Old_Y_Ch1[240]; 
+Nstatic uint16_t Old_Y_Ch2[WAVE_DISP_WIDTH];
+Xstatic uint16_t Old_Y_Ch2[240];
+N
+N// ================= ???? =================
 N
 N/**
-N * @brief ?LCD?????
-N * @param grid_size ?????????(??10?? 10�10 ????)
-X
-N * @param color ?????(RGB565)
-X
+N * @brief  ??????
 N */
-N// ???(??)
-X
-N// width, height : ???????
-N// grid_w, grid_h : ????????
-N// color : ????
+Nstatic uint16_t Software_Trigger(uint16_t *buffer, uint16_t limit)
+N{
+N    uint16_t i;
+N    uint16_t trigger_level = 2048; 
+N    
+N    for(i = 1; i < limit - 10; i++)
+N    {
+N        if(buffer[i-1] < trigger_level && buffer[i] >= trigger_level)
+N        {
+N            return i; 
+N        }
+N    }
+N    return 0; 
+N}
+N
+N/**
+N * @brief  ???? Y ??
+N */
+Nstatic uint16_t Calc_Y_Pos(uint16_t adc_val, int16_t offset)
+N{
+N    int32_t y = adc_val / 25; 
+N    
+N    y = WAVE_DISP_HEIGHT - y; 
+X    y = 200 - y; 
+N    y -= (offset * 10); 
+N
+N    if(y < 0) y = 0;
+N    if(y >= WAVE_DISP_HEIGHT) y = WAVE_DISP_HEIGHT - 1;
+X    if(y >= 200) y = 200 - 1;
+N    
+N    return (uint16_t)y;
+N}
+N
+N// ================= ???? =================
+N
+Nvoid Wave_Show_Init(void)
+N{
+N    // ???????
+N    for(int i = 0; i < WAVE_DISP_WIDTH; i++)
+X    for(int i = 0; i < 240; i++)
+N    {
+N        Old_Y_Ch1[i] = WAVE_CENTER_Y;
+X        Old_Y_Ch1[i] = 100;
+N        Old_Y_Ch2[i] = WAVE_CENTER_Y;
+X        Old_Y_Ch2[i] = 100;
+N    }
+N    
+N    LCD_Fill(0, 0, 240, 320, WAVE_COLOR_BG);
+X    LCD_Fill(0, 0, 240, 320, 0x0000);
+N    LCD_DrawGrid(240, 200, 20, 20, BLUE);
+X    LCD_DrawGrid(240, 200, 20, 20, 0x03bD);
+N}
+N
+Nvoid Wave_Show_Update(void)
+N{
+N    uint16_t x; // ????????? i
+N    uint16_t start_idx_1, start_idx_2;
+N    uint16_t new_y1, new_y1_next;
+N    uint16_t new_y2, new_y2_next;
+N
+N    // 1. ?????
+N    start_idx_1 = Software_Trigger(&Acq_Data.Buffer[0], 200);
+N    start_idx_2 = Software_Trigger(&Acq_Data.Buffer[DAQ_SAMPLE_DEPTH], 200);
+X    start_idx_2 = Software_Trigger(&Acq_Data.Buffer[500], 200);
+N
+N    // 2. ????
+N    for(x = 0; x < WAVE_DISP_WIDTH - 1; x++)
+X    for(x = 0; x < 240 - 1; x++)
+N    {
+N        // --- A. ???? ---
+N        uint16_t val1_now  = Acq_Data.Buffer[start_idx_1 + x];
+N        uint16_t val1_next = Acq_Data.Buffer[start_idx_1 + x + 1];
+N        
+N        uint16_t val2_now  = Acq_Data.Buffer[DAQ_SAMPLE_DEPTH + start_idx_2 + x];
+X        uint16_t val2_now  = Acq_Data.Buffer[500 + start_idx_2 + x];
+N        uint16_t val2_next = Acq_Data.Buffer[DAQ_SAMPLE_DEPTH + start_idx_2 + x + 1];
+X        uint16_t val2_next = Acq_Data.Buffer[500 + start_idx_2 + x + 1];
+N
+N        // --- B. ????? ---
+N        new_y1      = Calc_Y_Pos(val1_now,  Vertical1_offset);
+N        new_y1_next = Calc_Y_Pos(val1_next, Vertical1_offset);
+N        
+N        new_y2      = Calc_Y_Pos(val2_now,  Vertical2_offset);
+N        new_y2_next = Calc_Y_Pos(val2_next, Vertical2_offset);
+N
+N        // --- C. ???? (?????? TFT_DrawLine) ---
+N        TFT_DrawLine(WAVE_X_START + x, Old_Y_Ch1[x], 
+X        TFT_DrawLine(0 + x, Old_Y_Ch1[x], 
+N                     WAVE_X_START + x + 1, Old_Y_Ch1[x+1], WAVE_COLOR_BG);
+X                     0 + x + 1, Old_Y_Ch1[x+1], 0x0000);
+N                     
+N        TFT_DrawLine(WAVE_X_START + x, Old_Y_Ch2[x], 
+X        TFT_DrawLine(0 + x, Old_Y_Ch2[x], 
+N                     WAVE_X_START + x + 1, Old_Y_Ch2[x+1], WAVE_COLOR_BG);
+X                     0 + x + 1, Old_Y_Ch2[x+1], 0x0000);
+N
+N        // --- D. ???? ---
+N        TFT_DrawLine(WAVE_X_START + x, new_y1, 
+X        TFT_DrawLine(0 + x, new_y1, 
+N                     WAVE_X_START + x + 1, new_y1_next, WAVE_COLOR_CH1);
+X                     0 + x + 1, new_y1_next, 0xFFE0);
+N                     
+N        TFT_DrawLine(WAVE_X_START + x, new_y2, 
+X        TFT_DrawLine(0 + x, new_y2, 
+N                     WAVE_X_START + x + 1, new_y2_next, WAVE_COLOR_CH2);
+X                     0 + x + 1, new_y2_next, 0x07FF);
+N
+N        // --- E. ?????? ---
+N        Old_Y_Ch1[x] = new_y1;
+N        Old_Y_Ch2[x] = new_y2;
+N        
+N        // ????
+N        if(x == WAVE_DISP_WIDTH - 2) {
+X        if(x == 240 - 2) {
+N            Old_Y_Ch1[x+1] = new_y1_next;
+N            Old_Y_Ch2[x+1] = new_y2_next;
+N        }
+N    }
+N}
+N
 Nvoid LCD_DrawGrid(uint16_t width, uint16_t height,
 N                  uint16_t grid_w, uint16_t grid_h,
 N                  uint16_t color)
 N{
 N    uint16_t t;
-N
-N    // 1. ????
 N    for(t = 0; t <= height; t += grid_h)
 N    {
 N        TFT_DrawLine(0, t, width, t, color);
 N    }
-N
-N    // 2. ????
 N    for(t = 0; t <= width; t += grid_w)
 N    {
 N        TFT_DrawLine(t, 0, t, height, color);
 N    }
+W "..\User\Wave_Show_gy.c" 129 2 last line of file ends without a newline
 N}

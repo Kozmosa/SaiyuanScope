@@ -22873,7 +22873,47 @@ Nvoid drawCurve(uint8_t yOffset,short int rawValue);
 Nvoid LCD_ShowChinese12x12(uint16_t x,uint16_t y,uint8_t *s,uint16_t fc,uint16_t bc,uint8_t sizey);
 N#endif
 L 22 "..\User\SC_it.c" 2
+N#include "Data_Acquisition.h"
+L 1 "..\User\Data_Acquisition.h" 1
+N#ifndef __DATA_ACQUISITION_H
+N#define __DATA_ACQUISITION_H
 N
+N#include "sc32.h"
+N#include "sc32f1xxx_adc.h"
+N#include "sc32f1xxx_dma.h"
+N#include "sc32f1xxx_gpio.h"
+N#include "sc32f1xxx_rcc.h"
+N
+N// 閰嶇疆鍖哄煙
+N#define DAQ_SAMPLE_DEPTH    500
+N#define DAQ_TOTAL_BUF_SIZE  (DAQ_SAMPLE_DEPTH * 2)
+N
+N#define DAQ_CH1_GPIO_PORT   GPIOA
+N#define DAQ_CH1_PIN         GPIO_Pin_0 
+N#define DAQ_CH1_ADC_CH      ADC_Channel_0
+N
+N#define DAQ_CH2_GPIO_PORT   GPIOA
+N#define DAQ_CH2_PIN         GPIO_Pin_1 
+N#define DAQ_CH2_ADC_CH      ADC_Channel_1
+N
+Ntypedef struct {
+N    uint16_t Buffer[DAQ_TOTAL_BUF_SIZE]; 
+X    uint16_t Buffer[(500 * 2)]; 
+N} Data_Acq_Buffer_t;
+N
+Nextern Data_Acq_Buffer_t Acq_Data;
+Nextern volatile uint8_t  Acq_Done_Flag;
+N// ... 鍏朵粬 extern ...
+N
+Nextern volatile uint8_t Current_Ch_Index; 
+N
+N
+N// ... 鍑芥暟澹版槑 ...
+Nvoid Data_Acquisition_Init(void);
+Nvoid Data_Acquisition_Start_Next(void);
+N
+N#endif /* __DATA_ACQUISITION_H */
+L 23 "..\User\SC_it.c" 2
 N
 Nuint16_t TIM0_count;//定时器0，1ms中断一次，count加1
 Nuint16_t Encoder_Count=10000;//旋转编码器计数
@@ -22968,8 +23008,57 @@ N#endif
 N
 Nvoid DMA0_IRQHandler(void)
 N{
+N    // 检查是否是传输完成中断 (TCIF)
+N    if(DMA_GetFlagStatus(DMA0, DMA_FLAG_TCIF) == SET)
+X    if(DMA_GetFlagStatus(((DMA_TypeDef *) (((0x40000000UL)+0x10800) +(0x00000000UL))), DMA_FLAG_TCIF) == SET)
+N    {
+N        // 清除中断标志
+N        DMA_ClearFlag(DMA0, DMA_FLAG_TCIF); 
+X        DMA_ClearFlag(((DMA_TypeDef *) (((0x40000000UL)+0x10800) +(0x00000000UL))), DMA_FLAG_TCIF); 
 N
-N
+N        // 暂时停止 DMA，准备重构配置
+N        DMA_Cmd(DMA0, DISABLE);
+X        DMA_Cmd(((DMA_TypeDef *) (((0x40000000UL)+0x10800) +(0x00000000UL))), DISABLE);
+N        
+N        // --- 状态机：切换通道 ---
+N        if(Current_Ch_Index == 0)
+N        {
+N            // === 通道 1 采集完毕，现在切换到通道 2 ===
+N            
+N            // A. 切换 ADC 物理通道
+N            ADC_SetChannel(ADC, DAQ_CH2_ADC_CH);
+X            ADC_SetChannel(((ADC_TypeDef *) (((0x40000000UL)+0x22000) +(0x00000110UL))), ADC_Channel_1);
+N            
+N            // B. 修改 DMA 目标地址 -> 指向缓冲区后半部分
+N            DMA_SetDstAddress(DMA0, (uint32_t)&Acq_Data.Buffer[DAQ_SAMPLE_DEPTH]);
+X            DMA_SetDstAddress(((DMA_TypeDef *) (((0x40000000UL)+0x10800) +(0x00000000UL))), (uint32_t)&Acq_Data.Buffer[500]);
+N            
+N            // C. 重装计数器
+N            DMA_SetCurrDataCounter(DMA0, DAQ_SAMPLE_DEPTH); 
+X            DMA_SetCurrDataCounter(((DMA_TypeDef *) (((0x40000000UL)+0x10800) +(0x00000000UL))), 500); 
+N            
+N            // D. 更新状态
+N            Current_Ch_Index = 1;
+N            
+N            // E. 重新启动 DMA 和 ADC
+N            DMA_Cmd(DMA0, ENABLE);
+X            DMA_Cmd(((DMA_TypeDef *) (((0x40000000UL)+0x10800) +(0x00000000UL))), ENABLE);
+N            ADC_SoftwareStartConv(ADC); // 触发新通道转换
+X            ADC_SoftwareStartConv(((ADC_TypeDef *) (((0x40000000UL)+0x22000) +(0x00000110UL)))); 
+N        }
+N        else
+N        {
+N            // === 通道 2 采集完毕，一轮双通道采集结束 ===
+N            
+N            // A. 停止采集流程
+N            // DMA 保持 Disable 状态，不再开启
+N            
+N            // B. 置位完成标志，通知 main() 函数处理数据
+N            Acq_Done_Flag = 1;
+N            
+N            // 注意：此时 DMA 和 ADC 均暂停，等待 Data_Acquisition_Start_Next() 唤醒
+N        }
+N    }
 N}
 N
 Nvolatile FlagStatus ADC_Flag = RESET;
@@ -23028,7 +23117,7 @@ N
 Nvoid TIMER4_5_IRQHandler(void)
 N{
 N
-W "..\User\SC_it.c" 168 28 enumerated type mixed with another type
+W "..\User\SC_it.c" 209 28 enumerated type mixed with another type
 Nif(TIM_GetFlagStatus(TIM5, TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 Xif(TIM_GetFlagStatus(((TIM_TypeDef *) (((0x40000000UL)+0x21000) +(0x00000140UL))), TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 N{
@@ -23043,7 +23132,7 @@ N			}
 N		}
 N
 N}
-W "..\User\SC_it.c" 179 28 enumerated type mixed with another type
+W "..\User\SC_it.c" 220 28 enumerated type mixed with another type
 Nif(TIM_GetFlagStatus(TIM5, TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 Xif(TIM_GetFlagStatus(((TIM_TypeDef *) (((0x40000000UL)+0x21000) +(0x00000140UL))), TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 N{
@@ -23065,7 +23154,7 @@ N
 Nvoid TIMER6_7_IRQHandler(void)
 N{
 N
-W "..\User\SC_it.c" 196 28 enumerated type mixed with another type
+W "..\User\SC_it.c" 237 28 enumerated type mixed with another type
 Nif(TIM_GetFlagStatus(TIM6, TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 Xif(TIM_GetFlagStatus(((TIM_TypeDef *) (((0x40000000UL)+0x21000) +(0x00000180UL))), TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 N{
@@ -23080,7 +23169,7 @@ N			}
 N		}
 N
 N}
-W "..\User\SC_it.c" 207 28 enumerated type mixed with another type
+W "..\User\SC_it.c" 248 28 enumerated type mixed with another type
 Nif(TIM_GetFlagStatus(TIM6, TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 Xif(TIM_GetFlagStatus(((TIM_TypeDef *) (((0x40000000UL)+0x21000) +(0x00000180UL))), TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 N{
@@ -23173,8 +23262,7 @@ N
 Nvoid ADC_IRQHandler(void)
 N{
 N
-W "..\User\SC_it.c" 295 1 function "ADC_Conversion_IRQ" declared implicitly
-NADC_Conversion_IRQ();
+N
 N}
 N
 Nvoid CMP0_1_2_IRQHandler(void)

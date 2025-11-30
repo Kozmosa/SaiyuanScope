@@ -48,3 +48,4 @@
 ..\output\sc_it.o: ..\User\SC_Init.h
 ..\output\sc_it.o: ..\User\HeadFiles\SysFunVarDefine.h
 ..\output\sc_it.o: ..\CMSIS\core_cm0plus.h
+..\output\sc_it.o: ..\User\Data_Acquisition.h

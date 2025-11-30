@@ -22,41 +22,35 @@
 #include "TFT_Lcd.h"
 #include "Picture.h"
 #include "lcdfont.h"
+#include "Data_Acquisition.H"
+#include "FFT_xtc.h"
+#include "Menu.h"
 
 
-static volatile FlagStatus ADC_Flag;//×Ô¶¨Òå±êÖ¾Î»
+static volatile FlagStatus ADC_Flag;//è‡ªå®šä¹‰æ ‡å¿—ä½
 
-void screen_init();//ÆÁÄ»Æô¶¯
-void ADC_Conversion_IRQ();//´¦ÀíADCÖĞ¶Ï
-void ADC_Conversion();//ADC²ÉÑù
-void key_Get();//°´Ñ¹Ğı×ª±àÂëÆ÷
-void UART3_Send_Packet();//wifi´®¿Ú·¢ËÍÊı¾İ°ü
-void UART3_Send_String();//wifi´®¿Ú·¢ËÍÎÄ±¾
-void UART3_receive_Packet();//wifi´®¿Ú½ÓÊÜÊı¾İ
-void UART3_receive_String();//wifi´®¿Ú½ÓÊÜÊı¾İ
+void screen_init();//å±å¹•å¯åŠ¨
+void ADC_Conversion_IRQ();//å¤„ç†ADCä¸­æ–­
+void ADC_Conversion();//ADCé‡‡æ ·
+void key_Get();//æŒ‰å‹æ—‹è½¬ç¼–ç å™¨
+void UART3_Send_Packet();//wifiä¸²å£å‘é€æ•°æ®åŒ…
+void UART3_Send_String();//wifiä¸²å£å‘é€æ–‡æœ¬
+void UART3_receive_Packet();//wifiä¸²å£æ¥å—æ•°æ®
+void UART3_receive_String();//wifiä¸²å£æ¥å—æ•°æ®
 
 
-extern uint8_t KeyValue ;	//´¥¿ØĞÅÏ¢
-extern uint16_t TIM0_count;//¶¨Ê±Æ÷ 1msÖĞ¶ÏÒ»´Î Ã¿1ms,count+=1
-extern uint16_t Encoder_Count;//×ª¶¯Ğı×ª±àÂëÆ÷¼ÆÊı,³õÊ¼Öµ10000£¬Ïò×óĞı×ª1¸ñ-1£¬ÏòÓÒĞı×ªÒ»¸ñ+1
-uint16_t key_count;//°´Ñ¹Ğı×ª±àÂëÆ÷¼ÆÊı,Ã¿°´Ñ¹Ò»´Î¼Ó1
+extern uint8_t KeyValue ;	//è§¦æ§ä¿¡æ¯
+extern uint16_t TIM0_count;//å®šæ—¶å™¨ 1msä¸­æ–­ä¸€æ¬¡ æ¯1ms,count+=1
+extern uint16_t Encoder_Count;//è½¬åŠ¨æ—‹è½¬ç¼–ç å™¨è®¡æ•°,åˆå§‹å€¼10000ï¼Œå‘å·¦æ—‹è½¬1æ ¼-1ï¼Œå‘å³æ—‹è½¬ä¸€æ ¼+1
+uint16_t key_count;//æŒ‰å‹æ—‹è½¬ç¼–ç å™¨è®¡æ•°,æ¯æŒ‰å‹ä¸€æ¬¡åŠ 1
 extern uint8_t UART3_RxFlag;	
-uint8_t UART3_RxPacket[100];				//¶¨Òå½ÓÊÕÊı¾İ°üÊı×é£¬Êı¾İ°ü¸ñÊ½"@MSG\r\n"
-uint8_t UART3_RxFlag;					//¶¨Òå½ÓÊÕÊı¾İ°ü±êÖ¾Î»
-char UART3_RxString[100];				//¶¨Òå½ÓÊÕÊı¾İ°üÊı×é£¬Êı¾İ°ü¸ñÊ½"@MSG\r\n"
-uint16_t AD1;//ADC1Í¨µÀ²ÉÑù½á¹û
-uint16_t AD2;
-uint16_t AD3;
-uint16_t AD4;
-uint16_t AD5;
-uint16_t AD6;
-uint16_t AD7;
-uint16_t AD8;
-/**
-  * @brief This function implements main function.
-  * @note 
-  * @param
-  */
+uint8_t UART3_RxPacket[100];				//å®šä¹‰æ¥æ”¶æ•°æ®åŒ…æ•°ç»„ï¼Œæ•°æ®åŒ…æ ¼å¼"@MSG\r\n"
+uint8_t UART3_RxFlag;					//å®šä¹‰æ¥æ”¶æ•°æ®åŒ…æ ‡å¿—ä½
+char UART3_RxString[100];				//å®šä¹‰æ¥æ”¶æ•°æ®åŒ…æ•°ç»„ï¼Œæ•°æ®åŒ…æ ¼å¼"@MSG\r\n"
+
+
+
+
 int main(void)
 {
     IcResourceInit();     // ?????
@@ -69,11 +63,23 @@ int main(void)
     // (????????,????)
     // TFT_DrawLine(0, 160, 240, 160, RED);
     // TFT_DrawLine(120, 0, 120, 320, RED);
-
+		Data_Acquisition_Init();
     while(1)
     {
-        ADC_Conversion();  // ADC ??
-
+        
+		menu();
+        // ã€æ–°å¢ 2ã€‘ æ£€æŸ¥é‡‡é›†æ˜¯å¦å®Œæˆ
+        if(Acq_Done_Flag == 1)
+        {
+            /* 
+               æ•°æ®å·²å­˜æ”¾åœ¨ Acq_Data.Buffer[] ä¸­
+               0~499 æ˜¯é€šé“1ï¼Œ500~999 æ˜¯é€šé“2
+               åœ¨è¿™é‡Œå¤„ç†æ•°æ®ï¼ˆå¦‚å‘é€ä¸²å£ã€è®¡ç®—ç­‰ï¼‰ï¼Œä¸éœ€è¦ç”»å›¾
+            */
+					
+            // ã€é‡è¦ã€‘ å¤„ç†å®Œæ•°æ®åï¼Œå¿…é¡»è°ƒç”¨æ­¤å‡½æ•°å¯åŠ¨ä¸‹ä¸€è½®é‡‡é›†
+            Data_Acquisition_Start_Next();
+        }
         Sys_Scan();        // ????
         key_Get();
 
@@ -90,55 +96,16 @@ int main(void)
 
 
 
-void screen_init()//ÆÁÄ»³õÊ¼»¯
+void screen_init()//å±å¹•åˆå§‹åŒ–
 {
 	Lcd_Init();
-	LCD_Fill ( 1, 1, 320, 240, BLACK );//±¾À´ÊÇ»¨ÆÁ£¬Ë¢ĞÂºóÎª°×ÆÁ
-}
-
-
-void ADC_Conversion_IRQ()//ADCÖĞ¶Ï´¦Àí
-{
-  if(ADC_GetFlagStatus(ADC, ADC_Flag_ADCIF))//ÅĞ¶ÏADC±êÖ¾Î»
-  {
-    ADC_ClearFlag(ADC, ADC_Flag_ADCIF);//Çå³ıADC±êÖ¾Î»
-    ADC_Flag = SET;//×Ô¶¨Òå±êÖ¾Î»ÖÃÆğ
-  }
-}
-
-
-void ADC_Conversion()//ADC²É¼¯
-{
-	for(int ADC_num=1;ADC_num<=8;ADC_num++)//8¸öADCÍ¨µÀ²É¼¯
-	{
-		if(ADC_num==1) ADC_SetChannel(ADC,ADC_Channel_0);
-		if(ADC_num==2) ADC_SetChannel(ADC,ADC_Channel_1);
-		if(ADC_num==3) ADC_SetChannel(ADC,ADC_Channel_10);
-		if(ADC_num==4) ADC_SetChannel(ADC,ADC_Channel_11);
-		if(ADC_num==5) ADC_SetChannel(ADC,ADC_Channel_12);
-		if(ADC_num==6) ADC_SetChannel(ADC,ADC_Channel_13);
-		if(ADC_num==7) ADC_SetChannel(ADC,ADC_Channel_14);
-		if(ADC_num==8) ADC_SetChannel(ADC,ADC_Channel_15);
-		static volatile uint16_t ADC_Value;//¶¨Òå±äÁ¿´æ´¢ADCÖµ
-		//ADCµ¥´Î×ª»¯
-		ADC_SoftwareStartConv(ADC);//Èí¼ş´¥·¢ADC
-		while(ADC_Flag == RESET);//µÈ´ıADC×ª»»½áÊø
-		ADC_Flag = RESET;
-		LCD_ShowIntNum (270 , 20*ADC_num,ADC_GetConversionValue(ADC), 6, RED, WHITE,16 );//ADC²ÉÑù½á¹û
-		if(ADC_num==1) AD1=ADC_GetConversionValue(ADC);
-		if(ADC_num==2) AD2=ADC_GetConversionValue(ADC);
-		if(ADC_num==3) AD3=ADC_GetConversionValue(ADC);
-		if(ADC_num==4) AD4=ADC_GetConversionValue(ADC);
-		if(ADC_num==5) AD5=ADC_GetConversionValue(ADC);
-		if(ADC_num==6) AD6=ADC_GetConversionValue(ADC);
-		if(ADC_num==7) AD7=ADC_GetConversionValue(ADC);
-		if(ADC_num==8) AD8=ADC_GetConversionValue(ADC);
-	}
+	LCD_Fill ( 1, 1, 320, 240, BLACK );//æœ¬æ¥æ˜¯èŠ±å±ï¼Œåˆ·æ–°åä¸ºç™½å±
 }
 
 
 
-void key_Get()//°´Ñ¹Ğı×ª±àÂëÆ÷
+
+void key_Get()//æŒ‰å‹æ—‹è½¬ç¼–ç å™¨
 {
 	if(GPIO_ReadDataBit(GPIOA,GPIO_Pin_6)==0)
 			{
@@ -150,10 +117,10 @@ void key_Get()//°´Ñ¹Ğı×ª±àÂëÆ÷
 			
 }
 
-void UART3_Send_Packet()//wifi´®¿Ú·¢ËÍÊı¾İ°ü
+void UART3_Send_Packet()//wifiä¸²å£å‘é€æ•°æ®åŒ…
 {
-	static uint8_t RxState = 0;		//¶¨Òå±íÊ¾µ±Ç°×´Ì¬»ú×´Ì¬µÄ¾²Ì¬±äÁ¿
-	static uint8_t pRxPacket = 0;	//¶¨Òå±íÊ¾µ±Ç°½ÓÊÕÊı¾İÎ»ÖÃµÄ¾²Ì¬±äÁ¿
+	static uint8_t RxState = 0;		//å®šä¹‰è¡¨ç¤ºå½“å‰çŠ¶æ€æœºçŠ¶æ€çš„é™æ€å˜é‡
+	static uint8_t pRxPacket = 0;	//å®šä¹‰è¡¨ç¤ºå½“å‰æ¥æ”¶æ•°æ®ä½ç½®çš„é™æ€å˜é‡
 	 UART3_TxPacket[0]=0x01;
 	UART3_TxPacket[1]=0xA2;
 	UART3_TxPacket[2]=0x12;
@@ -167,48 +134,48 @@ void UART3_Send_Packet()//wifi´®¿Ú·¢ËÍÊı¾İ°ü
 	UART_SendArray(UART3,UART3_TxPacket, 10);					
 }
 
-void UART3_Send_String()//wifi´®¿Ú·¢ËÍÎÄ±¾
+void UART3_Send_String()//wifiä¸²å£å‘é€æ–‡æœ¬
 {
 	UART_SendString(UART3,"uni_wro");
 }
 
-void UART3_receive_Packet()//wifi´®¿Ú½ÓÊÜÊı¾İ(Êı¾İ°ü¸ñÊ½FF xx xx xx xx FE)
+void UART3_receive_Packet()//wifiä¸²å£æ¥å—æ•°æ®(æ•°æ®åŒ…æ ¼å¼FF xx xx xx xx FE)
 {
-	static uint8_t RxState = 0;		//¶¨Òå±íÊ¾µ±Ç°×´Ì¬»ú×´Ì¬µÄ¾²Ì¬±äÁ¿
-	static uint8_t pRxPacket = 0;	//¶¨Òå±íÊ¾µ±Ç°½ÓÊÕÊı¾İÎ»ÖÃµÄ¾²Ì¬±äÁ¿
-	if (UART_GetFlagStatus(UART3, UART_Flag_RX) == SET)	//ÅĞ¶ÏÊÇ·ñÊÇUSART3µÄ½ÓÊÕÊÂ¼ş´¥·¢µÄÖĞ¶Ï
+	static uint8_t RxState = 0;		//å®šä¹‰è¡¨ç¤ºå½“å‰çŠ¶æ€æœºçŠ¶æ€çš„é™æ€å˜é‡
+	static uint8_t pRxPacket = 0;	//å®šä¹‰è¡¨ç¤ºå½“å‰æ¥æ”¶æ•°æ®ä½ç½®çš„é™æ€å˜é‡
+	if (UART_GetFlagStatus(UART3, UART_Flag_RX) == SET)	//åˆ¤æ–­æ˜¯å¦æ˜¯USART3çš„æ¥æ”¶äº‹ä»¶è§¦å‘çš„ä¸­æ–­
 	{
 		
-		uint8_t RxData = UART_ReceiveData(UART3);			//¶ÁÈ¡Êı¾İ¼Ä´æÆ÷£¬´æ·ÅÔÚ½ÓÊÕµÄÊı¾İ±äÁ¿
+		uint8_t RxData = UART_ReceiveData(UART3);			//è¯»å–æ•°æ®å¯„å­˜å™¨ï¼Œå­˜æ”¾åœ¨æ¥æ”¶çš„æ•°æ®å˜é‡
 
-		/*Ê¹ÓÃ×´Ì¬»úµÄË¼Â·£¬ÒÀ´Î´¦ÀíÊı¾İ°üµÄ²»Í¬²¿·Ö*/
+		/*ä½¿ç”¨çŠ¶æ€æœºçš„æ€è·¯ï¼Œä¾æ¬¡å¤„ç†æ•°æ®åŒ…çš„ä¸åŒéƒ¨åˆ†*/
 
-		/*µ±Ç°×´Ì¬Îª0£¬½ÓÊÕÊı¾İ°ü°üÍ·*/
+		/*å½“å‰çŠ¶æ€ä¸º0ï¼Œæ¥æ”¶æ•°æ®åŒ…åŒ…å¤´*/
 				if (RxState == 0)
 		{
-			if (RxData == 0xFF)			//Èç¹ûÊı¾İÈ·ÊµÊÇ°üÍ·
+			if (RxData == 0xFF)			//å¦‚æœæ•°æ®ç¡®å®æ˜¯åŒ…å¤´
 			{
-				RxState = 1;			//ÖÃÏÂÒ»¸ö×´Ì¬
-				pRxPacket = 0;			//Êı¾İ°üµÄÎ»ÖÃ¹éÁã
+				RxState = 1;			//ç½®ä¸‹ä¸€ä¸ªçŠ¶æ€
+				pRxPacket = 0;			//æ•°æ®åŒ…çš„ä½ç½®å½’é›¶
 			}
 		}
-		/*µ±Ç°×´Ì¬Îª1£¬½ÓÊÕÊı¾İ°üÊı¾İ*/
+		/*å½“å‰çŠ¶æ€ä¸º1ï¼Œæ¥æ”¶æ•°æ®åŒ…æ•°æ®*/
 		else if (RxState == 1)
 		{
-			UART3_RxPacket[pRxPacket] = RxData;	//½«Êı¾İ´æÈëÊı¾İ°üÊı×éµÄÖ¸¶¨Î»ÖÃ
-			pRxPacket ++;				//Êı¾İ°üµÄÎ»ÖÃ×ÔÔö
-			if (pRxPacket >=4)			//Èç¹ûÊÕ¹»4¸öÊı¾İ
+			UART3_RxPacket[pRxPacket] = RxData;	//å°†æ•°æ®å­˜å…¥æ•°æ®åŒ…æ•°ç»„çš„æŒ‡å®šä½ç½®
+			pRxPacket ++;				//æ•°æ®åŒ…çš„ä½ç½®è‡ªå¢
+			if (pRxPacket >=4)			//å¦‚æœæ”¶å¤Ÿ4ä¸ªæ•°æ®
 			{
-				RxState = 2;			//ÖÃÏÂÒ»¸ö×´Ì¬
+				RxState = 2;			//ç½®ä¸‹ä¸€ä¸ªçŠ¶æ€
 			}
 		}
-		/*µ±Ç°×´Ì¬Îª2£¬½ÓÊÕÊı¾İ°ü°üÎ²*/
+		/*å½“å‰çŠ¶æ€ä¸º2ï¼Œæ¥æ”¶æ•°æ®åŒ…åŒ…å°¾*/
 		else if (RxState == 2)
 		{
-			if (RxData == 0xFE)			//Èç¹ûÊı¾İÈ·ÊµÊÇ°üÎ²²¿
+			if (RxData == 0xFE)			//å¦‚æœæ•°æ®ç¡®å®æ˜¯åŒ…å°¾éƒ¨
 			{
-				RxState = 0;			//×´Ì¬¹é0
-				UART3_RxFlag = 1;		//½ÓÊÕÊı¾İ°ü±êÖ¾Î»ÖÃ1£¬³É¹¦½ÓÊÕÒ»¸öÊı¾İ°ü
+				RxState = 0;			//çŠ¶æ€å½’0
+				UART3_RxFlag = 1;		//æ¥æ”¶æ•°æ®åŒ…æ ‡å¿—ä½ç½®1ï¼ŒæˆåŠŸæ¥æ”¶ä¸€ä¸ªæ•°æ®åŒ…
 			}
 		}
 
@@ -217,15 +184,15 @@ void UART3_receive_Packet()//wifi´®¿Ú½ÓÊÜÊı¾İ(Êı¾İ°ü¸ñÊ½FF xx xx xx xx FE)
 }
 void UART3_receive_String()
 {
-	static uint8_t RxState = 0;		//¶¨Òå±íÊ¾µ±Ç°×´Ì¬»ú×´Ì¬µÄ¾²Ì¬±äÁ¿
-	static uint8_t pRxPacket = 0;	//¶¨Òå±íÊ¾µ±Ç°½ÓÊÕÊı¾İÎ»ÖÃµÄ¾²Ì¬±äÁ¿
-	if (UART_GetFlagStatus(UART3, UART_Flag_RX) == SET)	//ÅĞ¶ÏÊÇ·ñÊÇUSART1µÄ½ÓÊÕÊÂ¼ş´¥·¢µÄÖĞ¶Ï
+	static uint8_t RxState = 0;		//å®šä¹‰è¡¨ç¤ºå½“å‰çŠ¶æ€æœºçŠ¶æ€çš„é™æ€å˜é‡
+	static uint8_t pRxPacket = 0;	//å®šä¹‰è¡¨ç¤ºå½“å‰æ¥æ”¶æ•°æ®ä½ç½®çš„é™æ€å˜é‡
+	if (UART_GetFlagStatus(UART3, UART_Flag_RX) == SET)	//åˆ¤æ–­æ˜¯å¦æ˜¯USART1çš„æ¥æ”¶äº‹ä»¶è§¦å‘çš„ä¸­æ–­
 	{
-		uint8_t RxData = UART_ReceiveData(UART3);			//¶ÁÈ¡Êı¾İ¼Ä´æÆ÷£¬´æ·ÅÔÚ½ÓÊÕµÄÊı¾İ±äÁ¿
+		uint8_t RxData = UART_ReceiveData(UART3);			//è¯»å–æ•°æ®å¯„å­˜å™¨ï¼Œå­˜æ”¾åœ¨æ¥æ”¶çš„æ•°æ®å˜é‡
 
-		/*Ê¹ÓÃ×´Ì¬»úµÄË¼Â·£¬ÒÀ´Î´¦ÀíÊı¾İ°üµÄ²»Í¬²¿·Ö*/
+		/*ä½¿ç”¨çŠ¶æ€æœºçš„æ€è·¯ï¼Œä¾æ¬¡å¤„ç†æ•°æ®åŒ…çš„ä¸åŒéƒ¨åˆ†*/
 
-		/*µ±Ç°×´Ì¬Îª0£¬½ÓÊÕÊı¾İ°ü°üÍ·*/
+		/*å½“å‰çŠ¶æ€ä¸º0ï¼Œæ¥æ”¶æ•°æ®åŒ…åŒ…å¤´*/
 		if (RxState == 0)
 		{
 			 RxState=1;
@@ -237,27 +204,27 @@ void UART3_receive_String()
             UART3_RxString[pRxPacket]=RxData;
             pRxPacket++;
 		}
-		/*µ±Ç°×´Ì¬Îª1£¬½ÓÊÕÊı¾İ°üÊı¾İ£¬Í¬Ê±ÅĞ¶ÏÊÇ·ñ½ÓÊÕµ½ÁËµÚÒ»¸ö°üÎ²*/
+		/*å½“å‰çŠ¶æ€ä¸º1ï¼Œæ¥æ”¶æ•°æ®åŒ…æ•°æ®ï¼ŒåŒæ—¶åˆ¤æ–­æ˜¯å¦æ¥æ”¶åˆ°äº†ç¬¬ä¸€ä¸ªåŒ…å°¾*/
 		else if (RxState == 1)
 		{
-			if (RxData == '\r')			//Èç¹ûÊÕµ½µÚÒ»¸ö°üÎ²
+			if (RxData == '\r')			//å¦‚æœæ”¶åˆ°ç¬¬ä¸€ä¸ªåŒ…å°¾
 			{
-				RxState = 2;			//ÖÃÏÂÒ»¸ö×´Ì¬
+				RxState = 2;			//ç½®ä¸‹ä¸€ä¸ªçŠ¶æ€
 			}
-			else						//½ÓÊÕµ½ÁËÕı³£µÄÊı¾İ
+			else						//æ¥æ”¶åˆ°äº†æ­£å¸¸çš„æ•°æ®
 			{
-				UART3_RxString[pRxPacket] = RxData;		//½«Êı¾İ´æÈëÊı¾İ°üÊı×éµÄÖ¸¶¨Î»ÖÃ
-				pRxPacket ++;			//Êı¾İ°üµÄÎ»ÖÃ×ÔÔö
+				UART3_RxString[pRxPacket] = RxData;		//å°†æ•°æ®å­˜å…¥æ•°æ®åŒ…æ•°ç»„çš„æŒ‡å®šä½ç½®
+				pRxPacket ++;			//æ•°æ®åŒ…çš„ä½ç½®è‡ªå¢
 			}
 		}
-		/*µ±Ç°×´Ì¬Îª2£¬½ÓÊÕÊı¾İ°üµÚ¶ş¸ö°üÎ²*/
+		/*å½“å‰çŠ¶æ€ä¸º2ï¼Œæ¥æ”¶æ•°æ®åŒ…ç¬¬äºŒä¸ªåŒ…å°¾*/
 		else if (RxState == 2)
 		{
-			if (RxData == '\n')			//Èç¹ûÊÕµ½µÚ¶ş¸ö°üÎ²
+			if (RxData == '\n')			//å¦‚æœæ”¶åˆ°ç¬¬äºŒä¸ªåŒ…å°¾
 			{
-				RxState = 0;			//×´Ì¬¹é0
-				UART3_RxString[pRxPacket] = '\0';			//½«ÊÕµ½µÄ×Ö·ûÊı¾İ°üÌí¼ÓÒ»¸ö×Ö·û´®½áÊø±êÖ¾
-				UART3_RxFlag = 1;		//½ÓÊÕÊı¾İ°ü±êÖ¾Î»ÖÃ1£¬³É¹¦½ÓÊÕÒ»¸öÊı¾İ°ü
+				RxState = 0;			//çŠ¶æ€å½’0
+				UART3_RxString[pRxPacket] = '\0';			//å°†æ”¶åˆ°çš„å­—ç¬¦æ•°æ®åŒ…æ·»åŠ ä¸€ä¸ªå­—ç¬¦ä¸²ç»“æŸæ ‡å¿—
+				UART3_RxFlag = 1;		//æ¥æ”¶æ•°æ®åŒ…æ ‡å¿—ä½ç½®1ï¼ŒæˆåŠŸæ¥æ”¶ä¸€ä¸ªæ•°æ®åŒ…
 			}
 		}
 

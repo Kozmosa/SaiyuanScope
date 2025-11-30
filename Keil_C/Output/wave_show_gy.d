@@ -1,15 +1,18 @@
 ..\output\wave_show_gy.o: ..\User\Wave_Show_gy.c
+..\output\wave_show_gy.o: ..\User\Wave_Show_gy.h
+..\output\wave_show_gy.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32.h
+..\output\wave_show_gy.o: D:\STM32\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\wave_show_gy.o: ..\Apps\TFT_Lcd.h
+..\output\wave_show_gy.o: ..\User\SC_Init.h
 ..\output\wave_show_gy.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32_conf.h
 ..\output\wave_show_gy.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx.h
 ..\output\wave_show_gy.o: ..\FWLib\SC32F1XXX_Lib\inc\SC32R803.h
 ..\output\wave_show_gy.o: ..\CMSIS\core_cm0plus.h
-..\output\wave_show_gy.o: D:\STM32\ARM\ARMCC\Bin\..\include\stdint.h
 ..\output\wave_show_gy.o: ..\CMSIS\cmsis_version.h
 ..\output\wave_show_gy.o: ..\CMSIS\cmsis_compiler.h
 ..\output\wave_show_gy.o: ..\CMSIS\cmsis_armcc.h
 ..\output\wave_show_gy.o: ..\CMSIS\mpu_armv7.h
 ..\output\wave_show_gy.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_rcc.h
-..\output\wave_show_gy.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32.h
 ..\output\wave_show_gy.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_gpio.h
 ..\output\wave_show_gy.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_iap.h
 ..\output\wave_show_gy.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_adc.h
@@ -34,9 +37,6 @@
 ..\output\wave_show_gy.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_op.h
 ..\output\wave_show_gy.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_can.h
 ..\output\wave_show_gy.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_qspi.h
-..\output\wave_show_gy.o: ..\FWLib\SC32F1XXX_Lib\inc\system_sc32f1xxx.h
-..\output\wave_show_gy.o: ..\Apps\TFT_Lcd.h
-..\output\wave_show_gy.o: ..\User\SC_Init.h
 ..\output\wave_show_gy.o: ..\User\SC_it.h
 ..\output\wave_show_gy.o: ..\Apps\..\Drivers\SCDriver_list.h
 ..\output\wave_show_gy.o: ..\Apps\..\Drivers\.\TKDriverNew\C\TKDriver.h
@@ -46,5 +46,4 @@
 ..\output\wave_show_gy.o: ..\User\HeadFiles\FunctionType.h
 ..\output\wave_show_gy.o: ..\User\HeadFiles\CompCtrlDefine.h
 ..\output\wave_show_gy.o: ..\CMSIS\core_cm0plus.h
-..\output\wave_show_gy.o: ..\Apps\lcdfont.h
-..\output\wave_show_gy.o: ..\Apps\Picture.h
+..\output\wave_show_gy.o: ..\User\Data_Acquisition.h

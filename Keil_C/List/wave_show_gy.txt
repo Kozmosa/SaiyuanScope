@@ -2,76 +2,406 @@
 ; commandline ArmCC [--c99 --list --split_sections --debug -c --asm --interleave -o..\output\wave_show_gy.o --asm_dir=..\List\ --list_dir=..\List\ --depend=..\output\wave_show_gy.d --cpu=Cortex-M0+ --apcs=interwork -O1 --diag_suppress=9931 -I..\FWLib\SC32F1XXX_Lib\inc -I..\User\HeadFiles -I..\Drivers -I..\Apps -I..\CMSIS -I..\User -ID:\STM32\ARM\PACK\Keil\SC32F1xxx_DFP\1.1.5\Device\SC32F10xx\FWLib\SC32_Lib\inc -D__UVISION_VERSION=540 -DSC32R803 --omf_browse=..\output\wave_show_gy.crf ..\User\Wave_Show_gy.c]
                           THUMB
 
+                          AREA ||i.Calc_Y_Pos||, CODE, READONLY, ALIGN=1
+
+                  Calc_Y_Pos PROC
+;;;33      */
+;;;34     static uint16_t Calc_Y_Pos(uint16_t adc_val, int16_t offset)
+000000  b510              PUSH     {r4,lr}
+;;;35     {
+000002  460c              MOV      r4,r1
+;;;36         int32_t y = adc_val / 25; 
+000004  2119              MOVS     r1,#0x19
+000006  f7fffffe          BL       __aeabi_uidivmod
+;;;37         
+;;;38         y = WAVE_DISP_HEIGHT - y; 
+00000a  21c8              MOVS     r1,#0xc8
+00000c  1a08              SUBS     r0,r1,r0
+;;;39         y -= (offset * 10); 
+00000e  210a              MOVS     r1,#0xa
+000010  434c              MULS     r4,r1,r4
+000012  1b00              SUBS     r0,r0,r4
+;;;40     
+;;;41         if(y < 0) y = 0;
+000014  2800              CMP      r0,#0
+000016  da00              BGE      |L1.26|
+000018  2000              MOVS     r0,#0
+                  |L1.26|
+;;;42         if(y >= WAVE_DISP_HEIGHT) y = WAVE_DISP_HEIGHT - 1;
+00001a  28c8              CMP      r0,#0xc8
+00001c  db00              BLT      |L1.32|
+00001e  20c7              MOVS     r0,#0xc7
+                  |L1.32|
+;;;43         
+;;;44         return (uint16_t)y;
+000020  b280              UXTH     r0,r0
+;;;45     }
+000022  bd10              POP      {r4,pc}
+;;;46     
+                          ENDP
+
+
                           AREA ||i.LCD_DrawGrid||, CODE, READONLY, ALIGN=1
 
                   LCD_DrawGrid PROC
-;;;15     // color : ????
-;;;16     void LCD_DrawGrid(uint16_t width, uint16_t height,
+;;;115    
+;;;116    void LCD_DrawGrid(uint16_t width, uint16_t height,
 000000  b5ff              PUSH     {r0-r7,lr}
-;;;17                       uint16_t grid_w, uint16_t grid_h,
-;;;18                       uint16_t color)
-;;;19     {
+;;;117                      uint16_t grid_w, uint16_t grid_h,
+;;;118                      uint16_t color)
+;;;119    {
 000002  b081              SUB      sp,sp,#4
 000004  9d0a              LDR      r5,[sp,#0x28]
 000006  4606              MOV      r6,r0
 000008  460f              MOV      r7,r1
-;;;20         uint16_t t;
-;;;21     
-;;;22         // 1. ????
-;;;23         for(t = 0; t <= height; t += grid_h)
+;;;120        uint16_t t;
+;;;121        for(t = 0; t <= height; t += grid_h)
 00000a  2400              MOVS     r4,#0
-00000c  e009              B        |L1.34|
-                  |L1.14|
-;;;24         {
-;;;25             TFT_DrawLine(0, t, width, t, color);
+00000c  e009              B        |L2.34|
+                  |L2.14|
+;;;122        {
+;;;123            TFT_DrawLine(0, t, width, t, color);
 00000e  4623              MOV      r3,r4
 000010  4632              MOV      r2,r6
 000012  4621              MOV      r1,r4
 000014  2000              MOVS     r0,#0
 000016  9500              STR      r5,[sp,#0]
 000018  f7fffffe          BL       TFT_DrawLine
-00001c  9804              LDR      r0,[sp,#0x10]         ;23
-00001e  1820              ADDS     r0,r4,r0              ;23
-000020  b284              UXTH     r4,r0                 ;23
-                  |L1.34|
-000022  42bc              CMP      r4,r7                 ;23
-000024  d9f3              BLS      |L1.14|
-;;;26         }
-;;;27     
-;;;28         // 2. ????
-;;;29         for(t = 0; t <= width; t += grid_w)
+00001c  9804              LDR      r0,[sp,#0x10]         ;121
+00001e  1820              ADDS     r0,r4,r0              ;121
+000020  b284              UXTH     r4,r0                 ;121
+                  |L2.34|
+000022  42bc              CMP      r4,r7                 ;121
+000024  d9f3              BLS      |L2.14|
+;;;124        }
+;;;125        for(t = 0; t <= width; t += grid_w)
 000026  2400              MOVS     r4,#0
-000028  e009              B        |L1.62|
-                  |L1.42|
-;;;30         {
-;;;31             TFT_DrawLine(t, 0, t, height, color);
+000028  e009              B        |L2.62|
+                  |L2.42|
+;;;126        {
+;;;127            TFT_DrawLine(t, 0, t, height, color);
 00002a  463b              MOV      r3,r7
 00002c  4622              MOV      r2,r4
 00002e  2100              MOVS     r1,#0
 000030  4620              MOV      r0,r4
 000032  9500              STR      r5,[sp,#0]
 000034  f7fffffe          BL       TFT_DrawLine
-000038  9803              LDR      r0,[sp,#0xc]          ;29
-00003a  1820              ADDS     r0,r4,r0              ;29
-00003c  b284              UXTH     r4,r0                 ;29
-                  |L1.62|
-00003e  42b4              CMP      r4,r6                 ;29
-000040  d9f3              BLS      |L1.42|
-;;;32         }
-;;;33     }
+000038  9803              LDR      r0,[sp,#0xc]          ;125
+00003a  1820              ADDS     r0,r4,r0              ;125
+00003c  b284              UXTH     r4,r0                 ;125
+                  |L2.62|
+00003e  42b4              CMP      r4,r6                 ;125
+000040  d9f3              BLS      |L2.42|
+;;;128        }
+;;;129    }
 000042  b005              ADD      sp,sp,#0x14
 000044  bdf0              POP      {r4-r7,pc}
                           ENDP
 
+
+                          AREA ||i.Software_Trigger||, CODE, READONLY, ALIGN=1
+
+                  Software_Trigger PROC
+;;;15      */
+;;;16     static uint16_t Software_Trigger(uint16_t *buffer, uint16_t limit)
+000000  b510              PUSH     {r4,lr}
+;;;17     {
+000002  4603              MOV      r3,r0
+;;;18         uint16_t i;
+;;;19         uint16_t trigger_level = 2048; 
+000004  2201              MOVS     r2,#1
+000006  02d2              LSLS     r2,r2,#11
+;;;20         
+;;;21         for(i = 1; i < limit - 10; i++)
+000008  2001              MOVS     r0,#1
+00000a  390a              SUBS     r1,r1,#0xa
+00000c  e00a              B        |L3.36|
+                  |L3.14|
+;;;22         {
+;;;23             if(buffer[i-1] < trigger_level && buffer[i] >= trigger_level)
+00000e  1e44              SUBS     r4,r0,#1
+000010  0064              LSLS     r4,r4,#1
+000012  5b1c              LDRH     r4,[r3,r4]
+000014  4294              CMP      r4,r2
+000016  d203              BCS      |L3.32|
+000018  0044              LSLS     r4,r0,#1
+00001a  5b1c              LDRH     r4,[r3,r4]
+00001c  4294              CMP      r4,r2
+00001e  d204              BCS      |L3.42|
+                  |L3.32|
+000020  1c40              ADDS     r0,r0,#1              ;21
+000022  b280              UXTH     r0,r0                 ;21
+                  |L3.36|
+000024  4288              CMP      r0,r1                 ;21
+000026  dbf2              BLT      |L3.14|
+;;;24             {
+;;;25                 return i; 
+;;;26             }
+;;;27         }
+;;;28         return 0; 
+000028  2000              MOVS     r0,#0
+                  |L3.42|
+;;;29     }
+00002a  bd10              POP      {r4,pc}
+;;;30     
+                          ENDP
+
+
+                          AREA ||i.Wave_Show_Init||, CODE, READONLY, ALIGN=2
+
+                  Wave_Show_Init PROC
+;;;48     
+;;;49     void Wave_Show_Init(void)
+000000  b538              PUSH     {r3-r5,lr}
+;;;50     {
+;;;51         // ???????
+;;;52         for(int i = 0; i < WAVE_DISP_WIDTH; i++)
+000002  2000              MOVS     r0,#0
+;;;53         {
+;;;54             Old_Y_Ch1[i] = WAVE_CENTER_Y;
+000004  4b0c              LDR      r3,|L4.56|
+;;;55             Old_Y_Ch2[i] = WAVE_CENTER_Y;
+000006  4c0d              LDR      r4,|L4.60|
+000008  2264              MOVS     r2,#0x64              ;54
+                  |L4.10|
+00000a  0041              LSLS     r1,r0,#1              ;54
+00000c  525a              STRH     r2,[r3,r1]            ;54
+00000e  5262              STRH     r2,[r4,r1]
+000010  1c40              ADDS     r0,r0,#1              ;52
+000012  28f0              CMP      r0,#0xf0              ;52
+000014  dbf9              BLT      |L4.10|
+;;;56         }
+;;;57         
+;;;58         LCD_Fill(0, 0, 240, 320, WAVE_COLOR_BG);
+000016  2000              MOVS     r0,#0
+000018  23ff              MOVS     r3,#0xff
+00001a  3341              ADDS     r3,r3,#0x41
+00001c  22f0              MOVS     r2,#0xf0
+00001e  4601              MOV      r1,r0
+000020  9000              STR      r0,[sp,#0]
+000022  f7fffffe          BL       LCD_Fill
+;;;59         LCD_DrawGrid(240, 200, 20, 20, BLUE);
+000026  4806              LDR      r0,|L4.64|
+000028  2314              MOVS     r3,#0x14
+00002a  9000              STR      r0,[sp,#0]
+00002c  461a              MOV      r2,r3
+00002e  21c8              MOVS     r1,#0xc8
+000030  20f0              MOVS     r0,#0xf0
+000032  f7fffffe          BL       LCD_DrawGrid
+;;;60     }
+000036  bd38              POP      {r3-r5,pc}
+;;;61     
+                          ENDP
+
+                  |L4.56|
+                          DCD      ||.bss||
+                  |L4.60|
+                          DCD      ||.bss||+0x1e0
+                  |L4.64|
+                          DCD      0x000003bd
+
+                          AREA ||i.Wave_Show_Update||, CODE, READONLY, ALIGN=2
+
+                  Wave_Show_Update PROC
+;;;61     
+;;;62     void Wave_Show_Update(void)
+000000  b5f0              PUSH     {r4-r7,lr}
+;;;63     {
+000002  b089              SUB      sp,sp,#0x24
+;;;64         uint16_t x; // ????????? i
+;;;65         uint16_t start_idx_1, start_idx_2;
+;;;66         uint16_t new_y1, new_y1_next;
+;;;67         uint16_t new_y2, new_y2_next;
+;;;68     
+;;;69         // 1. ?????
+;;;70         start_idx_1 = Software_Trigger(&Acq_Data.Buffer[0], 200);
+000004  21c8              MOVS     r1,#0xc8
+000006  4839              LDR      r0,|L5.236|
+000008  f7fffffe          BL       Software_Trigger
+00000c  9007              STR      r0,[sp,#0x1c]
+;;;71         start_idx_2 = Software_Trigger(&Acq_Data.Buffer[DAQ_SAMPLE_DEPTH], 200);
+00000e  21c8              MOVS     r1,#0xc8
+000010  4837              LDR      r0,|L5.240|
+000012  f7fffffe          BL       Software_Trigger
+000016  9006              STR      r0,[sp,#0x18]
+;;;72     
+;;;73         // 2. ????
+;;;74         for(x = 0; x < WAVE_DISP_WIDTH - 1; x++)
+000018  2400              MOVS     r4,#0
+                  |L5.26|
+;;;75         {
+;;;76             // --- A. ???? ---
+;;;77             uint16_t val1_now  = Acq_Data.Buffer[start_idx_1 + x];
+00001a  9807              LDR      r0,[sp,#0x1c]
+00001c  4933              LDR      r1,|L5.236|
+00001e  1900              ADDS     r0,r0,r4
+000020  0042              LSLS     r2,r0,#1
+000022  5a8a              LDRH     r2,[r1,r2]
+;;;78             uint16_t val1_next = Acq_Data.Buffer[start_idx_1 + x + 1];
+000024  1c40              ADDS     r0,r0,#1
+000026  0040              LSLS     r0,r0,#1
+000028  5a0d              LDRH     r5,[r1,r0]
+;;;79             
+;;;80             uint16_t val2_now  = Acq_Data.Buffer[DAQ_SAMPLE_DEPTH + start_idx_2 + x];
+00002a  9806              LDR      r0,[sp,#0x18]
+00002c  1900              ADDS     r0,r0,r4
+00002e  4603              MOV      r3,r0
+000030  33ff              ADDS     r3,r3,#0xff
+000032  33f5              ADDS     r3,r3,#0xf5
+000034  005b              LSLS     r3,r3,#1
+000036  5ace              LDRH     r6,[r1,r3]
+;;;81             uint16_t val2_next = Acq_Data.Buffer[DAQ_SAMPLE_DEPTH + start_idx_2 + x + 1];
+000038  30ff              ADDS     r0,r0,#0xff
+00003a  30f6              ADDS     r0,r0,#0xf6
+00003c  0040              LSLS     r0,r0,#1
+00003e  5a0f              LDRH     r7,[r1,r0]
+;;;82     
+;;;83             // --- B. ????? ---
+;;;84             new_y1      = Calc_Y_Pos(val1_now,  Vertical1_offset);
+000040  482c              LDR      r0,|L5.244|
+000042  2100              MOVS     r1,#0
+000044  5e41              LDRSH    r1,[r0,r1]  ; Vertical1_offset
+000046  4610              MOV      r0,r2
+000048  f7fffffe          BL       Calc_Y_Pos
+00004c  9005              STR      r0,[sp,#0x14]
+;;;85             new_y1_next = Calc_Y_Pos(val1_next, Vertical1_offset);
+00004e  4829              LDR      r0,|L5.244|
+000050  2100              MOVS     r1,#0
+000052  5e41              LDRSH    r1,[r0,r1]  ; Vertical1_offset
+000054  4628              MOV      r0,r5
+000056  f7fffffe          BL       Calc_Y_Pos
+00005a  9004              STR      r0,[sp,#0x10]
+;;;86             
+;;;87             new_y2      = Calc_Y_Pos(val2_now,  Vertical2_offset);
+00005c  4d26              LDR      r5,|L5.248|
+00005e  2100              MOVS     r1,#0
+000060  5e69              LDRSH    r1,[r5,r1]  ; Vertical2_offset
+000062  4630              MOV      r0,r6
+000064  f7fffffe          BL       Calc_Y_Pos
+000068  9003              STR      r0,[sp,#0xc]
+;;;88             new_y2_next = Calc_Y_Pos(val2_next, Vertical2_offset);
+00006a  2100              MOVS     r1,#0
+00006c  5e69              LDRSH    r1,[r5,r1]  ; Vertical2_offset
+00006e  4638              MOV      r0,r7
+000070  f7fffffe          BL       Calc_Y_Pos
+000074  9002              STR      r0,[sp,#8]
+;;;89     
+;;;90             // --- C. ???? (?????? TFT_DrawLine) ---
+;;;91             TFT_DrawLine(WAVE_X_START + x, Old_Y_Ch1[x], 
+000076  2000              MOVS     r0,#0
+000078  1c65              ADDS     r5,r4,#1
+00007a  9000              STR      r0,[sp,#0]
+00007c  0068              LSLS     r0,r5,#1
+00007e  4f1f              LDR      r7,|L5.252|
+000080  9008              STR      r0,[sp,#0x20]
+000082  5a3b              LDRH     r3,[r7,r0]
+000084  0066              LSLS     r6,r4,#1
+000086  b2aa              UXTH     r2,r5
+000088  5bb9              LDRH     r1,[r7,r6]
+00008a  4620              MOV      r0,r4
+00008c  f7fffffe          BL       TFT_DrawLine
+;;;92                          WAVE_X_START + x + 1, Old_Y_Ch1[x+1], WAVE_COLOR_BG);
+;;;93                          
+;;;94             TFT_DrawLine(WAVE_X_START + x, Old_Y_Ch2[x], 
+000090  2000              MOVS     r0,#0
+000092  9000              STR      r0,[sp,#0]
+000094  491a              LDR      r1,|L5.256|
+000096  9808              LDR      r0,[sp,#0x20]
+000098  b2aa              UXTH     r2,r5
+00009a  5a0b              LDRH     r3,[r1,r0]
+00009c  4608              MOV      r0,r1
+00009e  5b81              LDRH     r1,[r0,r6]
+0000a0  4620              MOV      r0,r4
+0000a2  f7fffffe          BL       TFT_DrawLine
+;;;95                          WAVE_X_START + x + 1, Old_Y_Ch2[x+1], WAVE_COLOR_BG);
+;;;96     
+;;;97             // --- D. ???? ---
+;;;98             TFT_DrawLine(WAVE_X_START + x, new_y1, 
+0000a6  4817              LDR      r0,|L5.260|
+0000a8  9000              STR      r0,[sp,#0]
+0000aa  b2aa              UXTH     r2,r5
+0000ac  4620              MOV      r0,r4
+0000ae  9b04              LDR      r3,[sp,#0x10]
+0000b0  9905              LDR      r1,[sp,#0x14]
+0000b2  f7fffffe          BL       TFT_DrawLine
+;;;99                          WAVE_X_START + x + 1, new_y1_next, WAVE_COLOR_CH1);
+;;;100                         
+;;;101            TFT_DrawLine(WAVE_X_START + x, new_y2, 
+0000b6  4814              LDR      r0,|L5.264|
+0000b8  9000              STR      r0,[sp,#0]
+0000ba  b2aa              UXTH     r2,r5
+0000bc  4620              MOV      r0,r4
+0000be  9b02              LDR      r3,[sp,#8]
+0000c0  9903              LDR      r1,[sp,#0xc]
+0000c2  f7fffffe          BL       TFT_DrawLine
+;;;102                         WAVE_X_START + x + 1, new_y2_next, WAVE_COLOR_CH2);
+;;;103    
+;;;104            // --- E. ?????? ---
+;;;105            Old_Y_Ch1[x] = new_y1;
+0000c6  9805              LDR      r0,[sp,#0x14]
+0000c8  53b8              STRH     r0,[r7,r6]
+;;;106            Old_Y_Ch2[x] = new_y2;
+0000ca  490d              LDR      r1,|L5.256|
+0000cc  9803              LDR      r0,[sp,#0xc]
+0000ce  5388              STRH     r0,[r1,r6]
+;;;107            
+;;;108            // ????
+;;;109            if(x == WAVE_DISP_WIDTH - 2) {
+0000d0  2cee              CMP      r4,#0xee
+0000d2  d106              BNE      |L5.226|
+;;;110                Old_Y_Ch1[x+1] = new_y1_next;
+0000d4  20ff              MOVS     r0,#0xff
+0000d6  30df              ADDS     r0,r0,#0xdf
+0000d8  9904              LDR      r1,[sp,#0x10]
+0000da  5239              STRH     r1,[r7,r0]
+;;;111                Old_Y_Ch2[x+1] = new_y2_next;
+0000dc  4a08              LDR      r2,|L5.256|
+0000de  9902              LDR      r1,[sp,#8]
+0000e0  5211              STRH     r1,[r2,r0]
+                  |L5.226|
+0000e2  b2ac              UXTH     r4,r5                 ;74
+0000e4  2cef              CMP      r4,#0xef              ;74
+0000e6  d398              BCC      |L5.26|
+;;;112            }
+;;;113        }
+;;;114    }
+0000e8  b009              ADD      sp,sp,#0x24
+0000ea  bdf0              POP      {r4-r7,pc}
+;;;115    
+                          ENDP
+
+                  |L5.236|
+                          DCD      Acq_Data
+                  |L5.240|
+                          DCD      Acq_Data+0x3e8
+                  |L5.244|
+                          DCD      Vertical1_offset
+                  |L5.248|
+                          DCD      Vertical2_offset
+                  |L5.252|
+                          DCD      ||.bss||
+                  |L5.256|
+                          DCD      ||.bss||+0x1e0
+                  |L5.260|
+                          DCD      0x0000ffe0
+                  |L5.264|
+                          DCD      0x000007ff
+
+                          AREA ||.bss||, DATA, NOINIT, ALIGN=1
+
+                  Old_Y_Ch1
+                          %        480
+                  Old_Y_Ch2
+                          %        480
 
 ;*** Start embedded assembler ***
 
 #line 1 "..\\User\\Wave_Show_gy.c"
 	AREA ||.rev16_text||, CODE
 	THUMB
-	EXPORT |__asm___14_Wave_Show_gy_c_ca802ead____REV16|
+	EXPORT |__asm___14_Wave_Show_gy_c_3cbad36e____REV16|
 #line 463 "..\\CMSIS\\cmsis_armcc.h"
-|__asm___14_Wave_Show_gy_c_ca802ead____REV16| PROC
+|__asm___14_Wave_Show_gy_c_3cbad36e____REV16| PROC
 #line 464
 
  rev16 r0, r0
@@ -79,9 +409,9 @@
 	ENDP
 	AREA ||.revsh_text||, CODE
 	THUMB
-	EXPORT |__asm___14_Wave_Show_gy_c_ca802ead____REVSH|
+	EXPORT |__asm___14_Wave_Show_gy_c_3cbad36e____REVSH|
 #line 478
-|__asm___14_Wave_Show_gy_c_ca802ead____REVSH| PROC
+|__asm___14_Wave_Show_gy_c_3cbad36e____REVSH| PROC
 #line 479
 
  revsh r0, r0

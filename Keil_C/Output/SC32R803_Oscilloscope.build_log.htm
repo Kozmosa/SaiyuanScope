@@ -21,8 +21,8 @@ Target DLL:      CMSIS_AGDI.dll V1.33.18.0
 Dialog DLL:      TARMCM1.DLL V1.14.6.0
  
 <h2>Project:</h2>
-D:\SaiYuan_Project\20251110\SC32R803_LCD_TKDEMO\SC32R803_LCD_TKDEMO\Keil_C\Project\SC32R803_Oscilloscope.uvprojx
-Project File Date:  11/19/2025
+D:\SaiYuan_Project\SaiyuanScope-main\Keil_C\Project\SC32R803_Oscilloscope.uvprojx
+Project File Date:  11/28/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\STM32\ARM\ARMCC\Bin'
@@ -30,33 +30,41 @@ Build target 'SC32R803_Oscilloscope'
 compiling main.c...
 ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
   void UART_SendPacket();
-..\User\main.c(29): warning:  #1295-D: Deprecated declaration screen_init - give arg types
-  void screen_init();//ÆÁÄ»Æô¶¯
-..\User\main.c(30): warning:  #1295-D: Deprecated declaration ADC_Conversion_IRQ - give arg types
-  void ADC_Conversion_IRQ();//´¦ÀíADCÖÐ¶Ï
-..\User\main.c(31): warning:  #1295-D: Deprecated declaration ADC_Conversion - give arg types
-  void ADC_Conversion();//ADC²ÉÑù
-..\User\main.c(32): warning:  #1295-D: Deprecated declaration key_Get - give arg types
-  void key_Get();//°´Ñ¹Ðý×ª±àÂëÆ÷
-..\User\main.c(33): warning:  #1295-D: Deprecated declaration UART3_Send_Packet - give arg types
-  void UART3_Send_Packet();//wifi´®¿Ú·¢ËÍÊý¾Ý°ü
-..\User\main.c(34): warning:  #1295-D: Deprecated declaration UART3_Send_String - give arg types
-  void UART3_Send_String();//wifi´®¿Ú·¢ËÍÎÄ±¾
-..\User\main.c(35): warning:  #1295-D: Deprecated declaration UART3_receive_Packet - give arg types
-  void UART3_receive_Packet();//wifi´®¿Ú½ÓÊÜÊý¾Ý
-..\User\main.c(36): warning:  #1295-D: Deprecated declaration UART3_receive_String - give arg types
-  void UART3_receive_String();//wifi´®¿Ú½ÓÊÜÊý¾Ý
-..\User\main.c(155): warning:  #177-D: variable "RxState"  was declared but never referenced
-  	static uint8_t RxState = 0;		//¶¨Òå±íÊ¾µ±Ç°×´Ì¬»ú×´Ì¬µÄ¾²Ì¬±äÁ¿
-..\User\main.c(156): warning:  #177-D: variable "pRxPacket"  was declared but never referenced
-  	static uint8_t pRxPacket = 0;	//¶¨Òå±íÊ¾µ±Ç°½ÓÊÕÊý¾ÝÎ»ÖÃµÄ¾²Ì¬±äÁ¿
-..\User\main.c(266): warning:  #1-D: last line of file ends without a newline
-  }
+..\User\Wave_Show_gy.h(40): warning:  #1-D: last line of file ends without a newline
+  #endif /* __WAVE_SHOW_GY_H */
+..\User\main.c(32): warning:  #1295-D: Deprecated declaration screen_init - give arg types
+  void screen_init();//å±å¹•å¯åŠ¨
+..\User\main.c(33): warning:  #1295-D: Deprecated declaration ADC_Conversion_IRQ - give arg types
+  void ADC_Conversion_IRQ();//å¤„ç†ADCä¸­æ–­
+..\User\main.c(34): warning:  #1295-D: Deprecated declaration ADC_Conversion - give arg types
+  void ADC_Conversion();//ADCé‡‡æ ·
+..\User\main.c(35): warning:  #1295-D: Deprecated declaration key_Get - give arg types
+  void key_Get();//æŒ‰åŽ‹æ—‹è½¬ç¼–ç å™?
+..\User\main.c(36): warning:  #1295-D: Deprecated declaration UART3_Send_Packet - give arg types
+  void UART3_Send_Packet();//wifiä¸²å£å‘é€æ•°æ®åŒ…
+..\User\main.c(37): warning:  #1295-D: Deprecated declaration UART3_Send_String - give arg types
+  void UART3_Send_String();//wifiä¸²å£å‘é€æ–‡æœ?
+..\User\main.c(38): warning:  #1295-D: Deprecated declaration UART3_receive_Packet - give arg types
+  void UART3_receive_Packet();//wifiä¸²å£æŽ¥å—æ•°æ®
+..\User\main.c(39): warning:  #1295-D: Deprecated declaration UART3_receive_String - give arg types
+  void UART3_receive_String();//wifiä¸²å£æŽ¥å—æ•°æ®
+..\User\main.c(122): warning:  #177-D: variable "RxState"  was declared but never referenced
+  	static uint8_t RxState = 0;		//å®šä¹‰è¡¨ç¤ºå½“å‰çŠ¶æ€æœºçŠ¶æ€çš„é™æ€å˜é‡?
+..\User\main.c(123): warning:  #177-D: variable "pRxPacket"  was declared but never referenced
+  	static uint8_t pRxPacket = 0;	//å®šä¹‰è¡¨ç¤ºå½“å‰æŽ¥æ”¶æ•°æ®ä½ç½®çš„é™æ€å˜é‡?
 ..\User\main.c: 12 warnings, 0 errors
+compiling Wave_Show_gy.c...
+..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
+  void UART_SendPacket();
+..\User\Wave_Show_gy.h(40): warning:  #1-D: last line of file ends without a newline
+  #endif /* __WAVE_SHOW_GY_H */
+..\User\Wave_Show_gy.c(129): warning:  #1-D: last line of file ends without a newline
+  }
+..\User\Wave_Show_gy.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=15484 RO-data=8104 RW-data=188 ZI-data=1948  
+Program Size: Code=18400 RO-data=8304 RW-data=428 ZI-data=11948  
 FromELF: creating hex file...
-"..\Output\SC32R803_Oscilloscope.axf" - 0 Error(s), 12 Warning(s).
+"..\Output\SC32R803_Oscilloscope.axf" - 0 Error(s), 15 Warning(s).
 
 <h2>Software Packages used:</h2>
 

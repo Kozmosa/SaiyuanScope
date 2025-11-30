@@ -37,7 +37,6 @@
 ..\output\main.o: ..\User\SC_Init.h
 ..\output\main.o: ..\User\SC_it.h
 ..\output\main.o: ..\User\Wave_Show_gy.h
-..\output\main.o: ..\FWLib\SC32F1XXX_Lib\inc\system_sc32f1xxx.h
 ..\output\main.o: ..\Apps\TFT_Lcd.h
 ..\output\main.o: ..\Apps\..\Drivers\SCDriver_list.h
 ..\output\main.o: ..\Apps\..\Drivers\.\TKDriverNew\C\TKDriver.h
@@ -47,7 +46,11 @@
 ..\output\main.o: ..\User\HeadFiles\FunctionType.h
 ..\output\main.o: ..\User\HeadFiles\CompCtrlDefine.h
 ..\output\main.o: ..\CMSIS\core_cm0plus.h
-..\output\main.o: ..\Apps\lcdfont.h
+..\output\main.o: ..\User\Data_Acquisition.h
 ..\output\main.o: ..\User\HeadFiles\SysFunVarDefine.h
 ..\output\main.o: ..\CMSIS\core_cm0plus.h
 ..\output\main.o: ..\Apps\Picture.h
+..\output\main.o: ..\Apps\lcdfont.h
+..\output\main.o: ..\User\FFT_xtc.h
+..\output\main.o: ..\FWLib\SC32F1XXX_Lib\inc\system_sc32f1xxx.h
+..\output\main.o: ..\User\Menu.h
