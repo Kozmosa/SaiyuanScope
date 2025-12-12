@@ -1,1 +1,1 @@
-..\output\fft_xtc.o: ..\User\FFT_XTC.c
+..\Output\FFT_XTC.o: ..\User\FFT_XTC.c

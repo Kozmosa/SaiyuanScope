@@ -10,7 +10,7 @@
       <TargetName>SC32R803_Oscilloscope</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060528::V5.06 update 5 (build 528)::ARMCC</pCCUsed>
+      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -469,6 +469,11 @@
               <FileType>1</FileType>
               <FilePath>..\User\Global_Variables.c</FilePath>
             </File>
+            <File>
+              <FileName>Global_Variables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Global_Variables.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -525,6 +530,11 @@
           <GroupName>FWLib</GroupName>
           <Files>
             <File>
+              <FileName>sc32f1xxx_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FWLib\SC32F1XXX_Lib\src\sc32f1xxx_dma.c</FilePath>
+            </File>
+            <File>
               <FileName>sc32f1xxx_tim.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FWLib\SC32F1XXX_Lib\src\sc32f1xxx_tim.c</FilePath>
@@ -558,16 +568,6 @@
               <FileName>sc32f1xxx_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FWLib\SC32F1XXX_Lib\src\sc32f1xxx_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>sc32f1xxx_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>sc32f1xxx_dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FWLib\SC32F1XXX_Lib\src\sc32f1xxx_dma.c</FilePath>
             </File>
             <File>
               <FileName>sc32f1xxx_btm.c</FileName>
@@ -706,3 +706,4 @@
   </LayerInfo>
 
 </Project>
+

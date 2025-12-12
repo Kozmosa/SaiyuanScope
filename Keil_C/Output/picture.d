@@ -1,2 +1,2 @@
-..\output\picture.o: ..\Apps\Picture.c
-..\output\picture.o: ..\Apps\Picture.h
+..\Output\Picture.o: ..\Apps\Picture.c
+..\Output\Picture.o: ..\Apps\Picture.h

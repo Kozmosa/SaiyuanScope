@@ -511,7 +511,7 @@ void GPIO_WriteBit ( GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, BitAction BitVal )
  * @retval None
  */
 void GPIO_TogglePins ( GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin )
-{
+{   GPIO_TogglePins(GPIOB , GPIO_Pin_5); 
     /* Check the parameters */
     assert_param ( IS_GPIO_ALL_PERIPH ( GPIOx ) );
     assert_param ( IS_GPIO_PIN ( GPIO_Pin ) );

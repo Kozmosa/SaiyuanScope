@@ -278,7 +278,7 @@ N#ifndef __CORE_CM0PLUS_H_GENERIC
 N#define __CORE_CM0PLUS_H_GENERIC
 N
 N#include <stdint.h>
-L 1 "D:\STM32\ARM\ARMCC\Bin\..\include\stdint.h" 1
+L 1 "D:\Develop\Keil\Keil_V5\ARM\ARMCC\bin\..\include\stdint.h" 1
 N/* Copyright (C) ARM Ltd., 1999,2014 */
 N/* All rights reserved */
 N
@@ -290,7 +290,7 @@ N */
 N
 N#ifndef __stdint_h
 N#define __stdint_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060044
 N
 N  #ifdef __INT64_TYPE__
 S    /* armclang predefines '__INT64_TYPE__' and '__INT64_C_SUFFIX__' */
@@ -803,7 +803,7 @@ N#define __CMSIS_ARMCC_H
 N
 N
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 400677)
-X#if 1L && (5060528 < 400677)
+X#if 1L && (5060960 < 400677)
 S  #error "Please use Arm Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -9699,7 +9699,7 @@ N#include "sc32f1xxx.h"
 N#include "sc32.h"
 N#include "sc32f1xxx_rcc.h"
 N#include "stdio.h"
-L 1 "D:\STM32\ARM\ARMCC\Bin\..\include\stdio.h" 1
+L 1 "D:\Develop\Keil\Keil_V5\ARM\ARMCC\bin\..\include\stdio.h" 1
 N/* stdio.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.9 */
 N/* Copyright (C) Codemist Ltd., 1988-1993                       */
 N/* Copyright 1991-1998 ARM Limited. All rights reserved.        */
@@ -9719,7 +9719,7 @@ N */
 N
 N#ifndef __stdio_h
 N#define __stdio_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060044
 N
 N/*
 N * Depending on compiler version __int64 or __INT64_TYPE__ should be defined.

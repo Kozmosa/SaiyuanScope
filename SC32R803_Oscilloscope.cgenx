@@ -1,11 +1,11 @@
 [Project]
 Project.Name=SC32R803_Oscilloscope
-Project.Path=D:\SaiYuan_Project\20251110\SC32R803_LCD_TKDEMO\SC32R803_LCD_TKDEMO
-Project.KeilPath=D:\SaiYuan_Project\20251110\SC32R803_LCD_TKDEMO\SC32R803_LCD_TKDEMO\Keil_C\
-Project.CurrentPath=D:\SaiYuan_Project\20251110\SC32R803_LCD_TKDEMO\SC32R803_LCD_TKDEMO\SC32R803_Oscilloscope.cgenx
-Project.CreationTime=20251010142447
-Project.ModificationTime=20251114160310
-Project.Version=EasyCodeCube 3.5.0
+Project.Path=E:\Code\SaiyuanScope-main
+Project.KeilPath=E:\Code\SaiyuanScope-main\Keil_C\
+Project.CurrentPath=E:\Code\SaiyuanScope-main\SC32R803_Oscilloscope.cgenx
+Project.CreationTime=20251212124757
+Project.ModificationTime=20251212124757
+Project.Version=EasyCodeCube 3.6.0
 Project.IsBootloaderProject=false
 Project.ProjectMode=DEFAULT
 Project.IsUnifiedVersionProject=True
@@ -13,8 +13,8 @@ Project.IsUnifiedVersionProject=True
 [ProjectSetting]
 [BSPVersion]V1.9-BetaV0[/BSPVersion]
 [BSPDateTime]2025-08-11[/BSPDateTime]
-[BSPPrompt]Y[/BSPPrompt]
-[BSPLastest]V1.9-BetaV0[/BSPLastest]
+[BSPPrompt]N[/BSPPrompt]
+[BSPLastest]V1.9-BetaV2[/BSPLastest]
 [/ProjectSetting]
 [TrialModel]YES[/TrialModel]
 [WindowStyleSet]
@@ -70,7 +70,8 @@ Style=DockRight
 [PinNumber]62[/PinNumber][UpperIndex]4[/UpperIndex][Iindex]0[/Iindex][PinName]TxD3[/PinName]
 [/Configure][/Peripheral]
 [Peripheral]OPTION[Index]1[/Index]
-[Configure]Option配置使能=False
+[Configure]未引出管脚配置使能=True
+Option配置使能=False
 LVR 电压选择=0
 JTAG口切换控制=0
 [/Configure][/Peripheral]
@@ -87,6 +88,27 @@ NVIC的RCC中断设置=0
 计数值=[16000]
 NVIC的SYSTICK中断设置=0
 SYSTICK使能=True
+[/Configure][/Peripheral]
+[Peripheral]DMA0[Index]4[/Index]
+[Configure]主频(AHB)=[64000000]
+通道优先级=-1
+传输源地址增减模式设置=-1
+传输目标地址增减模式设置=-1
+源内存缓存地址=[0x0000]
+目标内存缓存地址=[0x0000]
+数据宽度=-1
+Burst大小=-1
+缓存大小=[0x0000]
+请求源选择=-1
+循环模式=-1
+传输中断使能=False
+传输错误中断使能=False
+传输一半中断使能=False
+传输完成中断使能=False
+DMA请求源使能=False
+NVIC的DMA0中断设置=-1
+DMA0使能=False
+中断清理标志位=True
 [/Configure][/Peripheral]
 [Peripheral]UART3[Index]11[/Index]
 [Configure]主频(APB2)=[64000000]
@@ -275,8 +297,8 @@ radioButton_CLOCK_HXT=False
 radioButton_CLOCK_HIRC=True
 radioButton_CLOCK_LIRC=False
 radioButton_CLOCK_PPLR=False
-
 [/RCCClockConfiguration]
+
 [BurningAndSimulationConfig]
 CommunicationProtocol=SCLink
 RunToFirstAddrl=False

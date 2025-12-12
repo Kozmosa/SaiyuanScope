@@ -1,5 +1,9 @@
 #include "Wave_Show_gy.h"
+#include "Data_Acquisition.h" 
 
+// 引用外部变量 (来自 Global_Variables.c)
+extern int16_t Vertical1_offset	; // CH1 垂直位移
+extern int16_t Vertical2_offset; // CH2 垂直位移
 // ??????
 extern int16_t Vertical1_offset; 
 extern int16_t Vertical2_offset; 

@@ -1,56 +1,31 @@
 L 1 "..\User\main.c"
 N/**
 N *****************************************************************************************************
-N  * @copyright	(c)  Shenzhen Saiyuan Microelectronics Co., Ltd
-N  * @file	         main.c
-N  * @author	 
-N  * @version 	
-N  * @date	
-N  * @brief	         
-N  * @details         Contains the MCU initialization function and its H file
-N *****************************************************************************************************
-N * @attention
-N *
+N  * @file           main.c
+N  * @brief          SC32R803 8通道采集主程序
 N *****************************************************************************************************
 N */
-N/*******************Includes************************************************************************/
-N#include "sc32f1xxx_adc.h"
-L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_adc.h" 1
+N
+N#include "SC_Init.h"
+L 1 "..\User\SC_Init.h" 1
 N/**
-N ******************************************************************************
-N * @file    sc32f1xxx_ADC.h
-N * @author  SOC AE Team
-N * @version V1.9-BetaV0
-N * @date    2025-06-20
-N * @brief   Header file of ADC module.
-N ******************************************************************************
+N *****************************************************************************************************
+N  * @copyright	(c)  Shenzhen Saiyuan Microelectronics Co., Ltd
+N  * @file	         SC_Init.h
+N  * @author	 
+N  * @version 	     
+N  * @date	         2024.03.11
+N  * @brief	         Contains the MCU initialization function and its H file
+N  * @details         
+N *****************************************************************************************************
 N * @attention
 N *
-N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
-N *intended for use with SinOne products. No other uses are authorized. This 
-N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
-N *all applicable laws, including copyright laws. 
-N *2.The software which is for guidance only aims at providing customers with 
-N *coding information regarding their products in order for them to save time. 
-N *As a result, SinOne shall not be held liable for any direct, indirect or 
-N *consequential damages with respect to any claims arising from the content of 
-N *such software and/or the use made by customers of the coding information 
-N *contained herein in connection with their products.
-N *
-N *  COPYRIGHT 2025 SinOne Microelectronics
-N ******************************************************************************
+N *****************************************************************************************************
 N */
 N
-N/* Define to prevent recursive inclusion -------------------------------------*/
-N#ifndef __sc32f1xxx_ADC_H
-N#define __sc32f1xxx_ADC_H
+N#ifndef _SC_INIT_H_
+N#define _SC_INIT_H_
 N
-N#ifdef __cplusplus
-Sextern "C"
-S{
-N#endif
-N
-N/* Includes ------------------------------------------------------------------*/
 N#include "sc32_conf.h"
 L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32_conf.h" 1
 N/**
@@ -315,7 +290,7 @@ N#ifndef __CORE_CM0PLUS_H_GENERIC
 N#define __CORE_CM0PLUS_H_GENERIC
 N
 N#include <stdint.h>
-L 1 "D:\STM32\ARM\ARMCC\Bin\..\include\stdint.h" 1
+L 1 "D:\Develop\Keil\Keil_V5\ARM\ARMCC\bin\..\include\stdint.h" 1
 N/* Copyright (C) ARM Ltd., 1999,2014 */
 N/* All rights reserved */
 N
@@ -327,7 +302,7 @@ N */
 N
 N#ifndef __stdint_h
 N#define __stdint_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060044
 N
 N  #ifdef __INT64_TYPE__
 S    /* armclang predefines '__INT64_TYPE__' and '__INT64_C_SUFFIX__' */
@@ -840,7 +815,7 @@ N#define __CMSIS_ARMCC_H
 N
 N
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 400677)
-X#if 1L && (5060528 < 400677)
+X#if 1L && (5060960 < 400677)
 S  #error "Please use Arm Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -8197,62 +8172,142 @@ N */
 N
 N/* Define to prevent recursive inclusion -------------------------------------*/
 N#ifndef __sc32f1xxx_ADC_H
-S#define __sc32f1xxx_ADC_H
-S
-S#ifdef __cplusplus
+N#define __sc32f1xxx_ADC_H
+N
+N#ifdef __cplusplus
 Sextern "C"
 S{
-S#endif
-S
-S/* Includes ------------------------------------------------------------------*/
-S#include "sc32_conf.h"
-S#include "sc32.h"
+N#endif
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "sc32_conf.h"
+L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32_conf.h" 1
+N/**
+N ******************************************************************************
+N * @file    sc32_conf.h
+N * @author  SOC AE Team
+N * @version V1.9-BetaV0
+N * @date    2025-06-20
+N * @brief   This file includes all the header files for peripheral functions
+N ******************************************************************************
+N * @attention
+N *
+N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N *intended for use with SinOne products. No other uses are authorized. This 
+N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N *all applicable laws, including copyright laws. 
+N *2.The software which is for guidance only aims at providing customers with 
+N *coding information regarding their products in order for them to save time. 
+N *As a result, SinOne shall not be held liable for any direct, indirect or 
+N *consequential damages with respect to any claims arising from the content of 
+N *such software and/or the use made by customers of the coding information 
+N *contained herein in connection with their products.
+N *
+N *  COPYRIGHT 2025 SinOne Microelectronics
+N ******************************************************************************
+N */
+N#ifndef _sc32_CONF_H_
+S#define _sc32_CONF_H_
+S#include "sc32f1xxx.h"
 S#include "sc32f1xxx_rcc.h"
-S
-S/** @addtogroup sc32f1xxx_StdPeriph_Driver
-S * @{
-S */
-S
-S/** @addtogroup ADC
-S * @{
-S */
-S
-S/* Exported enumerations ------------------------------------------------------------*/
-S/** @defgroup ADC_Exported_Enumerations ADC Exported Enumerations
-S * @{
-S */
-S
-S/** @brief ADC_ConvMode ADC Conversion Mode
-S * @{
-S */
-Stypedef enum
-S{
-S    ADC_ConvMode_Single        = ( uint16_t ) ( 0x00 << ADC_CON_CONT_Pos ), /*!<Single conversion mode */
-S	#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-S    ADC_ConvMode_Continuous    = ( uint16_t ) ( 0x01 << ADC_CON_CONT_Pos ), /*!<Continuous conversion mode */
-S	#elif defined(SC32f15xx) || defined(SC32R601)
+S#include "sc32f1xxx_gpio.h"
+S#include "sc32f1xxx_iap.h"
+S#include "sc32f1xxx_adc.h"
+S#include "sc32f1xxx_cmp.h"
+S#include "sc32f1xxx_option.h"
+S#include "sc32f1xxx_int.h"
+S#include "sc32f1xxx_uart.h"
+S#include "sc32f1xxx_spi.h"
+S#include "sc32f1xxx_twi.h"
+S#include "sc32f1xxx_wdt.h"
+S#include "sc32f1xxx_btm.h"
+S#include "sc32f1xxx_crc.h"
+S#if !(defined(SC32f15xx) || defined(SC32R601))
+S#include "sc32f1xxx_pwm.h"
+S#include "sc32f1xxx_ledpwm.h"
+S#include "sc32f1xxx_lcd.h"
+S#include "sc32f1xxx_led.h"
+S#endif
+S#include "sc32f1xxx_tim.h"
+S#include "sc32f1xxx_dma.h"
+S#include "sc32f1xxx_pwr.h"
+S#if defined(SC32R803)
+S#include "sc32f1xxx_op.h"
+S#include "sc32f1xxx_can.h"	
+S#include "sc32f1xxx_qspi.h"
+S#endif
+S#if defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
+S#include "sc32f1xxx_op.h"	
+S#endif
+S#if defined(SC32f15xx)
+S#include "sc32f1xxx_dac.h"	
+S#include "sc32f1xxx_can.h"
+S//#include "sc32f1xxx_spi1_twi1.h"
+S#include "sc32f1xxx_op.h"
+S#endif
+S#if defined(SC32f15xx) || defined(SC32R601)
+S#include "sc32f1xxx_temper.h"
+S#include "sc32f1xxx_vref.h"
+S#include "sc32f1xxx_qep.h"
+S#endif
+N#endif
+N
+L 37 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_adc.h" 2
+N#include "sc32.h"
+N#include "sc32f1xxx_rcc.h"
+N
+N/** @addtogroup sc32f1xxx_StdPeriph_Driver
+N * @{
+N */
+N
+N/** @addtogroup ADC
+N * @{
+N */
+N
+N/* Exported enumerations ------------------------------------------------------------*/
+N/** @defgroup ADC_Exported_Enumerations ADC Exported Enumerations
+N * @{
+N */
+N
+N/** @brief ADC_ConvMode ADC Conversion Mode
+N * @{
+N */
+Ntypedef enum
+N{
+N    ADC_ConvMode_Single        = ( uint16_t ) ( 0x00 << ADC_CON_CONT_Pos ), /*!<Single conversion mode */
+X    ADC_ConvMode_Single        = ( uint16_t ) ( 0x00 << (11U) ),  
+N	#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
+X	#if 0L||1L||0L||0L || 0L
+N    ADC_ConvMode_Continuous    = ( uint16_t ) ( 0x01 << ADC_CON_CONT_Pos ), /*!<Continuous conversion mode */
+X    ADC_ConvMode_Continuous    = ( uint16_t ) ( 0x01 << (11U) ),  
+N	#elif defined(SC32f15xx) || defined(SC32R601)
 S	ADC_ConvMode_Sequence    = ( uint16_t ) ( 0x01 << ADC_CON_CONT_Pos ), /*!<Continuous sequence mode */
-S	#endif
-S} ADC_ConvMode_TypeDef;
-S
-S#define IS_ADC_CONVMODE(MODE) (((MODE) == ADC_ConvMode_Single) ||  \
-S															 ((MODE) == ADC_ConvMode_Continuous))
+N	#endif
+N} ADC_ConvMode_TypeDef;
+N
+N#define IS_ADC_CONVMODE(MODE) (((MODE) == ADC_ConvMode_Single) ||  \
+N															 ((MODE) == ADC_ConvMode_Continuous))
 X#define IS_ADC_CONVMODE(MODE) (((MODE) == ADC_ConvMode_Single) ||  															 ((MODE) == ADC_ConvMode_Continuous))
-S/**
-S * @}
-S */
-S
-S/** @brief ADC_Prescaler ADC Prescaler
-S * @{
-S */
-Stypedef enum
-S{
-S#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-S    ADC_Prescaler_3CLOCK  = ( uint32_t ) ( 0x04 << ADC_CON_LOWSP_Pos ), /*!<The sampling time is 3 APB2 clocks */
-S    ADC_Prescaler_6CLOCK  = ( uint32_t ) ( 0x05 << ADC_CON_LOWSP_Pos ), /*!<The sampling time is 6 APB2 clocks */
-S    ADC_Prescaler_16CLOCK = ( uint32_t ) ( 0x06 << ADC_CON_LOWSP_Pos ), /*!<The sampling time is 16 APB2 clocks */
-S    ADC_Prescaler_32CLOCK = ( uint32_t ) ( 0x07 << ADC_CON_LOWSP_Pos ), /*!<The sampling time is 32 APB2 clocks */
-S#elif defined(SC32f15xx) || defined(SC32R601)
+N/**
+N * @}
+N */
+N
+N/** @brief ADC_Prescaler ADC Prescaler
+N * @{
+N */
+Ntypedef enum
+N{
+N#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
+X#if 0L||1L||0L||0L || 0L
+N    ADC_Prescaler_3CLOCK  = ( uint32_t ) ( 0x04 << ADC_CON_LOWSP_Pos ), /*!<The sampling time is 3 APB2 clocks */
+X    ADC_Prescaler_3CLOCK  = ( uint32_t ) ( 0x04 << (16U) ),  
+N    ADC_Prescaler_6CLOCK  = ( uint32_t ) ( 0x05 << ADC_CON_LOWSP_Pos ), /*!<The sampling time is 6 APB2 clocks */
+X    ADC_Prescaler_6CLOCK  = ( uint32_t ) ( 0x05 << (16U) ),  
+N    ADC_Prescaler_16CLOCK = ( uint32_t ) ( 0x06 << ADC_CON_LOWSP_Pos ), /*!<The sampling time is 16 APB2 clocks */
+X    ADC_Prescaler_16CLOCK = ( uint32_t ) ( 0x06 << (16U) ),  
+N    ADC_Prescaler_32CLOCK = ( uint32_t ) ( 0x07 << ADC_CON_LOWSP_Pos ), /*!<The sampling time is 32 APB2 clocks */
+X    ADC_Prescaler_32CLOCK = ( uint32_t ) ( 0x07 << (16U) ),  
+N#elif defined(SC32f15xx) || defined(SC32R601)
 S    ADC_Prescaler_3CLOCK   = (uint32_t)(0x00 << ADC_CON_LOWSP_Pos),  /* The sampling time is 3   APB2 clocks */
 S    ADC_Prescaler_6CLOCK   = (uint32_t)(0x01 << ADC_CON_LOWSP_Pos),  /* The sampling time is 6   APB2 clocks */
 S    ADC_Prescaler_9CLOCK   = (uint32_t)(0x02 << ADC_CON_LOWSP_Pos),  /* The sampling time is 9   APB2 clocks */
@@ -8261,15 +8316,16 @@ S    ADC_Prescaler_30CLOCK  = (uint32_t)(0x04 << ADC_CON_LOWSP_Pos),  /* The sam
 S    ADC_Prescaler_60CLOCK  = (uint32_t)(0x05 << ADC_CON_LOWSP_Pos),  /* The sampling time is 60  APB2 clocks */
 S    ADC_Prescaler_120CLOCK = (uint32_t)(0x06 << ADC_CON_LOWSP_Pos),  /* The sampling time is 120 APB2 clocks */
 S    ADC_Prescaler_480CLOCK = (uint32_t)(0x07 << ADC_CON_LOWSP_Pos),  /* The sampling time is 480 APB2 clocks */	
-S#endif
-S} ADC_Prescaler_TypeDef;
-S#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-S#define IS_ADC_PRESCALER(PRESCALER) (((PRESCALER) == ADC_Prescaler_3CLOCK) ||  \
-S																		 ((PRESCALER) == ADC_Prescaler_6CLOCK) ||  \
-S																		 ((PRESCALER) == ADC_Prescaler_16CLOCK) || \
-S																		 ((PRESCALER) == ADC_Prescaler_32CLOCK))
+N#endif
+N} ADC_Prescaler_TypeDef;
+N#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
+X#if 0L||1L||0L||0L || 0L
+N#define IS_ADC_PRESCALER(PRESCALER) (((PRESCALER) == ADC_Prescaler_3CLOCK) ||  \
+N																		 ((PRESCALER) == ADC_Prescaler_6CLOCK) ||  \
+N																		 ((PRESCALER) == ADC_Prescaler_16CLOCK) || \
+N																		 ((PRESCALER) == ADC_Prescaler_32CLOCK))
 X#define IS_ADC_PRESCALER(PRESCALER) (((PRESCALER) == ADC_Prescaler_3CLOCK) ||  																		 ((PRESCALER) == ADC_Prescaler_6CLOCK) ||  																		 ((PRESCALER) == ADC_Prescaler_16CLOCK) || 																		 ((PRESCALER) == ADC_Prescaler_32CLOCK))
-S#elif defined(SC32f15xx) || defined(SC32R601)
+N#elif defined(SC32f15xx) || defined(SC32R601)
 S#define IS_ADC_PRESCALER(PRESCALER) (((PRESCALER) == ADC_Prescaler_3CLOCK)   || \
 S                                     ((PRESCALER) == ADC_Prescaler_6CLOCK)   || \
 S                                     ((PRESCALER) == ADC_Prescaler_9CLOCK)   || \
@@ -8279,47 +8335,51 @@ S                                     ((PRESCALER) == ADC_Prescaler_60CLOCK)  ||
 S                                     ((PRESCALER) == ADC_Prescaler_120CLOCK) || \
 S                                     ((PRESCALER) == ADC_Prescaler_480CLOCK))
 X#define IS_ADC_PRESCALER(PRESCALER) (((PRESCALER) == ADC_Prescaler_3CLOCK)   ||                                      ((PRESCALER) == ADC_Prescaler_6CLOCK)   ||                                      ((PRESCALER) == ADC_Prescaler_9CLOCK)   ||                                      ((PRESCALER) == ADC_Prescaler_15CLOCK)  ||                                      ((PRESCALER) == ADC_Prescaler_30CLOCK)  ||                                      ((PRESCALER) == ADC_Prescaler_60CLOCK)  ||                                      ((PRESCALER) == ADC_Prescaler_120CLOCK) ||                                      ((PRESCALER) == ADC_Prescaler_480CLOCK))
-S#endif
-S/**
-S * @}
-S */
-S
-S/** @brief ADC_ChannelTypedef ADC input channel
-S * @{
-S */
-S
-Stypedef enum
-S{
-S    ADC_Channel_0      = ( uint16_t ) 0x00,		 /*!< ADC input channel 0 */
-S    ADC_Channel_1      = ( uint16_t ) 0x01,		 /*!< ADC input channel 1 */
-S    ADC_Channel_2      = ( uint16_t ) 0x02,		 /*!< ADC input channel 2 */
-S    ADC_Channel_3      = ( uint16_t ) 0x03,		 /*!< ADC input channel 3 */
-S    ADC_Channel_4      = ( uint16_t ) 0x04,		 /*!< ADC input channel 4 */
-S#if !defined(SC32R601)
-S    ADC_Channel_5      = ( uint16_t ) 0x05,	 	 /*!< ADC input channel 5 */
-S    ADC_Channel_6      = ( uint16_t ) 0x06,		 /*!< ADC input channel 6 */
-S#endif
-S    ADC_Channel_7      = ( uint16_t ) 0x07,		 /*!< ADC input channel 7 */
-S    ADC_Channel_8      = ( uint16_t ) 0x08,		 /*!< ADC input channel 8 */
-S    ADC_Channel_9      = ( uint16_t ) 0x09,		 /*!< ADC input channel 9 */
-S    ADC_Channel_10     = ( uint16_t ) 0x0A,		 /*!< ADC input channel 10 */
-S    ADC_Channel_11     = ( uint16_t ) 0x0B,		 /*!< ADC input channel 11 */
-S    ADC_Channel_12     = ( uint16_t ) 0x0C,		 /*!< ADC input channel 12 */
-S    ADC_Channel_13     = ( uint16_t ) 0x0D,		 /*!< ADC input channel 13 */
-S#if !defined(SC32R601)
-S    ADC_Channel_14     = ( uint16_t ) 0x0E,		 /*!< ADC input channel 14 */
-S#endif
-S    ADC_Channel_15     = ( uint16_t ) 0x0F,		 /*!< ADC input channel 15 */
-S   
-S#if defined(SC32f10xx)
+N#endif
+N/**
+N * @}
+N */
+N
+N/** @brief ADC_ChannelTypedef ADC input channel
+N * @{
+N */
+N
+Ntypedef enum
+N{
+N    ADC_Channel_0      = ( uint16_t ) 0x00,		 /*!< ADC input channel 0 */
+N    ADC_Channel_1      = ( uint16_t ) 0x01,		 /*!< ADC input channel 1 */
+N    ADC_Channel_2      = ( uint16_t ) 0x02,		 /*!< ADC input channel 2 */
+N    ADC_Channel_3      = ( uint16_t ) 0x03,		 /*!< ADC input channel 3 */
+N    ADC_Channel_4      = ( uint16_t ) 0x04,		 /*!< ADC input channel 4 */
+N#if !defined(SC32R601)
+X#if !0L
+N    ADC_Channel_5      = ( uint16_t ) 0x05,	 	 /*!< ADC input channel 5 */
+N    ADC_Channel_6      = ( uint16_t ) 0x06,		 /*!< ADC input channel 6 */
+N#endif
+N    ADC_Channel_7      = ( uint16_t ) 0x07,		 /*!< ADC input channel 7 */
+N    ADC_Channel_8      = ( uint16_t ) 0x08,		 /*!< ADC input channel 8 */
+N    ADC_Channel_9      = ( uint16_t ) 0x09,		 /*!< ADC input channel 9 */
+N    ADC_Channel_10     = ( uint16_t ) 0x0A,		 /*!< ADC input channel 10 */
+N    ADC_Channel_11     = ( uint16_t ) 0x0B,		 /*!< ADC input channel 11 */
+N    ADC_Channel_12     = ( uint16_t ) 0x0C,		 /*!< ADC input channel 12 */
+N    ADC_Channel_13     = ( uint16_t ) 0x0D,		 /*!< ADC input channel 13 */
+N#if !defined(SC32R601)
+X#if !0L
+N    ADC_Channel_14     = ( uint16_t ) 0x0E,		 /*!< ADC input channel 14 */
+N#endif
+N    ADC_Channel_15     = ( uint16_t ) 0x0F,		 /*!< ADC input channel 15 */
+N   
+N#if defined(SC32f10xx)
+X#if 0L
 S    ADC_Channel_16     = ( uint16_t ) 0x10,		 /*!< ADC input channel 16 */
 S	  ADC_Channel_VDD_D4 = ( uint16_t ) 0x1F,		 /*!< ADC_CHANNEL VDD Divide 4 */
-S#elif defined(SC32R803)
-S    ADC_Channel_16     = ( uint16_t ) 0x10,		 /*!< ADC input channel 16 */
-S    ADC_Channel_17     = ( uint16_t ) 0x11,		 /*!< ADC input channel 17 */
-S    ADC_Channel_OP    = ( uint16_t ) 0x1E,		 /*!< ADC_CHANNEL OP */
-S		ADC_Channel_VDD_D4 = ( uint16_t ) 0x1F,		 /*!< ADC_CHANNEL VDD Divide 4 */
-S#elif defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
+N#elif defined(SC32R803)
+X#elif 1L
+N    ADC_Channel_16     = ( uint16_t ) 0x10,		 /*!< ADC input channel 16 */
+N    ADC_Channel_17     = ( uint16_t ) 0x11,		 /*!< ADC input channel 17 */
+N    ADC_Channel_OP    = ( uint16_t ) 0x1E,		 /*!< ADC_CHANNEL OP */
+N		ADC_Channel_VDD_D4 = ( uint16_t ) 0x1F,		 /*!< ADC_CHANNEL VDD Divide 4 */
+N#elif defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
 S    ADC_Channel_OP    = ( uint16_t ) 0x1E,		 /*!< ADC_CHANNEL OP */
 S		ADC_Channel_VDD_D4 = ( uint16_t ) 0x1F,		 /*!< ADC_CHANNEL VDD Divide 4 */
 S#elif defined(SC32f15xx)
@@ -8328,20 +8388,22 @@ S    ADC_Channel_TEMP   = (uint16_t)0x11,		 /*!< ADC input channel TEMP */
 S#elif defined(SC32R601)
 S		ADC_Channel_VDD_D4 = ( uint16_t ) 0x10,		 /*!< ADC_CHANNEL VDD Divide 4 */
 S		
-S#endif
-S} ADC_ChannelTypedef;
-S
-S
-S#if defined(SC32f10xx)
+N#endif
+N} ADC_ChannelTypedef;
+N
+N
+N#if defined(SC32f10xx)
+X#if 0L
 S#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_16 ||\
 S                                 (CHANNEL) == ADC_Channel_VDD_D4)
 X#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_16 ||                                 (CHANNEL) == ADC_Channel_VDD_D4)
-S#elif defined(SC32R803)
-S#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_17  ||\
-S                                 (CHANNEL) == ADC_Channel_OP ||\
-S                                 (CHANNEL) == ADC_Channel_VDD_D4)
+N#elif defined(SC32R803)
+X#elif 1L
+N#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_17  ||\
+N                                 (CHANNEL) == ADC_Channel_OP ||\
+N                                 (CHANNEL) == ADC_Channel_VDD_D4)
 X#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_17  ||                                 (CHANNEL) == ADC_Channel_OP ||                                 (CHANNEL) == ADC_Channel_VDD_D4)
-S#elif defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
+N#elif defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
 S#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_15  ||\
 S                                 (CHANNEL) == ADC_Channel_OP ||\
 S                                 (CHANNEL) == ADC_Channel_VDD_D4)
@@ -8355,11 +8417,12 @@ S#elif defined(SC32R601)
 S#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_15  ||\
 S                                 (CHANNEL) == ADC_Channel_VDD_D4)
 X#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_15  ||                                 (CHANNEL) == ADC_Channel_VDD_D4)
-S#endif
-S/**
-S * @}
-S */
-S#if defined(SC32f15xx)
+N#endif
+N/**
+N * @}
+N */
+N#if defined(SC32f15xx)
+X#if 0L
 S/** @defgroup ADC_ChannelATypedef ADC input channel
 S * @{
 S */
@@ -8396,285 +8459,299 @@ S} ADC_ChannelBTypedef;
 S
 S#define IS_ADC_ChannelB(ChannelB) ((ChannelB)!= 0)
 S
-S#endif
-S
-S/** @defgroup ADC_Thresholds_Channel ADC Thresholds Channel 
-S * @{
-S */
-Stypedef enum
-S{
-S    ADC_Thresholds_Channel_Less = (uint32_t)0x00000000, /*!< ADC port Less */
-S    ADC_Thresholds_Channel_0   = (uint32_t)0x00000001,  /*!< ADC port 0  */
-S    ADC_Thresholds_Channel_1   = (uint32_t)0x00000002,  /*!< ADC port 1  */
-S    ADC_Thresholds_Channel_2   = (uint32_t)0x00000004,  /*!< ADC port 2  */
-S    ADC_Thresholds_Channel_3   = (uint32_t)0x00000008,  /*!< ADC port 3  */
-S    ADC_Thresholds_Channel_4   = (uint32_t)0x00000010,  /*!< ADC port 4  */
-S    ADC_Thresholds_Channel_5   = (uint32_t)0x00000020,  /*!< ADC port 5  */
-S    ADC_Thresholds_Channel_6   = (uint32_t)0x00000040,  /*!< ADC port 6  */
-S    ADC_Thresholds_Channel_7   = (uint32_t)0x00000080,  /*!< ADC port 7  */
-S    ADC_Thresholds_Channel_8   = (uint32_t)0x00000100,  /*!< ADC port 8  */
-S    ADC_Thresholds_Channel_9   = (uint32_t)0x00000200,  /*!< ADC port 9  */
-S    ADC_Thresholds_Channel_10  = (uint32_t)0x00000400,  /*!< ADC port 10 */
-S    ADC_Thresholds_Channel_11  = (uint32_t)0x00000800,  /*!< ADC port 11 */
-S    ADC_Thresholds_Channel_12  = (uint32_t)0x00001000,  /*!< ADC port 12 */
-S    ADC_Thresholds_Channel_13  = (uint32_t)0x00002000,  /*!< ADC port 13 */
-S    ADC_Thresholds_Channel_14  = (uint32_t)0x00004000,  /*!< ADC port 14 */
-S    ADC_Thresholds_Channel_15  = (uint32_t)0x00008000,  /*!< ADC port 15 */
-S    ADC_Thresholds_Channel_All = (uint32_t)0x0000FFFF,  /*!< ADC port All */
-S} ADC_Thresholds_Channel_Typedef;
-S
-S#define IS_ADC_Thresholds_Channel(Channel) ((Channel | ADC_Thresholds_Channel_All) != 0)
-S/** @defgroup ADC_SQGroup ADC SQGroup
-S * @{
-S */
-Stypedef enum
-S{
-S    ADC_SQGroup_0    = (uint32_t)0x0000,   /*!< ADC sequence group 0 */
-S} ADC_SQGroup_Typedef;
-S
-S#define IS_ADC_SQGROUP(GROUP) ((GROUP) != 0)
-S/**
-S * @}
-S */
-S
-S/** @defgroup ADC_SQRank ADC SQRank
-S * @{
-S */
-Stypedef enum
-S{
-S    ADC_SQRank_0    = (uint32_t)0x0000,   /*!< ADC sequence Channel 0 */
-S    ADC_SQRank_1    = (uint32_t)0x0001,   /*!< ADC sequence Channel 1 */
-S    ADC_SQRank_2    = (uint32_t)0x0002,   /*!< ADC sequence Channel 2 */
-S    ADC_SQRank_3    = (uint32_t)0x0003,   /*!< ADC sequence Channel 3 */
-S    ADC_SQRank_4    = (uint32_t)0x0004,   /*!< ADC sequence Channel 4 */
-S    ADC_SQRank_5    = (uint32_t)0x0005,   /*!< ADC sequence Channel 5 */
-S    ADC_SQRank_6    = (uint32_t)0x0006,   /*!< ADC sequence Channel 6 */
-S    ADC_SQRank_7    = (uint32_t)0x0007,   /*!< ADC sequence Channel 7 */
-S    ADC_SQRank_8    = (uint32_t)0x0008,   /*!< ADC sequence Channel 8 */
-S    ADC_SQRank_9    = (uint32_t)0x0009,   /*!< ADC sequence Channel 9 */
-S    ADC_SQRank_10   = (uint32_t)0x000A,   /*!< ADC sequence Channel 10 */
-S    ADC_SQRank_11   = (uint32_t)0x000B,   /*!< ADC sequence Channel 11 */
-S    ADC_SQRank_12   = (uint32_t)0x000C,   /*!< ADC sequence Channel 12 */
-S    ADC_SQRank_13   = (uint32_t)0x000D,   /*!< ADC sequence Channel 13 */
-S    ADC_SQRank_14   = (uint32_t)0x000E,   /*!< ADC sequence Channel 14 */
-S    ADC_SQRank_15   = (uint32_t)0x000F,   /*!< ADC sequence Channel 15 */
-S} ADC_SQRank_Typedef;
-S
-S#define IS_ADC_SQRANK(RANK) ((RANK) != 0)
-S/**
-S * @}
-S */
-S 
-S/** @brief ADC_EAIN ADC Enable Input
-S * @{
-S */
-S
-Stypedef enum
-S{
-S    ADC_EAIN_Less = ( uint32_t ) 0x00000000,	/*!< ADC port Less */
-S    ADC_EAIN_0   = ( uint32_t ) 0x00000001,	/*!< ADC port 0 */
-S    ADC_EAIN_1   = ( uint32_t ) 0x00000002,	/*!< ADC port 1 */
-S    ADC_EAIN_2   = ( uint32_t ) 0x00000004,	/*!< ADC port 2 */
-S    ADC_EAIN_3   = ( uint32_t ) 0x00000008,	/*!< ADC port 3 */
-S    ADC_EAIN_4   = ( uint32_t ) 0x00000010,	/*!< ADC port 4 */
-S    ADC_EAIN_5   = ( uint32_t ) 0x00000020,	/*!< ADC port 5 */
-S    ADC_EAIN_6   = ( uint32_t ) 0x00000040,	/*!< ADC port 6 */
-S    ADC_EAIN_7   = ( uint32_t ) 0x00000080,	/*!< ADC port 7 */
-S    ADC_EAIN_8   = ( uint32_t ) 0x00000100,	/*!< ADC port 8 */
-S    ADC_EAIN_9   = ( uint32_t ) 0x00000200,	/*!< ADC port 9 */
-S    ADC_EAIN_10   = ( uint32_t ) 0x0000400,	/*!< ADC port 10 */
-S    ADC_EAIN_11   = ( uint32_t ) 0x0000800,	/*!< ADC port 11 */
-S    ADC_EAIN_12  = ( uint32_t ) 0x00001000, /*!< ADC port 12 */
-S    ADC_EAIN_13  = ( uint32_t ) 0x00002000, /*!< ADC port 13 */
-S    ADC_EAIN_14  = ( uint32_t ) 0x00004000, /*!< ADC port 14 */
-S    ADC_EAIN_15  = ( uint32_t ) 0x00008000, /*!< ADC port 15 */
-S#if defined(SC32f10xx)
+N#endif
+N
+N/** @defgroup ADC_Thresholds_Channel ADC Thresholds Channel 
+N * @{
+N */
+Ntypedef enum
+N{
+N    ADC_Thresholds_Channel_Less = (uint32_t)0x00000000, /*!< ADC port Less */
+N    ADC_Thresholds_Channel_0   = (uint32_t)0x00000001,  /*!< ADC port 0  */
+N    ADC_Thresholds_Channel_1   = (uint32_t)0x00000002,  /*!< ADC port 1  */
+N    ADC_Thresholds_Channel_2   = (uint32_t)0x00000004,  /*!< ADC port 2  */
+N    ADC_Thresholds_Channel_3   = (uint32_t)0x00000008,  /*!< ADC port 3  */
+N    ADC_Thresholds_Channel_4   = (uint32_t)0x00000010,  /*!< ADC port 4  */
+N    ADC_Thresholds_Channel_5   = (uint32_t)0x00000020,  /*!< ADC port 5  */
+N    ADC_Thresholds_Channel_6   = (uint32_t)0x00000040,  /*!< ADC port 6  */
+N    ADC_Thresholds_Channel_7   = (uint32_t)0x00000080,  /*!< ADC port 7  */
+N    ADC_Thresholds_Channel_8   = (uint32_t)0x00000100,  /*!< ADC port 8  */
+N    ADC_Thresholds_Channel_9   = (uint32_t)0x00000200,  /*!< ADC port 9  */
+N    ADC_Thresholds_Channel_10  = (uint32_t)0x00000400,  /*!< ADC port 10 */
+N    ADC_Thresholds_Channel_11  = (uint32_t)0x00000800,  /*!< ADC port 11 */
+N    ADC_Thresholds_Channel_12  = (uint32_t)0x00001000,  /*!< ADC port 12 */
+N    ADC_Thresholds_Channel_13  = (uint32_t)0x00002000,  /*!< ADC port 13 */
+N    ADC_Thresholds_Channel_14  = (uint32_t)0x00004000,  /*!< ADC port 14 */
+N    ADC_Thresholds_Channel_15  = (uint32_t)0x00008000,  /*!< ADC port 15 */
+N    ADC_Thresholds_Channel_All = (uint32_t)0x0000FFFF,  /*!< ADC port All */
+N} ADC_Thresholds_Channel_Typedef;
+N
+N#define IS_ADC_Thresholds_Channel(Channel) ((Channel | ADC_Thresholds_Channel_All) != 0)
+N/** @defgroup ADC_SQGroup ADC SQGroup
+N * @{
+N */
+Ntypedef enum
+N{
+N    ADC_SQGroup_0    = (uint32_t)0x0000,   /*!< ADC sequence group 0 */
+N} ADC_SQGroup_Typedef;
+N
+N#define IS_ADC_SQGROUP(GROUP) ((GROUP) != 0)
+N/**
+N * @}
+N */
+N
+N/** @defgroup ADC_SQRank ADC SQRank
+N * @{
+N */
+Ntypedef enum
+N{
+N    ADC_SQRank_0    = (uint32_t)0x0000,   /*!< ADC sequence Channel 0 */
+N    ADC_SQRank_1    = (uint32_t)0x0001,   /*!< ADC sequence Channel 1 */
+N    ADC_SQRank_2    = (uint32_t)0x0002,   /*!< ADC sequence Channel 2 */
+N    ADC_SQRank_3    = (uint32_t)0x0003,   /*!< ADC sequence Channel 3 */
+N    ADC_SQRank_4    = (uint32_t)0x0004,   /*!< ADC sequence Channel 4 */
+N    ADC_SQRank_5    = (uint32_t)0x0005,   /*!< ADC sequence Channel 5 */
+N    ADC_SQRank_6    = (uint32_t)0x0006,   /*!< ADC sequence Channel 6 */
+N    ADC_SQRank_7    = (uint32_t)0x0007,   /*!< ADC sequence Channel 7 */
+N    ADC_SQRank_8    = (uint32_t)0x0008,   /*!< ADC sequence Channel 8 */
+N    ADC_SQRank_9    = (uint32_t)0x0009,   /*!< ADC sequence Channel 9 */
+N    ADC_SQRank_10   = (uint32_t)0x000A,   /*!< ADC sequence Channel 10 */
+N    ADC_SQRank_11   = (uint32_t)0x000B,   /*!< ADC sequence Channel 11 */
+N    ADC_SQRank_12   = (uint32_t)0x000C,   /*!< ADC sequence Channel 12 */
+N    ADC_SQRank_13   = (uint32_t)0x000D,   /*!< ADC sequence Channel 13 */
+N    ADC_SQRank_14   = (uint32_t)0x000E,   /*!< ADC sequence Channel 14 */
+N    ADC_SQRank_15   = (uint32_t)0x000F,   /*!< ADC sequence Channel 15 */
+N} ADC_SQRank_Typedef;
+N
+N#define IS_ADC_SQRANK(RANK) ((RANK) != 0)
+N/**
+N * @}
+N */
+N 
+N/** @brief ADC_EAIN ADC Enable Input
+N * @{
+N */
+N
+Ntypedef enum
+N{
+N    ADC_EAIN_Less = ( uint32_t ) 0x00000000,	/*!< ADC port Less */
+N    ADC_EAIN_0   = ( uint32_t ) 0x00000001,	/*!< ADC port 0 */
+N    ADC_EAIN_1   = ( uint32_t ) 0x00000002,	/*!< ADC port 1 */
+N    ADC_EAIN_2   = ( uint32_t ) 0x00000004,	/*!< ADC port 2 */
+N    ADC_EAIN_3   = ( uint32_t ) 0x00000008,	/*!< ADC port 3 */
+N    ADC_EAIN_4   = ( uint32_t ) 0x00000010,	/*!< ADC port 4 */
+N    ADC_EAIN_5   = ( uint32_t ) 0x00000020,	/*!< ADC port 5 */
+N    ADC_EAIN_6   = ( uint32_t ) 0x00000040,	/*!< ADC port 6 */
+N    ADC_EAIN_7   = ( uint32_t ) 0x00000080,	/*!< ADC port 7 */
+N    ADC_EAIN_8   = ( uint32_t ) 0x00000100,	/*!< ADC port 8 */
+N    ADC_EAIN_9   = ( uint32_t ) 0x00000200,	/*!< ADC port 9 */
+N    ADC_EAIN_10   = ( uint32_t ) 0x0000400,	/*!< ADC port 10 */
+N    ADC_EAIN_11   = ( uint32_t ) 0x0000800,	/*!< ADC port 11 */
+N    ADC_EAIN_12  = ( uint32_t ) 0x00001000, /*!< ADC port 12 */
+N    ADC_EAIN_13  = ( uint32_t ) 0x00002000, /*!< ADC port 13 */
+N    ADC_EAIN_14  = ( uint32_t ) 0x00004000, /*!< ADC port 14 */
+N    ADC_EAIN_15  = ( uint32_t ) 0x00008000, /*!< ADC port 15 */
+N#if defined(SC32f10xx)
+X#if 0L
 S    ADC_EAIN_16  = ( uint32_t ) 0x00010000, /*!< ADC port 16 */
 S    ADC_EAIN_All = ( uint32_t ) 0x0001FFFF, /*!< ADC port All */
-S#elif defined(SC32R803)
-S    ADC_EAIN_16  = ( uint32_t ) 0x00010000, /*!< ADC port 16 */
-S    ADC_EAIN_17  = ( uint32_t ) 0x00020000, /*!< ADC port 17 */
-S    ADC_EAIN_All = ( uint32_t ) 0x0003FFFF, /*!< ADC port All */
-S#elif defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806) ||defined(SC32f15xx) || defined(SC32R601)
+N#elif defined(SC32R803)
+X#elif 1L
+N    ADC_EAIN_16  = ( uint32_t ) 0x00010000, /*!< ADC port 16 */
+N    ADC_EAIN_17  = ( uint32_t ) 0x00020000, /*!< ADC port 17 */
+N    ADC_EAIN_All = ( uint32_t ) 0x0003FFFF, /*!< ADC port All */
+N#elif defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806) ||defined(SC32f15xx) || defined(SC32R601)
 S    ADC_EAIN_All = ( uint32_t ) 0x0000FFFF, /*!< ADC port All */
-S#endif
-S} ADC_EAIN_Typedef;
-S
-S
-S
-S#define IS_ADC_EAIN(EAIN) ((EAIN | ADC_EAIN_All) != 0 || EAIN == ADC_EAIN_Less)
-S/**
-S * @}
-S */
-S
-S/** @brief ADC_VREF ADC Reference Voltage
-S * @{
-S */
-Stypedef enum
-S{
-S#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-S    ADC_VREF_VDD    = ( uint32_t ) ( 0x00 << ADC_CON_VREFS_Pos ),	 /*!< ADC reference voltage is VDD    */
-S    ADC_VREF_2_048V = ( uint32_t ) ( 0x01 << ADC_CON_VREFS_Pos ),	 /*!< ADC reference voltage is 2.048V */
-S    ADC_VREF_1_024V = ( uint32_t ) ( 0x02 << ADC_CON_VREFS_Pos ),	 /*!< ADC reference voltage is 1.024V */
-S    ADC_VREF_2_4V   = ( uint32_t ) ( 0x03 << ADC_CON_VREFS_Pos )	 /*!< ADC reference voltage is 2.4V   */
-S#elif defined(SC32f15xx) || defined(SC32R601)
+N#endif
+N} ADC_EAIN_Typedef;
+N
+N
+N
+N#define IS_ADC_EAIN(EAIN) ((EAIN | ADC_EAIN_All) != 0 || EAIN == ADC_EAIN_Less)
+N/**
+N * @}
+N */
+N
+N/** @brief ADC_VREF ADC Reference Voltage
+N * @{
+N */
+Ntypedef enum
+N{
+N#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
+X#if 0L||1L||0L||0L || 0L
+N    ADC_VREF_VDD    = ( uint32_t ) ( 0x00 << ADC_CON_VREFS_Pos ),	 /*!< ADC reference voltage is VDD    */
+X    ADC_VREF_VDD    = ( uint32_t ) ( 0x00 << (20U) ),	  
+N    ADC_VREF_2_048V = ( uint32_t ) ( 0x01 << ADC_CON_VREFS_Pos ),	 /*!< ADC reference voltage is 2.048V */
+X    ADC_VREF_2_048V = ( uint32_t ) ( 0x01 << (20U) ),	  
+N    ADC_VREF_1_024V = ( uint32_t ) ( 0x02 << ADC_CON_VREFS_Pos ),	 /*!< ADC reference voltage is 1.024V */
+X    ADC_VREF_1_024V = ( uint32_t ) ( 0x02 << (20U) ),	  
+N    ADC_VREF_2_4V   = ( uint32_t ) ( 0x03 << ADC_CON_VREFS_Pos )	 /*!< ADC reference voltage is 2.4V   */
+X    ADC_VREF_2_4V   = ( uint32_t ) ( 0x03 << (20U) )	  
+N#elif defined(SC32f15xx) || defined(SC32R601)
 S    ADC_RefSource_VDD  = (uint32_t)(0x00 << ADC_CON_REFSEL_Pos),	  /*!< ADC reference voltage is VDD    */
 S    ADC_RefSource_VREF = (uint32_t)(0x01 << ADC_CON_REFSEL_Pos),	  /*!< ADC reference voltage is Vref */
-S#endif
-S} ADC_VREF_TypeDef;
-S#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-S#define IS_ADC_VREF(VREF) (((VREF) == ADC_VREF_VDD)    || \
-S													 ((VREF) == ADC_VREF_2_048V) || \
-S													 ((VREF) == ADC_VREF_1_024V) || \
-S													 ((VREF) == ADC_VREF_2_4V))
+N#endif
+N} ADC_VREF_TypeDef;
+N#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
+X#if 0L||1L||0L||0L || 0L
+N#define IS_ADC_VREF(VREF) (((VREF) == ADC_VREF_VDD)    || \
+N													 ((VREF) == ADC_VREF_2_048V) || \
+N													 ((VREF) == ADC_VREF_1_024V) || \
+N													 ((VREF) == ADC_VREF_2_4V))
 X#define IS_ADC_VREF(VREF) (((VREF) == ADC_VREF_VDD)    || 													 ((VREF) == ADC_VREF_2_048V) || 													 ((VREF) == ADC_VREF_1_024V) || 													 ((VREF) == ADC_VREF_2_4V))
-S#elif defined(SC32f15xx) || defined(SC32R601)
+N#elif defined(SC32f15xx) || defined(SC32R601)
 S#define IS_ADC_VREF(VREF) (((VREF) == ADC_RefSource_VDD)    || \
 S                           ((VREF) == ADC_RefSource_VREF))
 X#define IS_ADC_VREF(VREF) (((VREF) == ADC_RefSource_VDD)    ||                            ((VREF) == ADC_RefSource_VREF))
-S#endif
-S/**
-S * @}
-S */
-S
-S/** @brief ADC_IT ADC Interrupt
-S * @{
-S */
-Stypedef enum
-S{
-S#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-S    ADC_IT_ADCIF = ( uint16_t ) ADC_CON_INTEN,	/*!< ADC Interrupt: ADC  Interrupt */
-S#elif defined(SC32f15xx) || defined(SC32R601)
+N#endif
+N/**
+N * @}
+N */
+N
+N/** @brief ADC_IT ADC Interrupt
+N * @{
+N */
+Ntypedef enum
+N{
+N#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
+X#if 0L||1L||0L||0L || 0L
+N    ADC_IT_ADCIF = ( uint16_t ) ADC_CON_INTEN,	/*!< ADC Interrupt: ADC  Interrupt */
+X    ADC_IT_ADCIF = ( uint16_t ) (0x1UL << (8U)),	 
+N#elif defined(SC32f15xx) || defined(SC32R601)
 S    ADC_IT_INTEN    = (uint16_t)ADC_IDE_INTEN,	    /*!< ADC interrupt request Flag */
 S    ADC_IT_EOCIE    = (uint16_t)ADC_IDE_EOCIE,	/*!< ADC sequence 0 sampling + conversion complete interrupt Flag */
 S    ADC_IT_EOSIE0   = (uint16_t)ADC_IDE_EOSIE0,	/*!< ADC sequence 0 sampling + conversion complete interrupt Flag */
 S    ADC_IT_UPTHIE   = (uint16_t)ADC_IDE_UPTHIE,	/*!< ADC upper threshold overflow Flag */
 S    ADC_IT_LOWTHIE  = (uint16_t)ADC_IDE_LOWTHIE,	/*!< ADC lower threshold overflow Flag */
-S#endif	
-S} ADC_IT_TypeDef;
-S
-S#define IS_ADC_IT(IT) ((((IT) & (uint16_t)0xFEFF) == 0x00) && ((IT) != (uint16_t)0x0000))
-S/**
-S * @}
-S */
-S
-S/** @brief ADC_FLAG ADC Flag
-S * @{
-S */
-Stypedef enum
-S{
-S#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-S    ADC_Flag_ADCIF = ( uint8_t ) ADC_STS_EOC,	/*!< ADC Flag:ADC  Flag */
-S#elif defined(SC32f15xx) || defined(SC32R601)
+N#endif	
+N} ADC_IT_TypeDef;
+N
+N#define IS_ADC_IT(IT) ((((IT) & (uint16_t)0xFEFF) == 0x00) && ((IT) != (uint16_t)0x0000))
+N/**
+N * @}
+N */
+N
+N/** @brief ADC_FLAG ADC Flag
+N * @{
+N */
+Ntypedef enum
+N{
+N#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
+X#if 0L||1L||0L||0L || 0L
+N    ADC_Flag_ADCIF = ( uint8_t ) ADC_STS_EOC,	/*!< ADC Flag:ADC  Flag */
+X    ADC_Flag_ADCIF = ( uint8_t ) (0x01UL << (0U)),	 
+N#elif defined(SC32f15xx) || defined(SC32R601)
 S    ADC_Flag_ADCIF    = (uint8_t)ADC_STS_EOCIF,   /*!< ADC interrupt request Flag */
 S    ADC_Flag_EOSIF0   = (uint8_t)ADC_STS_EOSIF0,	/*!< ADC sequence 0 sampling + conversion complete interrupt Flag */
 S    ADC_Flag_BUSY     = (uint8_t)ADC_STS_BUSY,    /*!< ADC busy Flag */
 S    ADC_Flag_UPTHIF   = (uint8_t)ADC_STS_UPTHIF,	/*!< ADC upper threshold overflow Flag */
 S    ADC_Flag_LOWTHIF  = (uint8_t)ADC_STS_LOWTHIF,	/*!< ADC lower threshold overflow Flag */
 S	  
-S#endif	
-S	ADC_Flag_OVERRUN =  (int)0x80000000UL,/*!< ADC overflow Flag */
-S} ADC_FLAG_TypeDef;
-S#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-S#define IS_ADC_FLAG(FLAG) ((((FLAG) & (uint16_t)0xFFFE) == 0x00) && ((FLAG) != (uint16_t)0x0000))
-S#define IS_GET_ADC_FLAG(FLAG) ((FLAG) == ADC_Flag_ADCIF)
-S#elif defined(SC32f15xx) || defined(SC32R601)
+N#endif	
+N	ADC_Flag_OVERRUN =  (int)0x80000000UL,/*!< ADC overflow Flag */
+N} ADC_FLAG_TypeDef;
+N#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
+X#if 0L||1L||0L||0L || 0L
+N#define IS_ADC_FLAG(FLAG) ((((FLAG) & (uint16_t)0xFFFE) == 0x00) && ((FLAG) != (uint16_t)0x0000))
+N#define IS_GET_ADC_FLAG(FLAG) ((FLAG) == ADC_Flag_ADCIF)
+N#elif defined(SC32f15xx) || defined(SC32R601)
 S#define IS_ADC_FLAG(FLAG) ((((FLAG) & (uint32_t)0x7FFE) == 0x00) && ((FLAG) != (uint32_t)0x0000))
 S
-S#endif
-S/**
-S * @}
-S */
-S
-S/**
-S * @}
-S */
-S/* End of enumerations -----------------------------------------------------*/
-S
-S
-S#define IS_ADC_ALL_PERIPH(PERIPH) ((PERIPH) == ADC)
-S
-S/**
-S * @}
-S */
-S/* End of constants -----------------------------------------------------*/
-S
-S/** @defgroup ADC_Exported_Struct ADC Exported Struct
-S * @{
-S */
-S
-S/** @brief ADC Time base Configuration Structure definition
-S * @{
-S */
-Stypedef struct
-S{
-S    uint32_t ADC_Prescaler; /*!<  Specifies sampling time of ADC.
-S																  This parameter can be a value of @ref ADC_Prescaler_TypeDef */
-S
-S    uint32_t ADC_EAIN; /*!< Specifies Input channel of ADC.
-S																	This parameter can be a value of @ref ADC_EAIN_Typedef */
-S
-S    uint32_t ADC_VREF; /*!<  Specifies reference voltage of ADC.
-S																	This parameter can be a value of @ref ADC_VREF_TypeDef */
-S
-S    uint16_t ADC_ConvMode; /*!< Specifies ADC work conversion mode.
-S																	This parameter can be a value of @ref ADC_ConvMode_TypeDef */
-S} ADC_InitTypeDef;
-S/**
-S * @}
-S */
-S
-S/**
-S * @}
-S */
-S/* End of struct -----------------------------------------------------*/
-S
-S/** @addtogroup ADC_Exported_Functions ADC Exported Functions
-S * @{
-S */
-S
-S/* ADC Base functions ********************************************************/
-Svoid ADC_DeInit ( ADC_TypeDef* ADCx );
-Svoid ADC_Init ( ADC_TypeDef* ADCx, ADC_InitTypeDef* ADC_InitStruct );
-Svoid ADC_StructInit ( ADC_InitTypeDef* ADC_InitStruct );
-Svoid ADC_Cmd ( ADC_TypeDef *ADCx, FunctionalState NewState );
-Svoid ADC_ConvModeConfig ( ADC_TypeDef* ADCx, ADC_ConvMode_TypeDef ADC_ConvMode );
-Svoid ADC_SetChannel ( ADC_TypeDef* ADCx, ADC_ChannelTypedef ADC_Channel );
-SADC_ChannelTypedef ADC_GetChannel ( ADC_TypeDef* ADCx );
-S
-S/* ADC Conversion management functions ********************************************************/
-Suint16_t ADC_GetConversionValue ( ADC_TypeDef* ADCx );
-Svoid ADC_SoftwareStartConv ( ADC_TypeDef* ADCx );
-S
-S/* Interrupts and flags  ***********************************************/
-Svoid ADC_ITConfig ( ADC_TypeDef* ADCx, uint16_t ADC_IT, FunctionalState NewState );
-SFlagStatus ADC_GetFlagStatus ( ADC_TypeDef* ADCx, uint32_t ADC_FLAG );
-Svoid ADC_ClearFlag ( ADC_TypeDef* ADCx, uint32_t ADC_FLAG );
-Svoid ADC_DMACmd ( ADC_TypeDef *ADCx, FunctionalState NewState );
-S#if defined(SC32f15xx) || defined(SC32R601)
+N#endif
+N/**
+N * @}
+N */
+N
+N/**
+N * @}
+N */
+N/* End of enumerations -----------------------------------------------------*/
+N
+N
+N#define IS_ADC_ALL_PERIPH(PERIPH) ((PERIPH) == ADC)
+N
+N/**
+N * @}
+N */
+N/* End of constants -----------------------------------------------------*/
+N
+N/** @defgroup ADC_Exported_Struct ADC Exported Struct
+N * @{
+N */
+N
+N/** @brief ADC Time base Configuration Structure definition
+N * @{
+N */
+Ntypedef struct
+N{
+N    uint32_t ADC_Prescaler; /*!<  Specifies sampling time of ADC.
+N																  This parameter can be a value of @ref ADC_Prescaler_TypeDef */
+N
+N    uint32_t ADC_EAIN; /*!< Specifies Input channel of ADC.
+N																	This parameter can be a value of @ref ADC_EAIN_Typedef */
+N
+N    uint32_t ADC_VREF; /*!<  Specifies reference voltage of ADC.
+N																	This parameter can be a value of @ref ADC_VREF_TypeDef */
+N
+N    uint16_t ADC_ConvMode; /*!< Specifies ADC work conversion mode.
+N																	This parameter can be a value of @ref ADC_ConvMode_TypeDef */
+N} ADC_InitTypeDef;
+N/**
+N * @}
+N */
+N
+N/**
+N * @}
+N */
+N/* End of struct -----------------------------------------------------*/
+N
+N/** @addtogroup ADC_Exported_Functions ADC Exported Functions
+N * @{
+N */
+N
+N/* ADC Base functions ********************************************************/
+Nvoid ADC_DeInit ( ADC_TypeDef* ADCx );
+Nvoid ADC_Init ( ADC_TypeDef* ADCx, ADC_InitTypeDef* ADC_InitStruct );
+Nvoid ADC_StructInit ( ADC_InitTypeDef* ADC_InitStruct );
+Nvoid ADC_Cmd ( ADC_TypeDef *ADCx, FunctionalState NewState );
+Nvoid ADC_ConvModeConfig ( ADC_TypeDef* ADCx, ADC_ConvMode_TypeDef ADC_ConvMode );
+Nvoid ADC_SetChannel ( ADC_TypeDef* ADCx, ADC_ChannelTypedef ADC_Channel );
+NADC_ChannelTypedef ADC_GetChannel ( ADC_TypeDef* ADCx );
+N
+N/* ADC Conversion management functions ********************************************************/
+Nuint16_t ADC_GetConversionValue ( ADC_TypeDef* ADCx );
+Nvoid ADC_SoftwareStartConv ( ADC_TypeDef* ADCx );
+N
+N/* Interrupts and flags  ***********************************************/
+Nvoid ADC_ITConfig ( ADC_TypeDef* ADCx, uint16_t ADC_IT, FunctionalState NewState );
+NFlagStatus ADC_GetFlagStatus ( ADC_TypeDef* ADCx, uint32_t ADC_FLAG );
+Nvoid ADC_ClearFlag ( ADC_TypeDef* ADCx, uint32_t ADC_FLAG );
+Nvoid ADC_DMACmd ( ADC_TypeDef *ADCx, FunctionalState NewState );
+N#if defined(SC32f15xx) || defined(SC32R601)
+X#if 0L || 0L
 Svoid ADC_SequenceChannelConfig(ADC_TypeDef* ADCx,ADC_SQRank_Typedef ADC_SQRank,ADC_ChannelTypedef ADC_Channel);
 Svoid ADC_SequenceGroupConfig(ADC_TypeDef* ADCx,uint8_t SQStr,uint8_t SQCnt);
 Svoid ADC_SetThresholds(ADC_TypeDef* ADCx, uint16_t HighThreshold,uint16_t LowThreshold);
 Svoid ADC_ThresholdsChannelConfig(ADC_TypeDef* ADCx, uint32_t ADC_Thresholds_Channel, FunctionalState NewState);
-S#endif
-S
-S/**
-S * @}
-S */
-S/* End of exported functions --------------------------------------------------*/
-S
-S/**
-S * @}
-S */
-S
-S/**
-S * @}
-S */
-S
-S#ifdef __cplusplus
+N#endif
+N
+N/**
+N * @}
+N */
+N/* End of exported functions --------------------------------------------------*/
+N
+N/**
+N * @}
+N */
+N
+N/**
+N * @}
+N */
+N
+N#ifdef __cplusplus
 S}
-S#endif
-S
+N#endif
+N
 N#endif
 L 32 "..\FWLib\SC32F1XXX_Lib\inc\sc32_conf.h" 2
 N#include "sc32f1xxx_cmp.h"
@@ -9634,7 +9711,7 @@ N#include "sc32f1xxx.h"
 N#include "sc32.h"
 N#include "sc32f1xxx_rcc.h"
 N#include "stdio.h"
-L 1 "D:\STM32\ARM\ARMCC\Bin\..\include\stdio.h" 1
+L 1 "D:\Develop\Keil\Keil_V5\ARM\ARMCC\bin\..\include\stdio.h" 1
 N/* stdio.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.9 */
 N/* Copyright (C) Codemist Ltd., 1988-1993                       */
 N/* Copyright 1991-1998 ARM Limited. All rights reserved.        */
@@ -9654,7 +9731,7 @@ N */
 N
 N#ifndef __stdio_h
 N#define __stdio_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060044
 N
 N/*
 N * Depending on compiler version __int64 or __INT64_TYPE__ should be defined.
@@ -17714,529 +17791,7 @@ S#include "sc32f1xxx_qep.h"
 N#endif
 N#endif
 N
-L 37 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_adc.h" 2
-N#include "sc32.h"
-N#include "sc32f1xxx_rcc.h"
-N
-N/** @addtogroup sc32f1xxx_StdPeriph_Driver
-N * @{
-N */
-N
-N/** @addtogroup ADC
-N * @{
-N */
-N
-N/* Exported enumerations ------------------------------------------------------------*/
-N/** @defgroup ADC_Exported_Enumerations ADC Exported Enumerations
-N * @{
-N */
-N
-N/** @brief ADC_ConvMode ADC Conversion Mode
-N * @{
-N */
-Ntypedef enum
-N{
-N    ADC_ConvMode_Single        = ( uint16_t ) ( 0x00 << ADC_CON_CONT_Pos ), /*!<Single conversion mode */
-X    ADC_ConvMode_Single        = ( uint16_t ) ( 0x00 << (11U) ),  
-N	#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-X	#if 0L||1L||0L||0L || 0L
-N    ADC_ConvMode_Continuous    = ( uint16_t ) ( 0x01 << ADC_CON_CONT_Pos ), /*!<Continuous conversion mode */
-X    ADC_ConvMode_Continuous    = ( uint16_t ) ( 0x01 << (11U) ),  
-N	#elif defined(SC32f15xx) || defined(SC32R601)
-S	ADC_ConvMode_Sequence    = ( uint16_t ) ( 0x01 << ADC_CON_CONT_Pos ), /*!<Continuous sequence mode */
-N	#endif
-N} ADC_ConvMode_TypeDef;
-N
-N#define IS_ADC_CONVMODE(MODE) (((MODE) == ADC_ConvMode_Single) ||  \
-N															 ((MODE) == ADC_ConvMode_Continuous))
-X#define IS_ADC_CONVMODE(MODE) (((MODE) == ADC_ConvMode_Single) ||  															 ((MODE) == ADC_ConvMode_Continuous))
-N/**
-N * @}
-N */
-N
-N/** @brief ADC_Prescaler ADC Prescaler
-N * @{
-N */
-Ntypedef enum
-N{
-N#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-X#if 0L||1L||0L||0L || 0L
-N    ADC_Prescaler_3CLOCK  = ( uint32_t ) ( 0x04 << ADC_CON_LOWSP_Pos ), /*!<The sampling time is 3 APB2 clocks */
-X    ADC_Prescaler_3CLOCK  = ( uint32_t ) ( 0x04 << (16U) ),  
-N    ADC_Prescaler_6CLOCK  = ( uint32_t ) ( 0x05 << ADC_CON_LOWSP_Pos ), /*!<The sampling time is 6 APB2 clocks */
-X    ADC_Prescaler_6CLOCK  = ( uint32_t ) ( 0x05 << (16U) ),  
-N    ADC_Prescaler_16CLOCK = ( uint32_t ) ( 0x06 << ADC_CON_LOWSP_Pos ), /*!<The sampling time is 16 APB2 clocks */
-X    ADC_Prescaler_16CLOCK = ( uint32_t ) ( 0x06 << (16U) ),  
-N    ADC_Prescaler_32CLOCK = ( uint32_t ) ( 0x07 << ADC_CON_LOWSP_Pos ), /*!<The sampling time is 32 APB2 clocks */
-X    ADC_Prescaler_32CLOCK = ( uint32_t ) ( 0x07 << (16U) ),  
-N#elif defined(SC32f15xx) || defined(SC32R601)
-S    ADC_Prescaler_3CLOCK   = (uint32_t)(0x00 << ADC_CON_LOWSP_Pos),  /* The sampling time is 3   APB2 clocks */
-S    ADC_Prescaler_6CLOCK   = (uint32_t)(0x01 << ADC_CON_LOWSP_Pos),  /* The sampling time is 6   APB2 clocks */
-S    ADC_Prescaler_9CLOCK   = (uint32_t)(0x02 << ADC_CON_LOWSP_Pos),  /* The sampling time is 9   APB2 clocks */
-S    ADC_Prescaler_15CLOCK  = (uint32_t)(0x03 << ADC_CON_LOWSP_Pos),  /* The sampling time is 15  APB2 clocks */
-S    ADC_Prescaler_30CLOCK  = (uint32_t)(0x04 << ADC_CON_LOWSP_Pos),  /* The sampling time is 30  APB2 clocks */
-S    ADC_Prescaler_60CLOCK  = (uint32_t)(0x05 << ADC_CON_LOWSP_Pos),  /* The sampling time is 60  APB2 clocks */
-S    ADC_Prescaler_120CLOCK = (uint32_t)(0x06 << ADC_CON_LOWSP_Pos),  /* The sampling time is 120 APB2 clocks */
-S    ADC_Prescaler_480CLOCK = (uint32_t)(0x07 << ADC_CON_LOWSP_Pos),  /* The sampling time is 480 APB2 clocks */	
-N#endif
-N} ADC_Prescaler_TypeDef;
-N#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-X#if 0L||1L||0L||0L || 0L
-N#define IS_ADC_PRESCALER(PRESCALER) (((PRESCALER) == ADC_Prescaler_3CLOCK) ||  \
-N																		 ((PRESCALER) == ADC_Prescaler_6CLOCK) ||  \
-N																		 ((PRESCALER) == ADC_Prescaler_16CLOCK) || \
-N																		 ((PRESCALER) == ADC_Prescaler_32CLOCK))
-X#define IS_ADC_PRESCALER(PRESCALER) (((PRESCALER) == ADC_Prescaler_3CLOCK) ||  																		 ((PRESCALER) == ADC_Prescaler_6CLOCK) ||  																		 ((PRESCALER) == ADC_Prescaler_16CLOCK) || 																		 ((PRESCALER) == ADC_Prescaler_32CLOCK))
-N#elif defined(SC32f15xx) || defined(SC32R601)
-S#define IS_ADC_PRESCALER(PRESCALER) (((PRESCALER) == ADC_Prescaler_3CLOCK)   || \
-S                                     ((PRESCALER) == ADC_Prescaler_6CLOCK)   || \
-S                                     ((PRESCALER) == ADC_Prescaler_9CLOCK)   || \
-S                                     ((PRESCALER) == ADC_Prescaler_15CLOCK)  || \
-S                                     ((PRESCALER) == ADC_Prescaler_30CLOCK)  || \
-S                                     ((PRESCALER) == ADC_Prescaler_60CLOCK)  || \
-S                                     ((PRESCALER) == ADC_Prescaler_120CLOCK) || \
-S                                     ((PRESCALER) == ADC_Prescaler_480CLOCK))
-X#define IS_ADC_PRESCALER(PRESCALER) (((PRESCALER) == ADC_Prescaler_3CLOCK)   ||                                      ((PRESCALER) == ADC_Prescaler_6CLOCK)   ||                                      ((PRESCALER) == ADC_Prescaler_9CLOCK)   ||                                      ((PRESCALER) == ADC_Prescaler_15CLOCK)  ||                                      ((PRESCALER) == ADC_Prescaler_30CLOCK)  ||                                      ((PRESCALER) == ADC_Prescaler_60CLOCK)  ||                                      ((PRESCALER) == ADC_Prescaler_120CLOCK) ||                                      ((PRESCALER) == ADC_Prescaler_480CLOCK))
-N#endif
-N/**
-N * @}
-N */
-N
-N/** @brief ADC_ChannelTypedef ADC input channel
-N * @{
-N */
-N
-Ntypedef enum
-N{
-N    ADC_Channel_0      = ( uint16_t ) 0x00,		 /*!< ADC input channel 0 */
-N    ADC_Channel_1      = ( uint16_t ) 0x01,		 /*!< ADC input channel 1 */
-N    ADC_Channel_2      = ( uint16_t ) 0x02,		 /*!< ADC input channel 2 */
-N    ADC_Channel_3      = ( uint16_t ) 0x03,		 /*!< ADC input channel 3 */
-N    ADC_Channel_4      = ( uint16_t ) 0x04,		 /*!< ADC input channel 4 */
-N#if !defined(SC32R601)
-X#if !0L
-N    ADC_Channel_5      = ( uint16_t ) 0x05,	 	 /*!< ADC input channel 5 */
-N    ADC_Channel_6      = ( uint16_t ) 0x06,		 /*!< ADC input channel 6 */
-N#endif
-N    ADC_Channel_7      = ( uint16_t ) 0x07,		 /*!< ADC input channel 7 */
-N    ADC_Channel_8      = ( uint16_t ) 0x08,		 /*!< ADC input channel 8 */
-N    ADC_Channel_9      = ( uint16_t ) 0x09,		 /*!< ADC input channel 9 */
-N    ADC_Channel_10     = ( uint16_t ) 0x0A,		 /*!< ADC input channel 10 */
-N    ADC_Channel_11     = ( uint16_t ) 0x0B,		 /*!< ADC input channel 11 */
-N    ADC_Channel_12     = ( uint16_t ) 0x0C,		 /*!< ADC input channel 12 */
-N    ADC_Channel_13     = ( uint16_t ) 0x0D,		 /*!< ADC input channel 13 */
-N#if !defined(SC32R601)
-X#if !0L
-N    ADC_Channel_14     = ( uint16_t ) 0x0E,		 /*!< ADC input channel 14 */
-N#endif
-N    ADC_Channel_15     = ( uint16_t ) 0x0F,		 /*!< ADC input channel 15 */
-N   
-N#if defined(SC32f10xx)
-X#if 0L
-S    ADC_Channel_16     = ( uint16_t ) 0x10,		 /*!< ADC input channel 16 */
-S	  ADC_Channel_VDD_D4 = ( uint16_t ) 0x1F,		 /*!< ADC_CHANNEL VDD Divide 4 */
-N#elif defined(SC32R803)
-X#elif 1L
-N    ADC_Channel_16     = ( uint16_t ) 0x10,		 /*!< ADC input channel 16 */
-N    ADC_Channel_17     = ( uint16_t ) 0x11,		 /*!< ADC input channel 17 */
-N    ADC_Channel_OP    = ( uint16_t ) 0x1E,		 /*!< ADC_CHANNEL OP */
-N		ADC_Channel_VDD_D4 = ( uint16_t ) 0x1F,		 /*!< ADC_CHANNEL VDD Divide 4 */
-N#elif defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-S    ADC_Channel_OP    = ( uint16_t ) 0x1E,		 /*!< ADC_CHANNEL OP */
-S		ADC_Channel_VDD_D4 = ( uint16_t ) 0x1F,		 /*!< ADC_CHANNEL VDD Divide 4 */
-S#elif defined(SC32f15xx)
-S    ADC_Channel_VDD_D4 = ( uint16_t ) 0x10,		 /*!< ADC_CHANNEL VDD Divide 4 */
-S    ADC_Channel_TEMP   = (uint16_t)0x11,		 /*!< ADC input channel TEMP */
-S#elif defined(SC32R601)
-S		ADC_Channel_VDD_D4 = ( uint16_t ) 0x10,		 /*!< ADC_CHANNEL VDD Divide 4 */
-S		
-N#endif
-N} ADC_ChannelTypedef;
-N
-N
-N#if defined(SC32f10xx)
-X#if 0L
-S#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_16 ||\
-S                                 (CHANNEL) == ADC_Channel_VDD_D4)
-X#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_16 ||                                 (CHANNEL) == ADC_Channel_VDD_D4)
-N#elif defined(SC32R803)
-X#elif 1L
-N#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_17  ||\
-N                                 (CHANNEL) == ADC_Channel_OP ||\
-N                                 (CHANNEL) == ADC_Channel_VDD_D4)
-X#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_17  ||                                 (CHANNEL) == ADC_Channel_OP ||                                 (CHANNEL) == ADC_Channel_VDD_D4)
-N#elif defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-S#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_15  ||\
-S                                 (CHANNEL) == ADC_Channel_OP ||\
-S                                 (CHANNEL) == ADC_Channel_VDD_D4)
-X#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_15  ||                                 (CHANNEL) == ADC_Channel_OP ||                                 (CHANNEL) == ADC_Channel_VDD_D4)
-S#elif defined(SC32f15xx)
-S#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_15  ||\
-S                                 (CHANNEL) == ADC_Channel_TEMP ||\
-S                                 (CHANNEL) == ADC_Channel_VDD_D4)
-X#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_15  ||                                 (CHANNEL) == ADC_Channel_TEMP ||                                 (CHANNEL) == ADC_Channel_VDD_D4)
-S#elif defined(SC32R601)
-S#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_15  ||\
-S                                 (CHANNEL) == ADC_Channel_VDD_D4)
-X#define IS_ADC_CHANNEL(CHANNEL) ((CHANNEL) <= ADC_Channel_15  ||                                 (CHANNEL) == ADC_Channel_VDD_D4)
-N#endif
-N/**
-N * @}
-N */
-N#if defined(SC32f15xx)
-X#if 0L
-S/** @defgroup ADC_ChannelATypedef ADC input channel
-S * @{
-S */
-Stypedef enum
-S{
-S    ADC_ChannelA_0      = (uint16_t)0x00,		 /*!< ADC input channel 0 */ 
-S    ADC_ChannelA_2      = (uint16_t)0x02,		 /*!< ADC input channel 2 */
-S    ADC_ChannelA_4      = (uint16_t)0x04,		 /*!< ADC input channel 4 */ 
-S    ADC_ChannelA_6      = (uint16_t)0x06,		 /*!< ADC input channel 6 */
-S    ADC_ChannelA_8      = (uint16_t)0x08,		 /*!< ADC input channel 8 */
-S    ADC_ChannelA_10     = (uint16_t)0x0A,		 /*!< ADC input channel 10 */
-S    ADC_ChannelA_12     = (uint16_t)0x0C,		 /*!< ADC input channel 12 */
-S    ADC_ChannelA_14     = (uint16_t)0x0E,		 /*!< ADC input channel 14 */
-S    ADC_ChannelA_VDD_D4 = (uint16_t)0x10,		 /*!< ADC_CHANNEL VDD Divide 4 */
-S} ADC_ChannelATypedef;
-S
-S#define IS_ADC_ChannelA(ChannelA) ((ChannelA) != 0)
-S/** @defgroup ADC_ChannelBTypedef ADC input channel
-S * @{
-S */
-Stypedef enum
-S{
-S   
-S    ADC_ChannelB_1      = (uint16_t)0x01,		 /*!< ADC input channel 1 */   
-S    ADC_ChannelB_3      = (uint16_t)0x03,		 /*!< ADC input channel 3 */
-S    ADC_ChannelB_5      = (uint16_t)0x05,		 /*!< ADC input channel 5 */
-S    ADC_ChannelB_7      = (uint16_t)0x07,		 /*!< ADC input channel 7 */  
-S    ADC_ChannelB_9      = (uint16_t)0x09,		 /*!< ADC input channel 9 */ 
-S    ADC_ChannelB_11     = (uint16_t)0x0B,		 /*!< ADC input channel 11 */ 
-S    ADC_ChannelB_13     = (uint16_t)0x0D,		 /*!< ADC input channel 13 */ 
-S    ADC_ChannelB_15     = (uint16_t)0x0F,		 /*!< ADC input channel 15 */ 
-S    ADC_ChannelB_TEMP   = (uint16_t)0x11,		 /*!< ADC input channel TEMP */
-S} ADC_ChannelBTypedef;
-S
-S#define IS_ADC_ChannelB(ChannelB) ((ChannelB)!= 0)
-S
-N#endif
-N
-N/** @defgroup ADC_Thresholds_Channel ADC Thresholds Channel 
-N * @{
-N */
-Ntypedef enum
-N{
-N    ADC_Thresholds_Channel_Less = (uint32_t)0x00000000, /*!< ADC port Less */
-N    ADC_Thresholds_Channel_0   = (uint32_t)0x00000001,  /*!< ADC port 0  */
-N    ADC_Thresholds_Channel_1   = (uint32_t)0x00000002,  /*!< ADC port 1  */
-N    ADC_Thresholds_Channel_2   = (uint32_t)0x00000004,  /*!< ADC port 2  */
-N    ADC_Thresholds_Channel_3   = (uint32_t)0x00000008,  /*!< ADC port 3  */
-N    ADC_Thresholds_Channel_4   = (uint32_t)0x00000010,  /*!< ADC port 4  */
-N    ADC_Thresholds_Channel_5   = (uint32_t)0x00000020,  /*!< ADC port 5  */
-N    ADC_Thresholds_Channel_6   = (uint32_t)0x00000040,  /*!< ADC port 6  */
-N    ADC_Thresholds_Channel_7   = (uint32_t)0x00000080,  /*!< ADC port 7  */
-N    ADC_Thresholds_Channel_8   = (uint32_t)0x00000100,  /*!< ADC port 8  */
-N    ADC_Thresholds_Channel_9   = (uint32_t)0x00000200,  /*!< ADC port 9  */
-N    ADC_Thresholds_Channel_10  = (uint32_t)0x00000400,  /*!< ADC port 10 */
-N    ADC_Thresholds_Channel_11  = (uint32_t)0x00000800,  /*!< ADC port 11 */
-N    ADC_Thresholds_Channel_12  = (uint32_t)0x00001000,  /*!< ADC port 12 */
-N    ADC_Thresholds_Channel_13  = (uint32_t)0x00002000,  /*!< ADC port 13 */
-N    ADC_Thresholds_Channel_14  = (uint32_t)0x00004000,  /*!< ADC port 14 */
-N    ADC_Thresholds_Channel_15  = (uint32_t)0x00008000,  /*!< ADC port 15 */
-N    ADC_Thresholds_Channel_All = (uint32_t)0x0000FFFF,  /*!< ADC port All */
-N} ADC_Thresholds_Channel_Typedef;
-N
-N#define IS_ADC_Thresholds_Channel(Channel) ((Channel | ADC_Thresholds_Channel_All) != 0)
-N/** @defgroup ADC_SQGroup ADC SQGroup
-N * @{
-N */
-Ntypedef enum
-N{
-N    ADC_SQGroup_0    = (uint32_t)0x0000,   /*!< ADC sequence group 0 */
-N} ADC_SQGroup_Typedef;
-N
-N#define IS_ADC_SQGROUP(GROUP) ((GROUP) != 0)
-N/**
-N * @}
-N */
-N
-N/** @defgroup ADC_SQRank ADC SQRank
-N * @{
-N */
-Ntypedef enum
-N{
-N    ADC_SQRank_0    = (uint32_t)0x0000,   /*!< ADC sequence Channel 0 */
-N    ADC_SQRank_1    = (uint32_t)0x0001,   /*!< ADC sequence Channel 1 */
-N    ADC_SQRank_2    = (uint32_t)0x0002,   /*!< ADC sequence Channel 2 */
-N    ADC_SQRank_3    = (uint32_t)0x0003,   /*!< ADC sequence Channel 3 */
-N    ADC_SQRank_4    = (uint32_t)0x0004,   /*!< ADC sequence Channel 4 */
-N    ADC_SQRank_5    = (uint32_t)0x0005,   /*!< ADC sequence Channel 5 */
-N    ADC_SQRank_6    = (uint32_t)0x0006,   /*!< ADC sequence Channel 6 */
-N    ADC_SQRank_7    = (uint32_t)0x0007,   /*!< ADC sequence Channel 7 */
-N    ADC_SQRank_8    = (uint32_t)0x0008,   /*!< ADC sequence Channel 8 */
-N    ADC_SQRank_9    = (uint32_t)0x0009,   /*!< ADC sequence Channel 9 */
-N    ADC_SQRank_10   = (uint32_t)0x000A,   /*!< ADC sequence Channel 10 */
-N    ADC_SQRank_11   = (uint32_t)0x000B,   /*!< ADC sequence Channel 11 */
-N    ADC_SQRank_12   = (uint32_t)0x000C,   /*!< ADC sequence Channel 12 */
-N    ADC_SQRank_13   = (uint32_t)0x000D,   /*!< ADC sequence Channel 13 */
-N    ADC_SQRank_14   = (uint32_t)0x000E,   /*!< ADC sequence Channel 14 */
-N    ADC_SQRank_15   = (uint32_t)0x000F,   /*!< ADC sequence Channel 15 */
-N} ADC_SQRank_Typedef;
-N
-N#define IS_ADC_SQRANK(RANK) ((RANK) != 0)
-N/**
-N * @}
-N */
-N 
-N/** @brief ADC_EAIN ADC Enable Input
-N * @{
-N */
-N
-Ntypedef enum
-N{
-N    ADC_EAIN_Less = ( uint32_t ) 0x00000000,	/*!< ADC port Less */
-N    ADC_EAIN_0   = ( uint32_t ) 0x00000001,	/*!< ADC port 0 */
-N    ADC_EAIN_1   = ( uint32_t ) 0x00000002,	/*!< ADC port 1 */
-N    ADC_EAIN_2   = ( uint32_t ) 0x00000004,	/*!< ADC port 2 */
-N    ADC_EAIN_3   = ( uint32_t ) 0x00000008,	/*!< ADC port 3 */
-N    ADC_EAIN_4   = ( uint32_t ) 0x00000010,	/*!< ADC port 4 */
-N    ADC_EAIN_5   = ( uint32_t ) 0x00000020,	/*!< ADC port 5 */
-N    ADC_EAIN_6   = ( uint32_t ) 0x00000040,	/*!< ADC port 6 */
-N    ADC_EAIN_7   = ( uint32_t ) 0x00000080,	/*!< ADC port 7 */
-N    ADC_EAIN_8   = ( uint32_t ) 0x00000100,	/*!< ADC port 8 */
-N    ADC_EAIN_9   = ( uint32_t ) 0x00000200,	/*!< ADC port 9 */
-N    ADC_EAIN_10   = ( uint32_t ) 0x0000400,	/*!< ADC port 10 */
-N    ADC_EAIN_11   = ( uint32_t ) 0x0000800,	/*!< ADC port 11 */
-N    ADC_EAIN_12  = ( uint32_t ) 0x00001000, /*!< ADC port 12 */
-N    ADC_EAIN_13  = ( uint32_t ) 0x00002000, /*!< ADC port 13 */
-N    ADC_EAIN_14  = ( uint32_t ) 0x00004000, /*!< ADC port 14 */
-N    ADC_EAIN_15  = ( uint32_t ) 0x00008000, /*!< ADC port 15 */
-N#if defined(SC32f10xx)
-X#if 0L
-S    ADC_EAIN_16  = ( uint32_t ) 0x00010000, /*!< ADC port 16 */
-S    ADC_EAIN_All = ( uint32_t ) 0x0001FFFF, /*!< ADC port All */
-N#elif defined(SC32R803)
-X#elif 1L
-N    ADC_EAIN_16  = ( uint32_t ) 0x00010000, /*!< ADC port 16 */
-N    ADC_EAIN_17  = ( uint32_t ) 0x00020000, /*!< ADC port 17 */
-N    ADC_EAIN_All = ( uint32_t ) 0x0003FFFF, /*!< ADC port All */
-N#elif defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806) ||defined(SC32f15xx) || defined(SC32R601)
-S    ADC_EAIN_All = ( uint32_t ) 0x0000FFFF, /*!< ADC port All */
-N#endif
-N} ADC_EAIN_Typedef;
-N
-N
-N
-N#define IS_ADC_EAIN(EAIN) ((EAIN | ADC_EAIN_All) != 0 || EAIN == ADC_EAIN_Less)
-N/**
-N * @}
-N */
-N
-N/** @brief ADC_VREF ADC Reference Voltage
-N * @{
-N */
-Ntypedef enum
-N{
-N#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-X#if 0L||1L||0L||0L || 0L
-N    ADC_VREF_VDD    = ( uint32_t ) ( 0x00 << ADC_CON_VREFS_Pos ),	 /*!< ADC reference voltage is VDD    */
-X    ADC_VREF_VDD    = ( uint32_t ) ( 0x00 << (20U) ),	  
-N    ADC_VREF_2_048V = ( uint32_t ) ( 0x01 << ADC_CON_VREFS_Pos ),	 /*!< ADC reference voltage is 2.048V */
-X    ADC_VREF_2_048V = ( uint32_t ) ( 0x01 << (20U) ),	  
-N    ADC_VREF_1_024V = ( uint32_t ) ( 0x02 << ADC_CON_VREFS_Pos ),	 /*!< ADC reference voltage is 1.024V */
-X    ADC_VREF_1_024V = ( uint32_t ) ( 0x02 << (20U) ),	  
-N    ADC_VREF_2_4V   = ( uint32_t ) ( 0x03 << ADC_CON_VREFS_Pos )	 /*!< ADC reference voltage is 2.4V   */
-X    ADC_VREF_2_4V   = ( uint32_t ) ( 0x03 << (20U) )	  
-N#elif defined(SC32f15xx) || defined(SC32R601)
-S    ADC_RefSource_VDD  = (uint32_t)(0x00 << ADC_CON_REFSEL_Pos),	  /*!< ADC reference voltage is VDD    */
-S    ADC_RefSource_VREF = (uint32_t)(0x01 << ADC_CON_REFSEL_Pos),	  /*!< ADC reference voltage is Vref */
-N#endif
-N} ADC_VREF_TypeDef;
-N#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-X#if 0L||1L||0L||0L || 0L
-N#define IS_ADC_VREF(VREF) (((VREF) == ADC_VREF_VDD)    || \
-N													 ((VREF) == ADC_VREF_2_048V) || \
-N													 ((VREF) == ADC_VREF_1_024V) || \
-N													 ((VREF) == ADC_VREF_2_4V))
-X#define IS_ADC_VREF(VREF) (((VREF) == ADC_VREF_VDD)    || 													 ((VREF) == ADC_VREF_2_048V) || 													 ((VREF) == ADC_VREF_1_024V) || 													 ((VREF) == ADC_VREF_2_4V))
-N#elif defined(SC32f15xx) || defined(SC32R601)
-S#define IS_ADC_VREF(VREF) (((VREF) == ADC_RefSource_VDD)    || \
-S                           ((VREF) == ADC_RefSource_VREF))
-X#define IS_ADC_VREF(VREF) (((VREF) == ADC_RefSource_VDD)    ||                            ((VREF) == ADC_RefSource_VREF))
-N#endif
-N/**
-N * @}
-N */
-N
-N/** @brief ADC_IT ADC Interrupt
-N * @{
-N */
-Ntypedef enum
-N{
-N#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-X#if 0L||1L||0L||0L || 0L
-N    ADC_IT_ADCIF = ( uint16_t ) ADC_CON_INTEN,	/*!< ADC Interrupt: ADC  Interrupt */
-X    ADC_IT_ADCIF = ( uint16_t ) (0x1UL << (8U)),	 
-N#elif defined(SC32f15xx) || defined(SC32R601)
-S    ADC_IT_INTEN    = (uint16_t)ADC_IDE_INTEN,	    /*!< ADC interrupt request Flag */
-S    ADC_IT_EOCIE    = (uint16_t)ADC_IDE_EOCIE,	/*!< ADC sequence 0 sampling + conversion complete interrupt Flag */
-S    ADC_IT_EOSIE0   = (uint16_t)ADC_IDE_EOSIE0,	/*!< ADC sequence 0 sampling + conversion complete interrupt Flag */
-S    ADC_IT_UPTHIE   = (uint16_t)ADC_IDE_UPTHIE,	/*!< ADC upper threshold overflow Flag */
-S    ADC_IT_LOWTHIE  = (uint16_t)ADC_IDE_LOWTHIE,	/*!< ADC lower threshold overflow Flag */
-N#endif	
-N} ADC_IT_TypeDef;
-N
-N#define IS_ADC_IT(IT) ((((IT) & (uint16_t)0xFEFF) == 0x00) && ((IT) != (uint16_t)0x0000))
-N/**
-N * @}
-N */
-N
-N/** @brief ADC_FLAG ADC Flag
-N * @{
-N */
-Ntypedef enum
-N{
-N#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-X#if 0L||1L||0L||0L || 0L
-N    ADC_Flag_ADCIF = ( uint8_t ) ADC_STS_EOC,	/*!< ADC Flag:ADC  Flag */
-X    ADC_Flag_ADCIF = ( uint8_t ) (0x01UL << (0U)),	 
-N#elif defined(SC32f15xx) || defined(SC32R601)
-S    ADC_Flag_ADCIF    = (uint8_t)ADC_STS_EOCIF,   /*!< ADC interrupt request Flag */
-S    ADC_Flag_EOSIF0   = (uint8_t)ADC_STS_EOSIF0,	/*!< ADC sequence 0 sampling + conversion complete interrupt Flag */
-S    ADC_Flag_BUSY     = (uint8_t)ADC_STS_BUSY,    /*!< ADC busy Flag */
-S    ADC_Flag_UPTHIF   = (uint8_t)ADC_STS_UPTHIF,	/*!< ADC upper threshold overflow Flag */
-S    ADC_Flag_LOWTHIF  = (uint8_t)ADC_STS_LOWTHIF,	/*!< ADC lower threshold overflow Flag */
-S	  
-N#endif	
-N	ADC_Flag_OVERRUN =  (int)0x80000000UL,/*!< ADC overflow Flag */
-N} ADC_FLAG_TypeDef;
-N#if defined(SC32f10xx)||defined(SC32R803)||defined(SC32f12xx)||defined(SC32R805) || defined(SC32R806)
-X#if 0L||1L||0L||0L || 0L
-N#define IS_ADC_FLAG(FLAG) ((((FLAG) & (uint16_t)0xFFFE) == 0x00) && ((FLAG) != (uint16_t)0x0000))
-N#define IS_GET_ADC_FLAG(FLAG) ((FLAG) == ADC_Flag_ADCIF)
-N#elif defined(SC32f15xx) || defined(SC32R601)
-S#define IS_ADC_FLAG(FLAG) ((((FLAG) & (uint32_t)0x7FFE) == 0x00) && ((FLAG) != (uint32_t)0x0000))
-S
-N#endif
-N/**
-N * @}
-N */
-N
-N/**
-N * @}
-N */
-N/* End of enumerations -----------------------------------------------------*/
-N
-N
-N#define IS_ADC_ALL_PERIPH(PERIPH) ((PERIPH) == ADC)
-N
-N/**
-N * @}
-N */
-N/* End of constants -----------------------------------------------------*/
-N
-N/** @defgroup ADC_Exported_Struct ADC Exported Struct
-N * @{
-N */
-N
-N/** @brief ADC Time base Configuration Structure definition
-N * @{
-N */
-Ntypedef struct
-N{
-N    uint32_t ADC_Prescaler; /*!<  Specifies sampling time of ADC.
-N																  This parameter can be a value of @ref ADC_Prescaler_TypeDef */
-N
-N    uint32_t ADC_EAIN; /*!< Specifies Input channel of ADC.
-N																	This parameter can be a value of @ref ADC_EAIN_Typedef */
-N
-N    uint32_t ADC_VREF; /*!<  Specifies reference voltage of ADC.
-N																	This parameter can be a value of @ref ADC_VREF_TypeDef */
-N
-N    uint16_t ADC_ConvMode; /*!< Specifies ADC work conversion mode.
-N																	This parameter can be a value of @ref ADC_ConvMode_TypeDef */
-N} ADC_InitTypeDef;
-N/**
-N * @}
-N */
-N
-N/**
-N * @}
-N */
-N/* End of struct -----------------------------------------------------*/
-N
-N/** @addtogroup ADC_Exported_Functions ADC Exported Functions
-N * @{
-N */
-N
-N/* ADC Base functions ********************************************************/
-Nvoid ADC_DeInit ( ADC_TypeDef* ADCx );
-Nvoid ADC_Init ( ADC_TypeDef* ADCx, ADC_InitTypeDef* ADC_InitStruct );
-Nvoid ADC_StructInit ( ADC_InitTypeDef* ADC_InitStruct );
-Nvoid ADC_Cmd ( ADC_TypeDef *ADCx, FunctionalState NewState );
-Nvoid ADC_ConvModeConfig ( ADC_TypeDef* ADCx, ADC_ConvMode_TypeDef ADC_ConvMode );
-Nvoid ADC_SetChannel ( ADC_TypeDef* ADCx, ADC_ChannelTypedef ADC_Channel );
-NADC_ChannelTypedef ADC_GetChannel ( ADC_TypeDef* ADCx );
-N
-N/* ADC Conversion management functions ********************************************************/
-Nuint16_t ADC_GetConversionValue ( ADC_TypeDef* ADCx );
-Nvoid ADC_SoftwareStartConv ( ADC_TypeDef* ADCx );
-N
-N/* Interrupts and flags  ***********************************************/
-Nvoid ADC_ITConfig ( ADC_TypeDef* ADCx, uint16_t ADC_IT, FunctionalState NewState );
-NFlagStatus ADC_GetFlagStatus ( ADC_TypeDef* ADCx, uint32_t ADC_FLAG );
-Nvoid ADC_ClearFlag ( ADC_TypeDef* ADCx, uint32_t ADC_FLAG );
-Nvoid ADC_DMACmd ( ADC_TypeDef *ADCx, FunctionalState NewState );
-N#if defined(SC32f15xx) || defined(SC32R601)
-X#if 0L || 0L
-Svoid ADC_SequenceChannelConfig(ADC_TypeDef* ADCx,ADC_SQRank_Typedef ADC_SQRank,ADC_ChannelTypedef ADC_Channel);
-Svoid ADC_SequenceGroupConfig(ADC_TypeDef* ADCx,uint8_t SQStr,uint8_t SQCnt);
-Svoid ADC_SetThresholds(ADC_TypeDef* ADCx, uint16_t HighThreshold,uint16_t LowThreshold);
-Svoid ADC_ThresholdsChannelConfig(ADC_TypeDef* ADCx, uint32_t ADC_Thresholds_Channel, FunctionalState NewState);
-N#endif
-N
-N/**
-N * @}
-N */
-N/* End of exported functions --------------------------------------------------*/
-N
-N/**
-N * @}
-N */
-N
-N/**
-N * @}
-N */
-N
-N#ifdef __cplusplus
-S}
-N#endif
-N
-N#endif
-L 17 "..\User\main.c" 2
-N#include "SC_Init.h"
-L 1 "..\User\SC_Init.h" 1
-N/**
-N *****************************************************************************************************
-N  * @copyright	(c)  Shenzhen Saiyuan Microelectronics Co., Ltd
-N  * @file	         SC_Init.h
-N  * @author	 
-N  * @version 	     
-N  * @date	         2024.03.11
-N  * @brief	         Contains the MCU initialization function and its H file
-N  * @details         
-N *****************************************************************************************************
-N * @attention
-N *
-N *****************************************************************************************************
-N */
-N
-N#ifndef _SC_INIT_H_
-N#define _SC_INIT_H_
-N
-N#include "sc32_conf.h"
+L 20 "..\User\SC_Init.h" 2
 N
 Nvoid SC_Init(void);
 Nvoid SC_NVIC_Init(void);
@@ -18333,7 +17888,7 @@ N
 N/**************************************Generated by EasyCodeCube*************************************/
 N//Forbid editing areas between the labels !!!
 N/*************************************.Generated by EasyCodeCube.************************************/
-L 18 "..\User\main.c" 2
+L 9 "..\User\main.c" 2
 N#include "SC_it.h"
 L 1 "..\User\SC_it.h" 1
 N/**
@@ -18426,30 +17981,9 @@ N
 N/**************************************Generated by EasyCodeCube*************************************/
 N//Forbid editing areas between the labels !!!
 N/*************************************.Generated by EasyCodeCube.************************************/
-L 19 "..\User\main.c" 2
-N#include "Wave_Show_gy.h"
-L 1 "..\User\Wave_Show_gy.h" 1
-N#ifndef __WAVE_SHOW_GY_H
-N#define __WAVE_SHOW_GY_H
-N
-N#include "sc32.h"           
-N#include "TFT_Lcd.h"        
-L 1 "..\Apps\TFT_Lcd.h" 1
-N//************************************************************
-N//  Copyright (c)
-N//	FileName	  : TFT_Lcd.h
-N//	Function	  : TFT LCD Display
-N//  Instructions  :
-N//  Date          : 2023/09/01
-N// 	Version		  : V1.0
-N//*************************************************************
-N#ifndef __TFT_LCD_H
-N#define __TFT_LCD_H
-N
-N#include "SC_Init.h"
-N#include "SC_it.h"
+L 10 "..\User\main.c" 2
 N#include "..\Drivers\SCDriver_list.h"
-L 1 "..\Apps\..\Drivers\SCDriver_list.h" 1
+L 1 "..\User\..\Drivers\SCDriver_list.h" 1
 N/************************************************************
 N//  Copyright (c) 
 N//	�ļ�����	: SCDriver_List.H
@@ -18464,7 +17998,7 @@ N#define _SCDriver_List_H_
 N/*<Generated by EasyCodeCube begin>*/
 N//Forbid editing areas between the labels !!!
 N#include ".\TKDriverNew\C\TKDriver.h"
-L 1 "..\Apps\..\Drivers\.\TKDriverNew\C\TKDriver.h" 1
+L 1 "..\User\..\Drivers\.\TKDriverNew\C\TKDriver.h" 1
 N#ifndef _SCTK_BASEKEYDEAL_H_
 N#define _SCTK_BASEKEYDEAL_H_
 N
@@ -18732,7 +18266,7 @@ N
 N
 N#endif
 N
-L 15 "..\Apps\..\Drivers\SCDriver_list.h" 2
+L 15 "..\User\..\Drivers\SCDriver_list.h" 2
 N/*<Generated by EasyCodeCube end>*/
 N
 N#endif
@@ -20852,7 +20386,10 @@ N
 N
 N
 N
-L 15 "..\Apps\TFT_Lcd.h" 2
+N
+N
+N
+L 11 "..\User\main.c" 2
 N#include "HeadFiles\SysFunVarDefine.h"
 L 1 "..\User\HeadFiles\SysFunVarDefine.h" 1
 N/**
@@ -22074,173 +21611,22 @@ N
 Nextern void ChangeTouchKeyvalue(void);
 Nextern void Sys_Scan(void);
 Nextern void IcResourceInit(void);
-L 16 "..\Apps\TFT_Lcd.h" 2
+L 12 "..\User\main.c" 2
+N#include "TFT_Lcd.h"
+L 1 "..\Apps\TFT_Lcd.h" 1
+N//************************************************************
+N//  Copyright (c)
+N//	FileName	  : TFT_Lcd.h
+N//	Function	  : TFT LCD Display
+N//  Instructions  :
+N//  Date          : 2023/09/01
+N// 	Version		  : V1.0
+N//*************************************************************
+N#ifndef __TFT_LCD_H
+N#define __TFT_LCD_H
 N
-N//���ⳣ��
-N//#define LCD_BLK_Clr() PX_BIT(n)=0
-N//#define LCD_BLK_Set() PX_BIT(n)=1
-N
-N#define LCD_CS_Clr()   PB_BIT(4)=0
-N#define LCD_CS_Set()   PB_BIT(4)=1
-N
-N#define LCD_DC_Clr()   PB_BIT(3)=0
-N#define LCD_DC_Set()   PB_BIT(3)=1
-N
-N//#define LCD_RES_Clr()  PB_BIT(2)=0
-N//#define LCD_RES_Set()  PB_BIT(2)=1
-N
-N//�ж�SPI��־λ
-N#define SPI_IF  (ITStatus)(SPI1->SPI_STS & SPI_FLAG_QTWIF)
-N//���SPI��־λ
-N#define CLEAR_SPI_IF()  SPI1->SPI_STS=(uint16_t)SPI_FLAG_QTWIF         
-N////���ú�������������ʾ 0��1Ϊ���� 2��3Ϊ����
-N#define USE_HORIZONTAL 3
-N
-N#define X_PIXEL_START 0   //��Ӳ���й�,1~160
-N#define Y_PIXEL_START 0   //��Ӳ���й�,1~132
-N
-N//#define X_PIXEL_START 3   //��Ӳ���й�,1~160
-N//#define Y_PIXEL_START 2   //��Ӳ���й�,1~132
-N
-N#define PINK   0xD2F5
-N#define BLUE   0x03bD
-N#define RED    0xF882
-N#define YELLOW 0xFFE0
-N#define WHITE  0xffff
-N#define BLACK  0x0000
-N
-N#define SPI_GET_DMA_STATUS   DMA_SPI_FLAG==RESET
-N
-N#define  DMA0_HakfWordSend()     DMA0->DMA_CFG &= (uint32_t)(~0x0000000C);\
-N                                 DMA0->DMA_CFG |= DMA_DataSize_HalfWord;
-X#define  DMA0_HakfWordSend()     DMA0->DMA_CFG &= (uint32_t)(~0x0000000C);                                 DMA0->DMA_CFG |= DMA_DataSize_HalfWord;
-N                                    
-N#define  DMA0_ByteSend()        DMA0->DMA_CFG &= (uint32_t)(~0x0000000C);\
-N                                DMA0->DMA_CFG |= DMA_DataSize_Byte;
-X#define  DMA0_ByteSend()        DMA0->DMA_CFG &= (uint32_t)(~0x0000000C);                                DMA0->DMA_CFG |= DMA_DataSize_Byte;
-N#define  DMA0_SrcFIXED()   DMA0->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC); \
-N                           DMA0->DMA_CFG |= DMA_SourceMode_FIXED;
-X#define  DMA0_SrcFIXED()   DMA0->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC);                            DMA0->DMA_CFG |= DMA_SourceMode_FIXED;
-N#define  DMA0_SrcINC()     DMA0->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC); \
-N                           DMA0->DMA_CFG |= DMA_SourceMode_INC;
-X#define  DMA0_SrcINC()     DMA0->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC);                            DMA0->DMA_CFG |= DMA_SourceMode_INC;
-N													 
-N#define  DMA1_HakfWordSend()     DMA1->DMA_CFG &= (uint32_t)(~0x0000000C);\
-N                                 DMA1->DMA_CFG |= DMA_DataSize_HalfWord;
-X#define  DMA1_HakfWordSend()     DMA1->DMA_CFG &= (uint32_t)(~0x0000000C);                                 DMA1->DMA_CFG |= DMA_DataSize_HalfWord;
-N                                    
-N#define  DMA1_ByteSend()        DMA1->DMA_CFG &= (uint32_t)(~0x0000000C);\
-N                                DMA1->DMA_CFG |= DMA_DataSize_Byte;
-X#define  DMA1_ByteSend()        DMA1->DMA_CFG &= (uint32_t)(~0x0000000C);                                DMA1->DMA_CFG |= DMA_DataSize_Byte;
-N#define  DMA1_SrcFIXED()   DMA1->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC); \
-N                           DMA1->DMA_CFG |= DMA_SourceMode_FIXED;
-X#define  DMA1_SrcFIXED()   DMA1->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC);                            DMA1->DMA_CFG |= DMA_SourceMode_FIXED;
-N#define  DMA1_SrcINC()     DMA1->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC); \
-N                           DMA1->DMA_CFG |= DMA_SourceMode_INC;
-X#define  DMA1_SrcINC()     DMA1->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC);                            DMA1->DMA_CFG |= DMA_SourceMode_INC;
-N													 
-N
-N
-N
-Nvoid delay_ms ( uint32_t ms );									
-Nvoid LCD_WR_DATA(uint16_t  dat,uint8_t Datalength);
-Nvoid LCD_WR_REG(uint16_t dat);
-Nvoid Lcd_Init(void);
-Nvoid LCD_Address_Set(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2);
-Nvoid LCD_Fill(uint16_t xsta,uint16_t ysta,uint16_t xend,uint16_t yend,uint16_t color);
-Nvoid LCD_Clear (uint16_t xsta, uint16_t ysta, uint16_t xend, uint16_t yend,volatile uint16_t color );
-Nvoid LCD_DrawPoint ( uint16_t x, uint16_t y, uint16_t color );
-Nvoid LCD_ShowPicture(uint16_t x,uint16_t y,uint16_t length,uint16_t width,const uint8_t pic[]);
-Nvoid LCD_ShowChar ( uint16_t x, uint16_t y, uint8_t num, uint16_t fc, uint16_t bc, uint8_t sizey);
-Nvoid LCD_ShowString(uint16_t x,uint16_t y,const uint8_t *p,uint16_t fc,uint16_t bc,uint8_t sizey);
-Nvoid LCD_ShowIntNum ( uint16_t x, uint16_t y, uint16_t num, uint8_t len, uint16_t fc, uint16_t bc, uint8_t sizey );
-Nvoid LCD_ShowChinese(uint16_t x,uint16_t y,uint8_t *s,uint16_t fc,uint16_t bc,uint8_t sizey);
-Nvoid LCD_ScrollSet ( uint16_t Topfix, uint16_t ScrollNum, uint16_t Botfix, uint16_t xsta );
-Nvoid LCD_ScrollReset ( uint16_t Topfix, uint16_t ScrollNum, uint16_t Botfix,uint16_t xsta, uint16_t ysta, uint16_t xend, uint16_t yend, uint16_t color, uint16_t xsta1);
-Nvoid TFT_DrawLine(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2,uint16_t color);
-Nvoid TFT_DrawRectangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,uint16_t color);
-Nvoid Draw_Circle(uint16_t x0,uint16_t y0,uint8_t r,uint16_t color);
-Nvoid drawCurve(uint8_t yOffset,short int rawValue);
-Nvoid LCD_ShowChinese12x12(uint16_t x,uint16_t y,uint8_t *s,uint16_t fc,uint16_t bc,uint8_t sizey);
-N#endif
-L 6 "..\User\Wave_Show_gy.h" 2
-N#include "Data_Acquisition.h" 
-L 1 "..\User\Data_Acquisition.h" 1
-N#ifndef __DATA_ACQUISITION_H
-N#define __DATA_ACQUISITION_H
-N
-N#include "sc32.h"
-N#include "sc32f1xxx_adc.h"
-N#include "sc32f1xxx_dma.h"
-N#include "sc32f1xxx_gpio.h"
-N#include "sc32f1xxx_rcc.h"
-N
-N// 配置区域
-N#define DAQ_SAMPLE_DEPTH    500
-N#define DAQ_TOTAL_BUF_SIZE  (DAQ_SAMPLE_DEPTH * 2)
-N
-N#define DAQ_CH1_GPIO_PORT   GPIOA
-N#define DAQ_CH1_PIN         GPIO_Pin_0 
-N#define DAQ_CH1_ADC_CH      ADC_Channel_0
-N
-N#define DAQ_CH2_GPIO_PORT   GPIOA
-N#define DAQ_CH2_PIN         GPIO_Pin_1 
-N#define DAQ_CH2_ADC_CH      ADC_Channel_1
-N
-Ntypedef struct {
-N    uint16_t Buffer[DAQ_TOTAL_BUF_SIZE]; 
-X    uint16_t Buffer[(500 * 2)]; 
-N} Data_Acq_Buffer_t;
-N
-Nextern Data_Acq_Buffer_t Acq_Data;
-Nextern volatile uint8_t  Acq_Done_Flag;
-N// ... 其他 extern ...
-N
-Nextern volatile uint8_t Current_Ch_Index; 
-N
-N
-N// ... 函数声明 ...
-Nvoid Data_Acquisition_Init(void);
-Nvoid Data_Acquisition_Start_Next(void);
-N
-N#endif /* __DATA_ACQUISITION_H */
-L 7 "..\User\Wave_Show_gy.h" 2
-N
-N// ================= ?????? =================
-N// ?? TFT_Lcd.h ????????,??????
-N#ifndef CYAN
-N#define CYAN      0x07FF
-N#endif
-N#ifndef YELLOW
-S#define YELLOW    0xFFE0
-N#endif
-N#ifndef BLACK
-S#define BLACK     0x0000
-N#endif
-N#ifndef BLUE
-S#define BLUE      0x001F
-N#endif
-N
-N// ================= ?????? =================
-N#define WAVE_X_START      0     
-N#define WAVE_DISP_WIDTH   240   
-N#define WAVE_DISP_HEIGHT  200   
-N#define WAVE_CENTER_Y     100   
-N
-N// ================= ???? =================
-N#define WAVE_COLOR_CH1    YELLOW  
-N#define WAVE_COLOR_CH2    CYAN    
-N#define WAVE_COLOR_BG     BLACK   
-N
-N// ================= ???? =================
-Nvoid Wave_Show_Init(void);      
-Nvoid Wave_Show_Update(void);    
-N
-Nvoid LCD_DrawGrid(uint16_t width, uint16_t height, uint16_t grid_w, uint16_t grid_h, uint16_t color);
-N
-W "..\User\Wave_Show_gy.h" 40 30 last line of file ends without a newline
-N#endif /* __WAVE_SHOW_GY_H */
-L 20 "..\User\main.c" 2
+N#include "SC_Init.h"
+N#include "SC_it.h"
 N#include "..\Drivers\SCDriver_list.h"
 N#include "HeadFiles\SysFunVarDefine.h"
 L 1 "..\User\HeadFiles\SysFunVarDefine.h" 1
@@ -23366,8 +22752,96 @@ N
 Nextern void ChangeTouchKeyvalue(void);
 Nextern void Sys_Scan(void);
 Nextern void IcResourceInit(void);
-L 22 "..\User\main.c" 2
-N#include "TFT_Lcd.h"
+L 16 "..\Apps\TFT_Lcd.h" 2
+N
+N//���ⳣ��
+N//#define LCD_BLK_Clr() PX_BIT(n)=0
+N//#define LCD_BLK_Set() PX_BIT(n)=1
+N
+N#define LCD_CS_Clr()   PB_BIT(4)=0
+N#define LCD_CS_Set()   PB_BIT(4)=1
+N
+N#define LCD_DC_Clr()   PB_BIT(3)=0
+N#define LCD_DC_Set()   PB_BIT(3)=1
+N
+N//#define LCD_RES_Clr()  PB_BIT(2)=0
+N//#define LCD_RES_Set()  PB_BIT(2)=1
+N
+N//�ж�SPI��־λ
+N#define SPI_IF  (ITStatus)(SPI1->SPI_STS & SPI_FLAG_QTWIF)
+N//���SPI��־λ
+N#define CLEAR_SPI_IF()  SPI1->SPI_STS=(uint16_t)SPI_FLAG_QTWIF         
+N////���ú�������������ʾ 0��1Ϊ���� 2��3Ϊ����
+N#define USE_HORIZONTAL 3
+N
+N#define X_PIXEL_START 0   //��Ӳ���й�,1~160
+N#define Y_PIXEL_START 0   //��Ӳ���й�,1~132
+N
+N//#define X_PIXEL_START 3   //��Ӳ���й�,1~160
+N//#define Y_PIXEL_START 2   //��Ӳ���й�,1~132
+N
+N#define PINK   0xD2F5
+N#define BLUE   0x03bD
+N#define RED    0xF882
+N#define YELLOW 0xFFE0
+N#define WHITE  0xffff
+N#define BLACK  0x0000
+N
+N#define SPI_GET_DMA_STATUS   DMA_SPI_FLAG==RESET
+N
+N#define  DMA0_HakfWordSend()     DMA0->DMA_CFG &= (uint32_t)(~0x0000000C);\
+N                                 DMA0->DMA_CFG |= DMA_DataSize_HalfWord;
+X#define  DMA0_HakfWordSend()     DMA0->DMA_CFG &= (uint32_t)(~0x0000000C);                                 DMA0->DMA_CFG |= DMA_DataSize_HalfWord;
+N                                    
+N#define  DMA0_ByteSend()        DMA0->DMA_CFG &= (uint32_t)(~0x0000000C);\
+N                                DMA0->DMA_CFG |= DMA_DataSize_Byte;
+X#define  DMA0_ByteSend()        DMA0->DMA_CFG &= (uint32_t)(~0x0000000C);                                DMA0->DMA_CFG |= DMA_DataSize_Byte;
+N#define  DMA0_SrcFIXED()   DMA0->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC); \
+N                           DMA0->DMA_CFG |= DMA_SourceMode_FIXED;
+X#define  DMA0_SrcFIXED()   DMA0->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC);                            DMA0->DMA_CFG |= DMA_SourceMode_FIXED;
+N#define  DMA0_SrcINC()     DMA0->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC); \
+N                           DMA0->DMA_CFG |= DMA_SourceMode_INC;
+X#define  DMA0_SrcINC()     DMA0->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC);                            DMA0->DMA_CFG |= DMA_SourceMode_INC;
+N													 
+N#define  DMA1_HakfWordSend()     DMA1->DMA_CFG &= (uint32_t)(~0x0000000C);\
+N                                 DMA1->DMA_CFG |= DMA_DataSize_HalfWord;
+X#define  DMA1_HakfWordSend()     DMA1->DMA_CFG &= (uint32_t)(~0x0000000C);                                 DMA1->DMA_CFG |= DMA_DataSize_HalfWord;
+N                                    
+N#define  DMA1_ByteSend()        DMA1->DMA_CFG &= (uint32_t)(~0x0000000C);\
+N                                DMA1->DMA_CFG |= DMA_DataSize_Byte;
+X#define  DMA1_ByteSend()        DMA1->DMA_CFG &= (uint32_t)(~0x0000000C);                                DMA1->DMA_CFG |= DMA_DataSize_Byte;
+N#define  DMA1_SrcFIXED()   DMA1->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC); \
+N                           DMA1->DMA_CFG |= DMA_SourceMode_FIXED;
+X#define  DMA1_SrcFIXED()   DMA1->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC);                            DMA1->DMA_CFG |= DMA_SourceMode_FIXED;
+N#define  DMA1_SrcINC()     DMA1->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC); \
+N                           DMA1->DMA_CFG |= DMA_SourceMode_INC;
+X#define  DMA1_SrcINC()     DMA1->DMA_CFG &= (uint32_t)(~DMA_SourceMode_INC_CIRC);                            DMA1->DMA_CFG |= DMA_SourceMode_INC;
+N													 
+N
+N
+N
+Nvoid delay_ms ( uint32_t ms );									
+Nvoid LCD_WR_DATA(uint16_t  dat,uint8_t Datalength);
+Nvoid LCD_WR_REG(uint16_t dat);
+Nvoid Lcd_Init(void);
+Nvoid LCD_Address_Set(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2);
+Nvoid LCD_Fill(uint16_t xsta,uint16_t ysta,uint16_t xend,uint16_t yend,uint16_t color);
+Nvoid LCD_Clear (uint16_t xsta, uint16_t ysta, uint16_t xend, uint16_t yend,volatile uint16_t color );
+Nvoid LCD_DrawPoint ( uint16_t x, uint16_t y, uint16_t color );
+Nvoid LCD_ShowPicture(uint16_t x,uint16_t y,uint16_t length,uint16_t width,const uint8_t pic[]);
+Nvoid LCD_ShowChar ( uint16_t x, uint16_t y, uint8_t num, uint16_t fc, uint16_t bc, uint8_t sizey);
+Nvoid LCD_ShowString(uint16_t x,uint16_t y,const uint8_t *p,uint16_t fc,uint16_t bc,uint8_t sizey);
+Nvoid LCD_ShowIntNum ( uint16_t x, uint16_t y, uint16_t num, uint8_t len, uint16_t fc, uint16_t bc, uint8_t sizey );
+Nvoid LCD_ShowChinese(uint16_t x,uint16_t y,uint8_t *s,uint16_t fc,uint16_t bc,uint8_t sizey);
+Nvoid LCD_ScrollSet ( uint16_t Topfix, uint16_t ScrollNum, uint16_t Botfix, uint16_t xsta );
+Nvoid LCD_ScrollReset ( uint16_t Topfix, uint16_t ScrollNum, uint16_t Botfix,uint16_t xsta, uint16_t ysta, uint16_t xend, uint16_t yend, uint16_t color, uint16_t xsta1);
+Nvoid TFT_DrawLine(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2,uint16_t color);
+Nvoid TFT_DrawRectangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,uint16_t color);
+Nvoid Draw_Circle(uint16_t x0,uint16_t y0,uint8_t r,uint16_t color);
+Nvoid drawCurve(uint8_t yOffset,short int rawValue);
+Nvoid LCD_ShowChinese12x12(uint16_t x,uint16_t y,uint8_t *s,uint16_t fc,uint16_t bc,uint8_t sizey);
+N#endif
+L 13 "..\User\main.c" 2
 N#include "Picture.h"
 L 1 "..\Apps\Picture.h" 1
 N//************************************************************
@@ -23400,7 +22874,7 @@ Nextern const unsigned char gImage_Softener[968];
 N
 N//extern const unsigned char gImage_aa[112000];
 N#endif
-L 24 "..\User\main.c" 2
+L 14 "..\User\main.c" 2
 N#include "lcdfont.h"
 L 1 "..\Apps\lcdfont.h" 1
 N#ifndef __LCDFONT_H
@@ -23420,8 +22894,134 @@ N
 N#endif
 N
 N
-L 25 "..\User\main.c" 2
-N#include "Data_Acquisition.H"
+L 15 "..\User\main.c" 2
+N
+N// 引入功能模块
+N#include "Data_Acquisition.h" // 【关键】包含此头文件以访问 AD 宏和 Acq_Data
+L 1 "..\User\Data_Acquisition.h" 1
+N#ifndef __DATA_ACQUISITION_H
+N#define __DATA_ACQUISITION_H
+N
+N#include "sc32f1xxx.h"
+N
+N// ================= 定义 =================
+N// 采集深度定义为 8 (满足底层需求)
+N#define DAQ_SAMPLE_DEPTH 8
+N
+N// 引脚定义 (根据你的实际电路修改)
+N#define DAQ_CH1_GPIO_PORT   GPIOA
+N#define DAQ_CH1_PIN         GPIO_Pin_0
+N#define DAQ_CH2_PIN         GPIO_Pin_1
+N// 注意：AIN10-15 的引脚也需要确保在 Init 中初始化
+N
+N// ================= 数据结构统一 =================
+N// 使用 Union 使得一套数据可以被不同的名称访问，兼容旧代码
+Ntypedef union {
+N    uint16_t Buffer[DAQ_SAMPLE_DEPTH]; // Wave_Show_gy.c 使用这个名字
+X    uint16_t Buffer[8]; 
+N    uint16_t v[DAQ_SAMPLE_DEPTH];      // main.c 可能使用这个名字
+X    uint16_t v[8];      
+N} Data_Acq_Buffer_t;
+N
+N// 为了兼容 main.c 中的 "extern AD_TypeDef AD;"
+Ntypedef Data_Acq_Buffer_t AD_TypeDef;
+N
+N// ================= 全局变量声明 =================
+Nextern Data_Acq_Buffer_t Acq_Data;
+N
+N// 宏定义：将 main.c 里的 AD 映射到 Acq_Data，解决变量名冲突
+N#define AD Acq_Data 
+N
+Nextern volatile uint8_t Acq_Done_Flag;
+N
+N// ================= 函数声明 =================
+Nvoid Data_Acquisition_Init(void);
+Nvoid Data_Acquisition_Start(void);      
+Nvoid Data_Acquisition_Start_Next(void); 
+N
+W "..\User\Data_Acquisition.h" 39 34 last line of file ends without a newline
+N#endif /* __DATA_ACQUISITION_H */
+L 18 "..\User\main.c" 2
+N#include "Menu.h"
+L 1 "..\User\Menu.h" 1
+N#ifndef __MENU_H
+N#define __MENU_H
+N
+N// 根据你的工程实际情况包含基础头文件
+N// 如果你的工程报错找不到 sc32.h，请改为 sc32_conf.h 或其他你工程里的头文件
+N#include "sc32.h"           
+N#include "TFT_Lcd.h"        
+N
+N// ================= 1. 颜色安全定义 =================
+N// 防止 TFT_Lcd.h 没定义这些颜色导致报错
+N#ifndef RED
+S#define RED   0xF800
+N#endif
+N#ifndef BLACK
+S#define BLACK 0x0000
+N#endif
+N#ifndef WHITE
+S#define WHITE 0xFFFF
+N#endif
+N#ifndef BLUE
+S#define BLUE  0x001F
+N#endif
+N
+N// ================= 2. 菜单配色配置 =================
+N#define MENU_BG_COLOR       RED    // 背景色
+N#define MENU_TEXT_SEL       WHITE  // 选中项颜色
+N#define MENU_TEXT_UNSEL     BLACK  // 未选中项颜色
+N
+N// ================= 3. 函数声明 =================
+Nvoid menu(void);
+N
+W "..\User\Menu.h" 32 22 last line of file ends without a newline
+N#endif /* __MENU_H */
+L 19 "..\User\main.c" 2
+N#include "Wave_Show_gy.h" 
+L 1 "..\User\Wave_Show_gy.h" 1
+N#ifndef __WAVE_SHOW_GY_H
+N#define __WAVE_SHOW_GY_H
+N
+N#include "sc32.h"           
+N#include "TFT_Lcd.h"        
+N#include "Data_Acquisition.h" 
+N
+N// ================= ?????? =================
+N// ?? TFT_Lcd.h ????????,??????
+N#ifndef CYAN
+N#define CYAN      0x07FF
+N#endif
+N#ifndef YELLOW
+S#define YELLOW    0xFFE0
+N#endif
+N#ifndef BLACK
+S#define BLACK     0x0000
+N#endif
+N#ifndef BLUE
+S#define BLUE      0x001F
+N#endif
+N
+N// ================= ?????? =================
+N#define WAVE_X_START      0     
+N#define WAVE_DISP_WIDTH   240   
+N#define WAVE_DISP_HEIGHT  200   
+N#define WAVE_CENTER_Y     100   
+N
+N// ================= ???? =================
+N#define WAVE_COLOR_CH1    YELLOW  
+N#define WAVE_COLOR_CH2    CYAN    
+N#define WAVE_COLOR_BG     BLACK   
+N
+N// ================= ???? =================
+Nvoid Wave_Show_Init(void);      
+Nvoid Wave_Show_Update(void);    
+N
+Nvoid LCD_DrawGrid(uint16_t width, uint16_t height, uint16_t grid_w, uint16_t grid_h, uint16_t color);
+N
+W "..\User\Wave_Show_gy.h" 40 30 last line of file ends without a newline
+N#endif /* __WAVE_SHOW_GY_H */
+L 20 "..\User\main.c" 2
 N#include "FFT_xtc.h"
 L 1 "..\User\FFT_xtc.h" 1
 N
@@ -23542,112 +23142,1826 @@ N
 Nvoid LCD_DrawFFT(float *b,uint8_t length,uint16_t color);
 Nvoid FFT(int16_t *a, float *f);
 N#endif  // __LCD_GRID_H
-L 27 "..\User\main.c" 2
-N#include "Menu.h"
-L 1 "..\User\Menu.h" 1
-N#ifndef __MENU_H
-N#define __MENU_H
+L 21 "..\User\main.c" 2
+N#include <string.h> 
+L 1 "D:\Develop\Keil\Keil_V5\ARM\ARMCC\bin\..\include\string.h" 1
+N/* string.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.11 */
+N/* Copyright (C) Codemist Ltd., 1988-1993.                        */
+N/* Copyright 1991-1993 ARM Limited. All rights reserved.          */
+N/* version 0.04 */
+N
+N/*
+N * RCS $Revision$
+N * Checkin $Date$
+N */
+N
+N/*
+N * string.h declares one type and several functions, and defines one macro
+N * useful for manipulating character arrays and other objects treated as
+N * character arrays. Various methods are used for determining the lengths of
+N * the arrays, but in all cases a char * or void * argument points to the
+N * initial (lowest addresses) character of the array. If an array is written
+N * beyond the end of an object, the behaviour is undefined.
+N */
+N
+N#ifndef __string_h
+N#define __string_h
+N#define __ARMCLIB_VERSION 5060044
+N
+N#define _ARMABI __declspec(__nothrow)
+N
+N  #ifndef __STRING_DECLS
+N  #define __STRING_DECLS
+N
+N    #undef __CLIBNS
+N
+N    #ifdef __cplusplus
+S        namespace std {
+S        #define __CLIBNS std::
+S        extern "C" {
+N    #else
+N      #define __CLIBNS
+N    #endif  /* __cplusplus */
+N
+N#if defined(__cplusplus) || !defined(__STRICT_ANSI__)
+X#if 0L || !0L
+N /* unconditional in C++ and non-strict C for consistency of debug info */
+N  #if __sizeof_ptr == 8
+X  #if 4 == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+N  #else
+N    typedef unsigned int size_t;   /* see <stddef.h> */
+N  #endif
+N#elif !defined(__size_t)
+S  #define __size_t 1
+S  #if __sizeof_ptr == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+S  #else
+S    typedef unsigned int size_t;   /* see <stddef.h> */
+S  #endif
+N#endif
+N
+N#undef NULL
+N#define NULL 0                   /* see <stddef.h> */
+N
+Nextern _ARMABI void *memcpy(void * __restrict /*s1*/,
+Xextern __declspec(__nothrow) void *memcpy(void * __restrict  ,
+N                    const void * __restrict /*s2*/, size_t /*n*/) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * copies n characters from the object pointed to by s2 into the object
+N    * pointed to by s1. If copying takes place between objects that overlap,
+N    * the behaviour is undefined.
+N    * Returns: the value of s1.
+N    */
+Nextern _ARMABI void *memmove(void * /*s1*/,
+Xextern __declspec(__nothrow) void *memmove(void *  ,
+N                    const void * /*s2*/, size_t /*n*/) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * copies n characters from the object pointed to by s2 into the object
+N    * pointed to by s1. Copying takes place as if the n characters from the
+N    * object pointed to by s2 are first copied into a temporary array of n
+N    * characters that does not overlap the objects pointed to by s1 and s2,
+N    * and then the n characters from the temporary array are copied into the
+N    * object pointed to by s1.
+N    * Returns: the value of s1.
+N    */
+Nextern _ARMABI char *strcpy(char * __restrict /*s1*/, const char * __restrict /*s2*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) char *strcpy(char * __restrict  , const char * __restrict  ) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * copies the string pointed to by s2 (including the terminating nul
+N    * character) into the array pointed to by s1. If copying takes place
+N    * between objects that overlap, the behaviour is undefined.
+N    * Returns: the value of s1.
+N    */
+Nextern _ARMABI char *strncpy(char * __restrict /*s1*/, const char * __restrict /*s2*/, size_t /*n*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) char *strncpy(char * __restrict  , const char * __restrict  , size_t  ) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * copies not more than n characters (characters that follow a null
+N    * character are not copied) from the array pointed to by s2 into the array
+N    * pointed to by s1. If copying takes place between objects that overlap,
+N    * the behaviour is undefined.
+N    * Returns: the value of s1.
+N    */
+N
+Nextern _ARMABI char *strcat(char * __restrict /*s1*/, const char * __restrict /*s2*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) char *strcat(char * __restrict  , const char * __restrict  ) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * appends a copy of the string pointed to by s2 (including the terminating
+N    * null character) to the end of the string pointed to by s1. The initial
+N    * character of s2 overwrites the null character at the end of s1.
+N    * Returns: the value of s1.
+N    */
+Nextern _ARMABI char *strncat(char * __restrict /*s1*/, const char * __restrict /*s2*/, size_t /*n*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) char *strncat(char * __restrict  , const char * __restrict  , size_t  ) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * appends not more than n characters (a null character and characters that
+N    * follow it are not appended) from the array pointed to by s2 to the end of
+N    * the string pointed to by s1. The initial character of s2 overwrites the
+N    * null character at the end of s1. A terminating null character is always
+N    * appended to the result.
+N    * Returns: the value of s1.
+N    */
+N
+N/*
+N * The sign of a nonzero value returned by the comparison functions is
+N * determined by the sign of the difference between the values of the first
+N * pair of characters (both interpreted as unsigned char) that differ in the
+N * objects being compared.
+N */
+N
+Nextern _ARMABI int memcmp(const void * /*s1*/, const void * /*s2*/, size_t /*n*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) int memcmp(const void *  , const void *  , size_t  ) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * compares the first n characters of the object pointed to by s1 to the
+N    * first n characters of the object pointed to by s2.
+N    * Returns: an integer greater than, equal to, or less than zero, according
+N    *          as the object pointed to by s1 is greater than, equal to, or
+N    *          less than the object pointed to by s2.
+N    */
+Nextern _ARMABI int strcmp(const char * /*s1*/, const char * /*s2*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) int strcmp(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * compares the string pointed to by s1 to the string pointed to by s2.
+N    * Returns: an integer greater than, equal to, or less than zero, according
+N    *          as the string pointed to by s1 is greater than, equal to, or
+N    *          less than the string pointed to by s2.
+N    */
+Nextern _ARMABI int strncmp(const char * /*s1*/, const char * /*s2*/, size_t /*n*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) int strncmp(const char *  , const char *  , size_t  ) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * compares not more than n characters (characters that follow a null
+N    * character are not compared) from the array pointed to by s1 to the array
+N    * pointed to by s2.
+N    * Returns: an integer greater than, equal to, or less than zero, according
+N    *          as the string pointed to by s1 is greater than, equal to, or
+N    *          less than the string pointed to by s2.
+N    */
+Nextern _ARMABI int strcasecmp(const char * /*s1*/, const char * /*s2*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) int strcasecmp(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * compares the string pointed to by s1 to the string pointed to by s2,
+N    * case-insensitively as defined by the current locale.
+N    * Returns: an integer greater than, equal to, or less than zero, according
+N    *          as the string pointed to by s1 is greater than, equal to, or
+N    *          less than the string pointed to by s2.
+N    */
+Nextern _ARMABI int strncasecmp(const char * /*s1*/, const char * /*s2*/, size_t /*n*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) int strncasecmp(const char *  , const char *  , size_t  ) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * compares not more than n characters (characters that follow a null
+N    * character are not compared) from the array pointed to by s1 to the array
+N    * pointed to by s2, case-insensitively as defined by the current locale.
+N    * Returns: an integer greater than, equal to, or less than zero, according
+N    *          as the string pointed to by s1 is greater than, equal to, or
+N    *          less than the string pointed to by s2.
+N    */
+Nextern _ARMABI int strcoll(const char * /*s1*/, const char * /*s2*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) int strcoll(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * compares the string pointed to by s1 to the string pointed to by s2, both
+N    * interpreted as appropriate to the LC_COLLATE category of the current
+N    * locale.
+N    * Returns: an integer greater than, equal to, or less than zero, according
+N    *          as the string pointed to by s1 is greater than, equal to, or
+N    *          less than the string pointed to by s2 when both are interpreted
+N    *          as appropriate to the current locale.
+N    */
+N
+Nextern _ARMABI size_t strxfrm(char * __restrict /*s1*/, const char * __restrict /*s2*/, size_t /*n*/) __attribute__((__nonnull__(2)));
+Xextern __declspec(__nothrow) size_t strxfrm(char * __restrict  , const char * __restrict  , size_t  ) __attribute__((__nonnull__(2)));
+N   /*
+N    * transforms the string pointed to by s2 and places the resulting string
+N    * into the array pointed to by s1. The transformation function is such that
+N    * if the strcmp function is applied to two transformed strings, it returns
+N    * a value greater than, equal to or less than zero, corresponding to the
+N    * result of the strcoll function applied to the same two original strings.
+N    * No more than n characters are placed into the resulting array pointed to
+N    * by s1, including the terminating null character. If n is zero, s1 is
+N    * permitted to be a null pointer. If copying takes place between objects
+N    * that overlap, the behaviour is undefined.
+N    * Returns: The length of the transformed string is returned (not including
+N    *          the terminating null character). If the value returned is n or
+N    *          more, the contents of the array pointed to by s1 are
+N    *          indeterminate.
+N    */
 N
 N
-N#include "sc32_conf.h"
-N#include "system_sc32f1xxx.h"
-N#include "TFT_Lcd.h"       // ?? LCD ????
+N#ifdef __cplusplus
+Sextern _ARMABI const void *memchr(const void * /*s*/, int /*c*/, size_t /*n*/) __attribute__((__nonnull__(1)));
+Sextern "C++" void *memchr(void * __s, int __c, size_t __n) __attribute__((__nonnull__(1)));
+Sextern "C++" inline void *memchr(void * __s, int __c, size_t __n)
+S    { return const_cast<void *>(memchr(const_cast<const void *>(__s), __c, __n)); }
+N#else
+Nextern _ARMABI void *memchr(const void * /*s*/, int /*c*/, size_t /*n*/) __attribute__((__nonnull__(1)));
+Xextern __declspec(__nothrow) void *memchr(const void *  , int  , size_t  ) __attribute__((__nonnull__(1)));
+N#endif
+N   /*
+N    * locates the first occurence of c (converted to an unsigned char) in the
+N    * initial n characters (each interpreted as unsigned char) of the object
+N    * pointed to by s.
+N    * Returns: a pointer to the located character, or a null pointer if the
+N    *          character does not occur in the object.
+N    */
 N
+N#ifdef __cplusplus
+Sextern _ARMABI const char *strchr(const char * /*s*/, int /*c*/) __attribute__((__nonnull__(1)));
+Sextern "C++" char *strchr(char * __s, int __c) __attribute__((__nonnull__(1)));
+Sextern "C++" inline char *strchr(char * __s, int __c)
+S    { return const_cast<char *>(strchr(const_cast<const char *>(__s), __c)); }
+N#else
+Nextern _ARMABI char *strchr(const char * /*s*/, int /*c*/) __attribute__((__nonnull__(1)));
+Xextern __declspec(__nothrow) char *strchr(const char *  , int  ) __attribute__((__nonnull__(1)));
+N#endif
+N   /*
+N    * locates the first occurence of c (converted to an char) in the string
+N    * pointed to by s (including the terminating null character).
+N    * Returns: a pointer to the located character, or a null pointer if the
+N    *          character does not occur in the string.
+N    */
 N
-N#define MENU_BG_COLOR       RED
-N#define MENU_TEXT_SEL       WHITE  // ?????
-N#define MENU_TEXT_UNSEL     BLACK  // ??????
-N// ????
-Nvoid menu(void);
+Nextern _ARMABI size_t strcspn(const char * /*s1*/, const char * /*s2*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) size_t strcspn(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * computes the length of the initial segment of the string pointed to by s1
+N    * which consists entirely of characters not from the string pointed to by
+N    * s2. The terminating null character is not considered part of s2.
+N    * Returns: the length of the segment.
+N    */
 N
+N#ifdef __cplusplus
+Sextern _ARMABI const char *strpbrk(const char * /*s1*/, const char * /*s2*/) __attribute__((__nonnull__(1,2)));
+Sextern "C++" char *strpbrk(char * __s1, const char * __s2) __attribute__((__nonnull__(1,2)));
+Sextern "C++" inline char *strpbrk(char * __s1, const char * __s2)
+S    { return const_cast<char *>(strpbrk(const_cast<const char *>(__s1), __s2)); }
+N#else
+Nextern _ARMABI char *strpbrk(const char * /*s1*/, const char * /*s2*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) char *strpbrk(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
+N#endif
+N   /*
+N    * locates the first occurence in the string pointed to by s1 of any
+N    * character from the string pointed to by s2.
+N    * Returns: returns a pointer to the character, or a null pointer if no
+N    *          character form s2 occurs in s1.
+N    */
+N
+N#ifdef __cplusplus
+Sextern _ARMABI const char *strrchr(const char * /*s*/, int /*c*/) __attribute__((__nonnull__(1)));
+Sextern "C++" char *strrchr(char * __s, int __c) __attribute__((__nonnull__(1)));
+Sextern "C++" inline char *strrchr(char * __s, int __c)
+S    { return const_cast<char *>(strrchr(const_cast<const char *>(__s), __c)); }
+N#else
+Nextern _ARMABI char *strrchr(const char * /*s*/, int /*c*/) __attribute__((__nonnull__(1)));
+Xextern __declspec(__nothrow) char *strrchr(const char *  , int  ) __attribute__((__nonnull__(1)));
+N#endif
+N   /*
+N    * locates the last occurence of c (converted to a char) in the string
+N    * pointed to by s. The terminating null character is considered part of
+N    * the string.
+N    * Returns: returns a pointer to the character, or a null pointer if c does
+N    *          not occur in the string.
+N    */
+N
+Nextern _ARMABI size_t strspn(const char * /*s1*/, const char * /*s2*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) size_t strspn(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * computes the length of the initial segment of the string pointed to by s1
+N    * which consists entirely of characters from the string pointed to by S2
+N    * Returns: the length of the segment.
+N    */
+N
+N#ifdef __cplusplus
+Sextern _ARMABI const char *strstr(const char * /*s1*/, const char * /*s2*/) __attribute__((__nonnull__(1,2)));
+Sextern "C++" char *strstr(char * __s1, const char * __s2) __attribute__((__nonnull__(1,2)));
+Sextern "C++" inline char *strstr(char * __s1, const char * __s2)
+S    { return const_cast<char *>(strstr(const_cast<const char *>(__s1), __s2)); }
+N#else
+Nextern _ARMABI char *strstr(const char * /*s1*/, const char * /*s2*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) char *strstr(const char *  , const char *  ) __attribute__((__nonnull__(1,2)));
+N#endif
+N   /*
+N    * locates the first occurence in the string pointed to by s1 of the
+N    * sequence of characters (excluding the terminating null character) in the
+N    * string pointed to by s2.
+N    * Returns: a pointer to the located string, or a null pointer if the string
+N    *          is not found.
+N    */
+N
+Nextern _ARMABI char *strtok(char * __restrict /*s1*/, const char * __restrict /*s2*/) __attribute__((__nonnull__(2)));
+Xextern __declspec(__nothrow) char *strtok(char * __restrict  , const char * __restrict  ) __attribute__((__nonnull__(2)));
+Nextern _ARMABI char *_strtok_r(char * /*s1*/, const char * /*s2*/, char ** /*ptr*/) __attribute__((__nonnull__(2,3)));
+Xextern __declspec(__nothrow) char *_strtok_r(char *  , const char *  , char **  ) __attribute__((__nonnull__(2,3)));
+N#ifndef __STRICT_ANSI__
+Nextern _ARMABI char *strtok_r(char * /*s1*/, const char * /*s2*/, char ** /*ptr*/) __attribute__((__nonnull__(2,3)));
+Xextern __declspec(__nothrow) char *strtok_r(char *  , const char *  , char **  ) __attribute__((__nonnull__(2,3)));
+N#endif
+N   /*
+N    * A sequence of calls to the strtok function breaks the string pointed to
+N    * by s1 into a sequence of tokens, each of which is delimited by a
+N    * character from the string pointed to by s2. The first call in the
+N    * sequence has s1 as its first argument, and is followed by calls with a
+N    * null pointer as their first argument. The separator string pointed to by
+N    * s2 may be different from call to call.
+N    * The first call in the sequence searches for the first character that is
+N    * not contained in the current separator string s2. If no such character
+N    * is found, then there are no tokens in s1 and the strtok function returns
+N    * a null pointer. If such a character is found, it is the start of the
+N    * first token.
+N    * The strtok function then searches from there for a character that is
+N    * contained in the current separator string. If no such character is found,
+N    * the current token extends to the end of the string pointed to by s1, and
+N    * subsequent searches for a token will fail. If such a character is found,
+N    * it is overwritten by a null character, which terminates the current
+N    * token. The strtok function saves a pointer to the following character,
+N    * from which the next search for a token will start.
+N    * Each subsequent call, with a null pointer as the value for the first
+N    * argument, starts searching from the saved pointer and behaves as
+N    * described above.
+N    * Returns: pointer to the first character of a token, or a null pointer if
+N    *          there is no token.
+N    *
+N    * strtok_r() is a common extension which works exactly like
+N    * strtok(), but instead of storing its state in a hidden
+N    * library variable, requires the user to pass in a pointer to a
+N    * char * variable which will be used instead. Any sequence of
+N    * calls to strtok_r() passing the same char ** pointer should
+N    * behave exactly like the corresponding sequence of calls to
+N    * strtok(). This means that strtok_r() can safely be used in
+N    * multi-threaded programs, and also that you can tokenise two
+N    * strings in parallel.
+N    */
+N
+Nextern _ARMABI void *memset(void * /*s*/, int /*c*/, size_t /*n*/) __attribute__((__nonnull__(1)));
+Xextern __declspec(__nothrow) void *memset(void *  , int  , size_t  ) __attribute__((__nonnull__(1)));
+N   /*
+N    * copies the value of c (converted to an unsigned char) into each of the
+N    * first n charactes of the object pointed to by s.
+N    * Returns: the value of s.
+N    */
+Nextern _ARMABI char *strerror(int /*errnum*/);
+Xextern __declspec(__nothrow) char *strerror(int  );
+N   /*
+N    * maps the error number in errnum to an error message string.
+N    * Returns: a pointer to the string, the contents of which are
+N    *          implementation-defined. The array pointed to shall not be
+N    *          modified by the program, but may be overwritten by a
+N    *          subsequent call to the strerror function.
+N    */
+Nextern _ARMABI size_t strlen(const char * /*s*/) __attribute__((__nonnull__(1)));
+Xextern __declspec(__nothrow) size_t strlen(const char *  ) __attribute__((__nonnull__(1)));
+N   /*
+N    * computes the length of the string pointed to by s.
+N    * Returns: the number of characters that precede the terminating null
+N    *          character.
+N    */
+N
+Nextern _ARMABI size_t strlcpy(char * /*dst*/, const char * /*src*/, size_t /*len*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) size_t strlcpy(char *  , const char *  , size_t  ) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * copies the string src into the string dst, using no more than
+N    * len bytes of dst. Always null-terminates dst _within the
+N    * length len (i.e. will copy at most len-1 bytes of string plus
+N    * a NUL), unless len is actually zero.
+N    * 
+N    * Return value is the length of the string that _would_ have
+N    * been written, i.e. the length of src. Thus, the operation
+N    * succeeded without truncation if and only if ret < len;
+N    * otherwise, the value in ret tells you how big to make dst if
+N    * you decide to reallocate it. (That value does _not_ include
+N    * the NUL.)
+N    * 
+N    * This is a BSD-derived library extension, which we are
+N    * permitted to declare in a standard header because ISO defines
+N    * function names beginning with 'str' as reserved for future
+N    * expansion of <string.h>.
+N    */
+N
+Nextern _ARMABI size_t strlcat(char * /*dst*/, const char * /*src*/, size_t /*len*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) size_t strlcat(char *  , const char *  , size_t  ) __attribute__((__nonnull__(1,2)));
+N   /*
+N    * concatenates the string src to the string dst, using no more
+N    * than len bytes of dst. Always null-terminates dst _within the
+N    * length len (i.e. will copy at most len-1 bytes of string plus
+N    * a NUL), unless len is actually zero.
+N    * 
+N    * Return value is the length of the string that _would_ have
+N    * been written, i.e. the length of src plus the original length
+N    * of dst. Thus, the operation succeeded without truncation if
+N    * and only if ret < len; otherwise, the value in ret tells you
+N    * how big to make dst if you decide to reallocate it. (That
+N    * value does _not_ include the NUL.)
+N    * 
+N    * If no NUL is encountered within the first len bytes of dst,
+N    * then the length of dst is considered to have been equal to
+N    * len for the purposes of the return value (as if there were a
+N    * NUL at dst[len]). Thus, the return value in this case is len
+N    * + strlen(src).
+N    * 
+N    * This is a BSD-derived library extension, which we are
+N    * permitted to declare in a standard header because ISO defines
+N    * function names beginning with 'str' as reserved for future
+N    * expansion of <string.h>.
+N    */
+N
+Nextern _ARMABI void _membitcpybl(void * /*dest*/, const void * /*src*/, int /*destoffset*/, int /*srcoffset*/, size_t /*nbits*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) void _membitcpybl(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+Nextern _ARMABI void _membitcpybb(void * /*dest*/, const void * /*src*/, int /*destoffset*/, int /*srcoffset*/, size_t /*nbits*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) void _membitcpybb(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+Nextern _ARMABI void _membitcpyhl(void * /*dest*/, const void * /*src*/, int /*destoffset*/, int /*srcoffset*/, size_t /*nbits*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) void _membitcpyhl(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+Nextern _ARMABI void _membitcpyhb(void * /*dest*/, const void * /*src*/, int /*destoffset*/, int /*srcoffset*/, size_t /*nbits*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) void _membitcpyhb(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+Nextern _ARMABI void _membitcpywl(void * /*dest*/, const void * /*src*/, int /*destoffset*/, int /*srcoffset*/, size_t /*nbits*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) void _membitcpywl(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+Nextern _ARMABI void _membitcpywb(void * /*dest*/, const void * /*src*/, int /*destoffset*/, int /*srcoffset*/, size_t /*nbits*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) void _membitcpywb(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+Nextern _ARMABI void _membitmovebl(void * /*dest*/, const void * /*src*/, int /*destoffset*/, int /*srcoffset*/, size_t /*nbits*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) void _membitmovebl(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+Nextern _ARMABI void _membitmovebb(void * /*dest*/, const void * /*src*/, int /*destoffset*/, int /*srcoffset*/, size_t /*nbits*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) void _membitmovebb(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+Nextern _ARMABI void _membitmovehl(void * /*dest*/, const void * /*src*/, int /*destoffset*/, int /*srcoffset*/, size_t /*nbits*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) void _membitmovehl(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+Nextern _ARMABI void _membitmovehb(void * /*dest*/, const void * /*src*/, int /*destoffset*/, int /*srcoffset*/, size_t /*nbits*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) void _membitmovehb(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+Nextern _ARMABI void _membitmovewl(void * /*dest*/, const void * /*src*/, int /*destoffset*/, int /*srcoffset*/, size_t /*nbits*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) void _membitmovewl(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+Nextern _ARMABI void _membitmovewb(void * /*dest*/, const void * /*src*/, int /*destoffset*/, int /*srcoffset*/, size_t /*nbits*/) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  , int  , size_t  ) __attribute__((__nonnull__(1,2)));
+N    /*
+N     * Copies or moves a piece of memory from one place to another,
+N     * with one-bit granularity. So you can start or finish a copy
+N     * part way through a byte, and you can copy between regions
+N     * with different alignment within a byte.
+N     * 
+N     * All these functions have the same prototype: two void *
+N     * pointers for destination and source, then two integers
+N     * giving the bit offset from those pointers, and finally the
+N     * number of bits to copy.
+N     * 
+N     * Just like memcpy and memmove, the "cpy" functions copy as
+N     * fast as they can in the assumption that the memory regions
+N     * do not overlap, while the "move" functions cope correctly
+N     * with overlap.
+N     *
+N     * Treating memory as a stream of individual bits requires
+N     * defining a convention about what order those bits are
+N     * considered to be arranged in. The above functions support
+N     * multiple conventions:
+N     * 
+N     *  - the "bl" functions consider the unit of memory to be the
+N     *    byte, and consider the bits within each byte to be
+N     *    arranged in little-endian fashion, so that the LSB comes
+N     *    first. (For example, membitcpybl(a,b,0,7,1) would copy
+N     *    the MSB of the byte at b to the LSB of the byte at a.)
+N     * 
+N     *  - the "bb" functions consider the unit of memory to be the
+N     *    byte, and consider the bits within each byte to be
+N     *    arranged in big-endian fashion, so that the MSB comes
+N     *    first.
+N     * 
+N     *  - the "hl" functions consider the unit of memory to be the
+N     *    16-bit halfword, and consider the bits within each word
+N     *    to be arranged in little-endian fashion.
+N     * 
+N     *  - the "hb" functions consider the unit of memory to be the
+N     *    16-bit halfword, and consider the bits within each word
+N     *    to be arranged in big-endian fashion.
+N     * 
+N     *  - the "wl" functions consider the unit of memory to be the
+N     *    32-bit word, and consider the bits within each word to be
+N     *    arranged in little-endian fashion.
+N     * 
+N     *  - the "wb" functions consider the unit of memory to be the
+N     *    32-bit word, and consider the bits within each word to be
+N     *    arranged in big-endian fashion.
+N     */
+N
+N    #ifdef __cplusplus
+S         }  /* extern "C" */
+S      }  /* namespace std */
+N    #endif /* __cplusplus */
+N  #endif /* __STRING_DECLS */
+N
+N  #ifdef __cplusplus
+S    #ifndef __STRING_NO_EXPORTS
+S      using ::std::size_t;
+S      using ::std::memcpy;
+S      using ::std::memmove;
+S      using ::std::strcpy;
+S      using ::std::strncpy;
+S      using ::std::strcat;
+S      using ::std::strncat;
+S      using ::std::memcmp;
+S      using ::std::strcmp;
+S      using ::std::strncmp;
+S      using ::std::strcasecmp;
+S      using ::std::strncasecmp;
+S      using ::std::strcoll;
+S      using ::std::strxfrm;
+S      using ::std::memchr;
+S      using ::std::strchr;
+S      using ::std::strcspn;
+S      using ::std::strpbrk;
+S      using ::std::strrchr;
+S      using ::std::strspn;
+S      using ::std::strstr;
+S      using ::std::strtok;
+S#ifndef __STRICT_ANSI__
+S      using ::std::strtok_r;
+S#endif
+S      using ::std::_strtok_r;
+S      using ::std::memset;
+S      using ::std::strerror;
+S      using ::std::strlen;
+S      using ::std::strlcpy;
+S      using ::std::strlcat;
+S      using ::std::_membitcpybl;
+S      using ::std::_membitcpybb;
+S      using ::std::_membitcpyhl;
+S      using ::std::_membitcpyhb;
+S      using ::std::_membitcpywl;
+S      using ::std::_membitcpywb;
+S      using ::std::_membitmovebl;
+S      using ::std::_membitmovebb;
+S      using ::std::_membitmovehl;
+S      using ::std::_membitmovehb;
+S      using ::std::_membitmovewl;
+S      using ::std::_membitmovewb;
+S    #endif /* __STRING_NO_EXPORTS */
+N  #endif /* __cplusplus */
 N
 N#endif
 N
+N/* end of string.h */
 N
-L 28 "..\User\main.c" 2
+L 22 "..\User\main.c" 2
 N
+N// =========================================================
+N//  外部变量引用
+N// =========================================================
 N
-Nstatic volatile FlagStatus ADC_Flag;//自定义标志位
+N// 【修改点1】: 
+N// 不需要再手动 extern AD_TypeDef AD; 
+N// 因为 Data_Acquisition.h 中已经有了 #define AD Acq_Data
+N// 只要包含头文件，就可以直接使用 AD.v[0] 或 Acq_Data.Buffer[0]
 N
-W "..\User\main.c" 32 6 Deprecated declaration screen_init - give arg types
-Nvoid screen_init();//屏幕启动
-W "..\User\main.c" 33 6 Deprecated declaration ADC_Conversion_IRQ - give arg types
-Nvoid ADC_Conversion_IRQ();//处理ADC中断
-W "..\User\main.c" 34 6 Deprecated declaration ADC_Conversion - give arg types
-Nvoid ADC_Conversion();//ADC采样
-W "..\User\main.c" 35 6 Deprecated declaration key_Get - give arg types
-Nvoid key_Get();//按压旋转编码器
-W "..\User\main.c" 36 6 Deprecated declaration UART3_Send_Packet - give arg types
-Nvoid UART3_Send_Packet();//wifi串口发送数据包
-W "..\User\main.c" 37 6 Deprecated declaration UART3_Send_String - give arg types
-Nvoid UART3_Send_String();//wifi串口发送文本
-W "..\User\main.c" 38 6 Deprecated declaration UART3_receive_Packet - give arg types
-Nvoid UART3_receive_Packet();//wifi串口接受数据
-W "..\User\main.c" 39 6 Deprecated declaration UART3_receive_String - give arg types
-Nvoid UART3_receive_String();//wifi串口接受数据
+N// 【修改点2】: 变量名修正
+N// Data_Acquisition.c 中定义的是 Acq_Done_Flag，而不是 ADC_Flag
+Nextern volatile uint8_t Acq_Done_Flag;   
 N
+N// 引用 Global_Variables.c 中的变量
+Nextern uint16_t wave1_value[1000]; 
+Nextern uint16_t wave2_value[1000];
+Nextern uint16_t key_count;         
+Nextern uint8_t  KeyValue;          
 N
-Nextern uint8_t KeyValue ;	//触控信息
-Nextern uint16_t TIM0_count;//定时器 1ms中断一次 每1ms,count+=1
-Nextern uint16_t Encoder_Count;//转动旋转编码器计数,初始值10000，向左旋转1格-1，向右旋转一格+1
-Nuint16_t key_count;//按压旋转编码器计数,每按压一次加1
-Nextern uint8_t UART3_RxFlag;	
-Nuint8_t UART3_RxPacket[100];				//定义接收数据包数组，数据包格式"@MSG\r\n"
-Nuint8_t UART3_RxFlag;					//定义接收数据包标志位
-Nchar UART3_RxString[100];				//定义接收数据包数组，数据包格式"@MSG\r\n"
+N// =========================================================
+N//  全局变量定义
+N// =========================================================
+Nuint8_t UART3_RxPacket[100];
+Nuint8_t UART3_RxFlag = 0;
+Nchar    UART3_RxString[100];
+Nextern uint8_t UART3_TxPacket[10];
 N
+N// =========================================================
+N//  函数声明
+N// =========================================================
+Nvoid screen_init(void);
+Nvoid key_Get(void);
+N// 其他串口函数声明略...
+N#include <stdio.h> // 确保包含这个以使用 sprintf
 N
+N#include "SC_Init.h"
+N#include "SC_it.h"
+N#include "..\Drivers\SCDriver_list.h"
+N#include "HeadFiles\SysFunVarDefine.h"
+L 1 "..\User\HeadFiles\SysFunVarDefine.h" 1
+N/**
+N *****************************************************************************************************
+N  * @copyright	(c)  Shenzhen Saiyuan Microelectronics Co., Ltd
+N  * @file	SysFunVarDefine.h
+N  * @author	 
+N  * @version 	
+N  * @date	
+N  * @brief	Store var control and function control extern
+N  * @details 
+N *****************************************************************************************************
+N * @attention
+N *
+N *****************************************************************************************************
+N */
+N#ifndef SYS_FUN_VAR_DEFINE
+S    #define SYS_FUN_VAR_DEFINE
+S#include "CustomType.h"
+S#include "UserExport.h"
+S#include "FunctionType.h"
+S#include "CompCtrlDefine.h"
+N#endif
+N#include "stdint.h"
+N#include "core_cm0plus.h"
+L 1 "..\CMSIS\core_cm0plus.h" 1
+N/**************************************************************************//**
+N * @file     core_cm0plus.h
+N * @brief    CMSIS Cortex-M0+ Core Peripheral Access Layer Header File
+N * @version  V5.0.6
+N * @date     28. May 2018
+N ******************************************************************************/
+N/*
+N * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+N *
+N * SPDX-License-Identifier: Apache-2.0
+N *
+N * Licensed under the Apache License, Version 2.0 (the License); you may
+N * not use this file except in compliance with the License.
+N * You may obtain a copy of the License at
+N *
+N * www.apache.org/licenses/LICENSE-2.0
+N *
+N * Unless required by applicable law or agreed to in writing, software
+N * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+N * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+N * See the License for the specific language governing permissions and
+N * limitations under the License.
+N */
 N
+N#if   defined ( __ICCARM__ )
+X#if   0L
+S  #pragma system_include         /* treat file as system include file for MISRA check */
+S#elif defined (__clang__)
+X#elif 0L
+S  #pragma clang system_header   /* treat file as system include file */
+N#endif
 N
-Nint main(void)
+N#ifndef __CORE_CM0PLUS_H_GENERIC
+S#define __CORE_CM0PLUS_H_GENERIC
+S
+S#include <stdint.h>
+S
+S#ifdef __cplusplus
+S extern "C" {
+S#endif
+S
+S/**
+S  \page CMSIS_MISRA_Exceptions  MISRA-C:2004 Compliance Exceptions
+S  CMSIS violates the following MISRA-C:2004 rules:
+S
+S   \li Required Rule 8.5, object/function definition in header file.<br>
+S     Function definitions in header files are used to allow 'inlining'.
+S
+S   \li Required Rule 18.4, declaration of union type or object of union type: '{...}'.<br>
+S     Unions are used for effective representation of core registers.
+S
+S   \li Advisory Rule 19.7, Function-like macro defined.<br>
+S     Function-like macros are used to allow more efficient code.
+S */
+S
+S
+S/*******************************************************************************
+S *                 CMSIS definitions
+S ******************************************************************************/
+S/**
+S  \ingroup Cortex-M0+
+S  @{
+S */
+S
+S#include "cmsis_version.h"
+S 
+S/*  CMSIS CM0+ definitions */
+S#define __CM0PLUS_CMSIS_VERSION_MAIN (__CM_CMSIS_VERSION_MAIN)                  /*!< \deprecated [31:16] CMSIS HAL main version */
+S#define __CM0PLUS_CMSIS_VERSION_SUB  (__CM_CMSIS_VERSION_SUB)                   /*!< \deprecated [15:0]  CMSIS HAL sub version */
+S#define __CM0PLUS_CMSIS_VERSION      ((__CM0PLUS_CMSIS_VERSION_MAIN << 16U) | \
+S                                       __CM0PLUS_CMSIS_VERSION_SUB           )  /*!< \deprecated CMSIS HAL version number */
+X#define __CM0PLUS_CMSIS_VERSION      ((__CM0PLUS_CMSIS_VERSION_MAIN << 16U) |                                        __CM0PLUS_CMSIS_VERSION_SUB           )   
+S
+S#define __CORTEX_M                   (0U)                                       /*!< Cortex-M Core */
+S
+S/** __FPU_USED indicates whether an FPU is used or not.
+S    This core does not support an FPU at all
+S*/
+S#define __FPU_USED       0U
+S
+S#if defined ( __CC_ARM )
+S  #if defined __TARGET_FPU_VFP
+S    #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+S  #endif
+S
+S#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+S  #if defined __ARM_PCS_VFP
+S    #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+S  #endif
+S
+S#elif defined ( __GNUC__ )
+S  #if defined (__VFP_FP__) && !defined(__SOFTFP__)
+S    #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+S  #endif
+S
+S#elif defined ( __ICCARM__ )
+S  #if defined __ARMVFP__
+S    #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+S  #endif
+S
+S#elif defined ( __TI_ARM__ )
+S  #if defined __TI_VFP_SUPPORT__
+S    #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+S  #endif
+S
+S#elif defined ( __TASKING__ )
+S  #if defined __FPU_VFP__
+S    #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+S  #endif
+S
+S#elif defined ( __CSMC__ )
+S  #if ( __CSMC__ & 0x400U)
+S    #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+S  #endif
+S
+S#endif
+S
+S#include "cmsis_compiler.h"               /* CMSIS compiler specific defines */
+S
+S
+S#ifdef __cplusplus
+S}
+S#endif
+S
+N#endif /* __CORE_CM0PLUS_H_GENERIC */
+N
+N#ifndef __CMSIS_GENERIC
+N
+N#ifndef __CORE_CM0PLUS_H_DEPENDANT
+S#define __CORE_CM0PLUS_H_DEPENDANT
+S
+S#ifdef __cplusplus
+S extern "C" {
+S#endif
+S
+S/* check device defines and use defaults */
+S#if defined __CHECK_DEVICE_DEFINES
+S  #ifndef __CM0PLUS_REV
+S    #define __CM0PLUS_REV             0x0000U
+S    #warning "__CM0PLUS_REV not defined in device header file; using default!"
+S  #endif
+S
+S  #ifndef __MPU_PRESENT
+S    #define __MPU_PRESENT             0U
+S    #warning "__MPU_PRESENT not defined in device header file; using default!"
+S  #endif
+S
+S  #ifndef __VTOR_PRESENT
+S    #define __VTOR_PRESENT            0U
+S    #warning "__VTOR_PRESENT not defined in device header file; using default!"
+S  #endif
+S
+S  #ifndef __NVIC_PRIO_BITS
+S    #define __NVIC_PRIO_BITS          2U
+S    #warning "__NVIC_PRIO_BITS not defined in device header file; using default!"
+S  #endif
+S
+S  #ifndef __Vendor_SysTickConfig
+S    #define __Vendor_SysTickConfig    0U
+S    #warning "__Vendor_SysTickConfig not defined in device header file; using default!"
+S  #endif
+S#endif
+S
+S/* IO definitions (access restrictions to peripheral registers) */
+S/**
+S    \defgroup CMSIS_glob_defs CMSIS Global Defines
+S
+S    <strong>IO Type Qualifiers</strong> are used
+S    \li to specify the access to peripheral variables.
+S    \li for automatic generation of peripheral register debug information.
+S*/
+S#ifdef __cplusplus
+S  #define   __I     volatile             /*!< Defines 'read only' permissions */
+S#else
+S  #define   __I     volatile const       /*!< Defines 'read only' permissions */
+S#endif
+S#define     __O     volatile             /*!< Defines 'write only' permissions */
+S#define     __IO    volatile             /*!< Defines 'read / write' permissions */
+S
+S/* following defines should be used for structure members */
+S#define     __IM     volatile const      /*! Defines 'read only' structure member permissions */
+S#define     __OM     volatile            /*! Defines 'write only' structure member permissions */
+S#define     __IOM    volatile            /*! Defines 'read / write' structure member permissions */
+S
+S/*@} end of group Cortex-M0+ */
+S
+S
+S
+S/*******************************************************************************
+S *                 Register Abstraction
+S  Core Register contain:
+S  - Core Register
+S  - Core NVIC Register
+S  - Core SCB Register
+S  - Core SysTick Register
+S  - Core MPU Register
+S ******************************************************************************/
+S/**
+S  \defgroup CMSIS_core_register Defines and Type Definitions
+S  \brief Type definitions and defines for Cortex-M processor based devices.
+S*/
+S
+S/**
+S  \ingroup    CMSIS_core_register
+S  \defgroup   CMSIS_CORE  Status and Control Registers
+S  \brief      Core Register type definitions.
+S  @{
+S */
+S
+S/**
+S  \brief  Union type to access the Application Program Status Register (APSR).
+S */
+Stypedef union
+S{
+S  struct
+S  {
+S    uint32_t _reserved0:28;              /*!< bit:  0..27  Reserved */
+S    uint32_t V:1;                        /*!< bit:     28  Overflow condition code flag */
+S    uint32_t C:1;                        /*!< bit:     29  Carry condition code flag */
+S    uint32_t Z:1;                        /*!< bit:     30  Zero condition code flag */
+S    uint32_t N:1;                        /*!< bit:     31  Negative condition code flag */
+S  } b;                                   /*!< Structure used for bit  access */
+S  uint32_t w;                            /*!< Type      used for word access */
+S} APSR_Type;
+S
+S/* APSR Register Definitions */
+S#define APSR_N_Pos                         31U                                            /*!< APSR: N Position */
+S#define APSR_N_Msk                         (1UL << APSR_N_Pos)                            /*!< APSR: N Mask */
+S
+S#define APSR_Z_Pos                         30U                                            /*!< APSR: Z Position */
+S#define APSR_Z_Msk                         (1UL << APSR_Z_Pos)                            /*!< APSR: Z Mask */
+S
+S#define APSR_C_Pos                         29U                                            /*!< APSR: C Position */
+S#define APSR_C_Msk                         (1UL << APSR_C_Pos)                            /*!< APSR: C Mask */
+S
+S#define APSR_V_Pos                         28U                                            /*!< APSR: V Position */
+S#define APSR_V_Msk                         (1UL << APSR_V_Pos)                            /*!< APSR: V Mask */
+S
+S
+S/**
+S  \brief  Union type to access the Interrupt Program Status Register (IPSR).
+S */
+Stypedef union
+S{
+S  struct
+S  {
+S    uint32_t ISR:9;                      /*!< bit:  0.. 8  Exception number */
+S    uint32_t _reserved0:23;              /*!< bit:  9..31  Reserved */
+S  } b;                                   /*!< Structure used for bit  access */
+S  uint32_t w;                            /*!< Type      used for word access */
+S} IPSR_Type;
+S
+S/* IPSR Register Definitions */
+S#define IPSR_ISR_Pos                        0U                                            /*!< IPSR: ISR Position */
+S#define IPSR_ISR_Msk                       (0x1FFUL /*<< IPSR_ISR_Pos*/)                  /*!< IPSR: ISR Mask */
+S
+S
+S/**
+S  \brief  Union type to access the Special-Purpose Program Status Registers (xPSR).
+S */
+Stypedef union
+S{
+S  struct
+S  {
+S    uint32_t ISR:9;                      /*!< bit:  0.. 8  Exception number */
+S    uint32_t _reserved0:15;              /*!< bit:  9..23  Reserved */
+S    uint32_t T:1;                        /*!< bit:     24  Thumb bit        (read 0) */
+S    uint32_t _reserved1:3;               /*!< bit: 25..27  Reserved */
+S    uint32_t V:1;                        /*!< bit:     28  Overflow condition code flag */
+S    uint32_t C:1;                        /*!< bit:     29  Carry condition code flag */
+S    uint32_t Z:1;                        /*!< bit:     30  Zero condition code flag */
+S    uint32_t N:1;                        /*!< bit:     31  Negative condition code flag */
+S  } b;                                   /*!< Structure used for bit  access */
+S  uint32_t w;                            /*!< Type      used for word access */
+S} xPSR_Type;
+S
+S/* xPSR Register Definitions */
+S#define xPSR_N_Pos                         31U                                            /*!< xPSR: N Position */
+S#define xPSR_N_Msk                         (1UL << xPSR_N_Pos)                            /*!< xPSR: N Mask */
+S
+S#define xPSR_Z_Pos                         30U                                            /*!< xPSR: Z Position */
+S#define xPSR_Z_Msk                         (1UL << xPSR_Z_Pos)                            /*!< xPSR: Z Mask */
+S
+S#define xPSR_C_Pos                         29U                                            /*!< xPSR: C Position */
+S#define xPSR_C_Msk                         (1UL << xPSR_C_Pos)                            /*!< xPSR: C Mask */
+S
+S#define xPSR_V_Pos                         28U                                            /*!< xPSR: V Position */
+S#define xPSR_V_Msk                         (1UL << xPSR_V_Pos)                            /*!< xPSR: V Mask */
+S
+S#define xPSR_T_Pos                         24U                                            /*!< xPSR: T Position */
+S#define xPSR_T_Msk                         (1UL << xPSR_T_Pos)                            /*!< xPSR: T Mask */
+S
+S#define xPSR_ISR_Pos                        0U                                            /*!< xPSR: ISR Position */
+S#define xPSR_ISR_Msk                       (0x1FFUL /*<< xPSR_ISR_Pos*/)                  /*!< xPSR: ISR Mask */
+S
+S
+S/**
+S  \brief  Union type to access the Control Registers (CONTROL).
+S */
+Stypedef union
+S{
+S  struct
+S  {
+S    uint32_t nPRIV:1;                    /*!< bit:      0  Execution privilege in Thread mode */
+S    uint32_t SPSEL:1;                    /*!< bit:      1  Stack to be used */
+S    uint32_t _reserved1:30;              /*!< bit:  2..31  Reserved */
+S  } b;                                   /*!< Structure used for bit  access */
+S  uint32_t w;                            /*!< Type      used for word access */
+S} CONTROL_Type;
+S
+S/* CONTROL Register Definitions */
+S#define CONTROL_SPSEL_Pos                   1U                                            /*!< CONTROL: SPSEL Position */
+S#define CONTROL_SPSEL_Msk                  (1UL << CONTROL_SPSEL_Pos)                     /*!< CONTROL: SPSEL Mask */
+S
+S#define CONTROL_nPRIV_Pos                   0U                                            /*!< CONTROL: nPRIV Position */
+S#define CONTROL_nPRIV_Msk                  (1UL /*<< CONTROL_nPRIV_Pos*/)                 /*!< CONTROL: nPRIV Mask */
+S
+S/*@} end of group CMSIS_CORE */
+S
+S
+S/**
+S  \ingroup    CMSIS_core_register
+S  \defgroup   CMSIS_NVIC  Nested Vectored Interrupt Controller (NVIC)
+S  \brief      Type definitions for the NVIC Registers
+S  @{
+S */
+S
+S/**
+S  \brief  Structure type to access the Nested Vectored Interrupt Controller (NVIC).
+S */
+Stypedef struct
+S{
+S  __IOM uint32_t ISER[1U];               /*!< Offset: 0x000 (R/W)  Interrupt Set Enable Register */
+S        uint32_t RESERVED0[31U];
+S  __IOM uint32_t ICER[1U];               /*!< Offset: 0x080 (R/W)  Interrupt Clear Enable Register */
+S        uint32_t RSERVED1[31U];
+S  __IOM uint32_t ISPR[1U];               /*!< Offset: 0x100 (R/W)  Interrupt Set Pending Register */
+S        uint32_t RESERVED2[31U];
+S  __IOM uint32_t ICPR[1U];               /*!< Offset: 0x180 (R/W)  Interrupt Clear Pending Register */
+S        uint32_t RESERVED3[31U];
+S        uint32_t RESERVED4[64U];
+S  __IOM uint32_t IP[8U];                 /*!< Offset: 0x300 (R/W)  Interrupt Priority Register */
+S}  NVIC_Type;
+S
+S/*@} end of group CMSIS_NVIC */
+S
+S
+S/**
+S  \ingroup  CMSIS_core_register
+S  \defgroup CMSIS_SCB     System Control Block (SCB)
+S  \brief    Type definitions for the System Control Block Registers
+S  @{
+S */
+S
+S/**
+S  \brief  Structure type to access the System Control Block (SCB).
+S */
+Stypedef struct
+S{
+S  __IM  uint32_t CPUID;                  /*!< Offset: 0x000 (R/ )  CPUID Base Register */
+S  __IOM uint32_t ICSR;                   /*!< Offset: 0x004 (R/W)  Interrupt Control and State Register */
+S#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+S  __IOM uint32_t VTOR;                   /*!< Offset: 0x008 (R/W)  Vector Table Offset Register */
+S#else
+S        uint32_t RESERVED0;
+S#endif
+S  __IOM uint32_t AIRCR;                  /*!< Offset: 0x00C (R/W)  Application Interrupt and Reset Control Register */
+S  __IOM uint32_t SCR;                    /*!< Offset: 0x010 (R/W)  System Control Register */
+S  __IOM uint32_t CCR;                    /*!< Offset: 0x014 (R/W)  Configuration Control Register */
+S        uint32_t RESERVED1;
+S  __IOM uint32_t SHP[2U];                /*!< Offset: 0x01C (R/W)  System Handlers Priority Registers. [0] is RESERVED */
+S  __IOM uint32_t SHCSR;                  /*!< Offset: 0x024 (R/W)  System Handler Control and State Register */
+S} SCB_Type;
+S
+S/* SCB CPUID Register Definitions */
+S#define SCB_CPUID_IMPLEMENTER_Pos          24U                                            /*!< SCB CPUID: IMPLEMENTER Position */
+S#define SCB_CPUID_IMPLEMENTER_Msk          (0xFFUL << SCB_CPUID_IMPLEMENTER_Pos)          /*!< SCB CPUID: IMPLEMENTER Mask */
+S
+S#define SCB_CPUID_VARIANT_Pos              20U                                            /*!< SCB CPUID: VARIANT Position */
+S#define SCB_CPUID_VARIANT_Msk              (0xFUL << SCB_CPUID_VARIANT_Pos)               /*!< SCB CPUID: VARIANT Mask */
+S
+S#define SCB_CPUID_ARCHITECTURE_Pos         16U                                            /*!< SCB CPUID: ARCHITECTURE Position */
+S#define SCB_CPUID_ARCHITECTURE_Msk         (0xFUL << SCB_CPUID_ARCHITECTURE_Pos)          /*!< SCB CPUID: ARCHITECTURE Mask */
+S
+S#define SCB_CPUID_PARTNO_Pos                4U                                            /*!< SCB CPUID: PARTNO Position */
+S#define SCB_CPUID_PARTNO_Msk               (0xFFFUL << SCB_CPUID_PARTNO_Pos)              /*!< SCB CPUID: PARTNO Mask */
+S
+S#define SCB_CPUID_REVISION_Pos              0U                                            /*!< SCB CPUID: REVISION Position */
+S#define SCB_CPUID_REVISION_Msk             (0xFUL /*<< SCB_CPUID_REVISION_Pos*/)          /*!< SCB CPUID: REVISION Mask */
+S
+S/* SCB Interrupt Control State Register Definitions */
+S#define SCB_ICSR_NMIPENDSET_Pos            31U                                            /*!< SCB ICSR: NMIPENDSET Position */
+S#define SCB_ICSR_NMIPENDSET_Msk            (1UL << SCB_ICSR_NMIPENDSET_Pos)               /*!< SCB ICSR: NMIPENDSET Mask */
+S
+S#define SCB_ICSR_PENDSVSET_Pos             28U                                            /*!< SCB ICSR: PENDSVSET Position */
+S#define SCB_ICSR_PENDSVSET_Msk             (1UL << SCB_ICSR_PENDSVSET_Pos)                /*!< SCB ICSR: PENDSVSET Mask */
+S
+S#define SCB_ICSR_PENDSVCLR_Pos             27U                                            /*!< SCB ICSR: PENDSVCLR Position */
+S#define SCB_ICSR_PENDSVCLR_Msk             (1UL << SCB_ICSR_PENDSVCLR_Pos)                /*!< SCB ICSR: PENDSVCLR Mask */
+S
+S#define SCB_ICSR_PENDSTSET_Pos             26U                                            /*!< SCB ICSR: PENDSTSET Position */
+S#define SCB_ICSR_PENDSTSET_Msk             (1UL << SCB_ICSR_PENDSTSET_Pos)                /*!< SCB ICSR: PENDSTSET Mask */
+S
+S#define SCB_ICSR_PENDSTCLR_Pos             25U                                            /*!< SCB ICSR: PENDSTCLR Position */
+S#define SCB_ICSR_PENDSTCLR_Msk             (1UL << SCB_ICSR_PENDSTCLR_Pos)                /*!< SCB ICSR: PENDSTCLR Mask */
+S
+S#define SCB_ICSR_ISRPREEMPT_Pos            23U                                            /*!< SCB ICSR: ISRPREEMPT Position */
+S#define SCB_ICSR_ISRPREEMPT_Msk            (1UL << SCB_ICSR_ISRPREEMPT_Pos)               /*!< SCB ICSR: ISRPREEMPT Mask */
+S
+S#define SCB_ICSR_ISRPENDING_Pos            22U                                            /*!< SCB ICSR: ISRPENDING Position */
+S#define SCB_ICSR_ISRPENDING_Msk            (1UL << SCB_ICSR_ISRPENDING_Pos)               /*!< SCB ICSR: ISRPENDING Mask */
+S
+S#define SCB_ICSR_VECTPENDING_Pos           12U                                            /*!< SCB ICSR: VECTPENDING Position */
+S#define SCB_ICSR_VECTPENDING_Msk           (0x1FFUL << SCB_ICSR_VECTPENDING_Pos)          /*!< SCB ICSR: VECTPENDING Mask */
+S
+S#define SCB_ICSR_VECTACTIVE_Pos             0U                                            /*!< SCB ICSR: VECTACTIVE Position */
+S#define SCB_ICSR_VECTACTIVE_Msk            (0x1FFUL /*<< SCB_ICSR_VECTACTIVE_Pos*/)       /*!< SCB ICSR: VECTACTIVE Mask */
+S
+S#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+S/* SCB Interrupt Control State Register Definitions */
+S#define SCB_VTOR_TBLOFF_Pos                 8U                                            /*!< SCB VTOR: TBLOFF Position */
+S#define SCB_VTOR_TBLOFF_Msk                (0xFFFFFFUL << SCB_VTOR_TBLOFF_Pos)            /*!< SCB VTOR: TBLOFF Mask */
+S#endif
+S
+S/* SCB Application Interrupt and Reset Control Register Definitions */
+S#define SCB_AIRCR_VECTKEY_Pos              16U                                            /*!< SCB AIRCR: VECTKEY Position */
+S#define SCB_AIRCR_VECTKEY_Msk              (0xFFFFUL << SCB_AIRCR_VECTKEY_Pos)            /*!< SCB AIRCR: VECTKEY Mask */
+S
+S#define SCB_AIRCR_VECTKEYSTAT_Pos          16U                                            /*!< SCB AIRCR: VECTKEYSTAT Position */
+S#define SCB_AIRCR_VECTKEYSTAT_Msk          (0xFFFFUL << SCB_AIRCR_VECTKEYSTAT_Pos)        /*!< SCB AIRCR: VECTKEYSTAT Mask */
+S
+S#define SCB_AIRCR_ENDIANESS_Pos            15U                                            /*!< SCB AIRCR: ENDIANESS Position */
+S#define SCB_AIRCR_ENDIANESS_Msk            (1UL << SCB_AIRCR_ENDIANESS_Pos)               /*!< SCB AIRCR: ENDIANESS Mask */
+S
+S#define SCB_AIRCR_SYSRESETREQ_Pos           2U                                            /*!< SCB AIRCR: SYSRESETREQ Position */
+S#define SCB_AIRCR_SYSRESETREQ_Msk          (1UL << SCB_AIRCR_SYSRESETREQ_Pos)             /*!< SCB AIRCR: SYSRESETREQ Mask */
+S
+S#define SCB_AIRCR_VECTCLRACTIVE_Pos         1U                                            /*!< SCB AIRCR: VECTCLRACTIVE Position */
+S#define SCB_AIRCR_VECTCLRACTIVE_Msk        (1UL << SCB_AIRCR_VECTCLRACTIVE_Pos)           /*!< SCB AIRCR: VECTCLRACTIVE Mask */
+S
+S/* SCB System Control Register Definitions */
+S#define SCB_SCR_SEVONPEND_Pos               4U                                            /*!< SCB SCR: SEVONPEND Position */
+S#define SCB_SCR_SEVONPEND_Msk              (1UL << SCB_SCR_SEVONPEND_Pos)                 /*!< SCB SCR: SEVONPEND Mask */
+S
+S#define SCB_SCR_SLEEPDEEP_Pos               2U                                            /*!< SCB SCR: SLEEPDEEP Position */
+S#define SCB_SCR_SLEEPDEEP_Msk              (1UL << SCB_SCR_SLEEPDEEP_Pos)                 /*!< SCB SCR: SLEEPDEEP Mask */
+S
+S#define SCB_SCR_SLEEPONEXIT_Pos             1U                                            /*!< SCB SCR: SLEEPONEXIT Position */
+S#define SCB_SCR_SLEEPONEXIT_Msk            (1UL << SCB_SCR_SLEEPONEXIT_Pos)               /*!< SCB SCR: SLEEPONEXIT Mask */
+S
+S/* SCB Configuration Control Register Definitions */
+S#define SCB_CCR_STKALIGN_Pos                9U                                            /*!< SCB CCR: STKALIGN Position */
+S#define SCB_CCR_STKALIGN_Msk               (1UL << SCB_CCR_STKALIGN_Pos)                  /*!< SCB CCR: STKALIGN Mask */
+S
+S#define SCB_CCR_UNALIGN_TRP_Pos             3U                                            /*!< SCB CCR: UNALIGN_TRP Position */
+S#define SCB_CCR_UNALIGN_TRP_Msk            (1UL << SCB_CCR_UNALIGN_TRP_Pos)               /*!< SCB CCR: UNALIGN_TRP Mask */
+S
+S/* SCB System Handler Control and State Register Definitions */
+S#define SCB_SHCSR_SVCALLPENDED_Pos         15U                                            /*!< SCB SHCSR: SVCALLPENDED Position */
+S#define SCB_SHCSR_SVCALLPENDED_Msk         (1UL << SCB_SHCSR_SVCALLPENDED_Pos)            /*!< SCB SHCSR: SVCALLPENDED Mask */
+S
+S/*@} end of group CMSIS_SCB */
+S
+S
+S/**
+S  \ingroup  CMSIS_core_register
+S  \defgroup CMSIS_SysTick     System Tick Timer (SysTick)
+S  \brief    Type definitions for the System Timer Registers.
+S  @{
+S */
+S
+S/**
+S  \brief  Structure type to access the System Timer (SysTick).
+S */
+Stypedef struct
+S{
+S  __IOM uint32_t CTRL;                   /*!< Offset: 0x000 (R/W)  SysTick Control and Status Register */
+S  __IOM uint32_t LOAD;                   /*!< Offset: 0x004 (R/W)  SysTick Reload Value Register */
+S  __IOM uint32_t VAL;                    /*!< Offset: 0x008 (R/W)  SysTick Current Value Register */
+S  __IM  uint32_t CALIB;                  /*!< Offset: 0x00C (R/ )  SysTick Calibration Register */
+S} SysTick_Type;
+S
+S/* SysTick Control / Status Register Definitions */
+S#define SysTick_CTRL_COUNTFLAG_Pos         16U                                            /*!< SysTick CTRL: COUNTFLAG Position */
+S#define SysTick_CTRL_COUNTFLAG_Msk         (1UL << SysTick_CTRL_COUNTFLAG_Pos)            /*!< SysTick CTRL: COUNTFLAG Mask */
+S
+S#define SysTick_CTRL_CLKSOURCE_Pos          2U                                            /*!< SysTick CTRL: CLKSOURCE Position */
+S#define SysTick_CTRL_CLKSOURCE_Msk         (1UL << SysTick_CTRL_CLKSOURCE_Pos)            /*!< SysTick CTRL: CLKSOURCE Mask */
+S
+S#define SysTick_CTRL_TICKINT_Pos            1U                                            /*!< SysTick CTRL: TICKINT Position */
+S#define SysTick_CTRL_TICKINT_Msk           (1UL << SysTick_CTRL_TICKINT_Pos)              /*!< SysTick CTRL: TICKINT Mask */
+S
+S#define SysTick_CTRL_ENABLE_Pos             0U                                            /*!< SysTick CTRL: ENABLE Position */
+S#define SysTick_CTRL_ENABLE_Msk            (1UL /*<< SysTick_CTRL_ENABLE_Pos*/)           /*!< SysTick CTRL: ENABLE Mask */
+S
+S/* SysTick Reload Register Definitions */
+S#define SysTick_LOAD_RELOAD_Pos             0U                                            /*!< SysTick LOAD: RELOAD Position */
+S#define SysTick_LOAD_RELOAD_Msk            (0xFFFFFFUL /*<< SysTick_LOAD_RELOAD_Pos*/)    /*!< SysTick LOAD: RELOAD Mask */
+S
+S/* SysTick Current Register Definitions */
+S#define SysTick_VAL_CURRENT_Pos             0U                                            /*!< SysTick VAL: CURRENT Position */
+S#define SysTick_VAL_CURRENT_Msk            (0xFFFFFFUL /*<< SysTick_VAL_CURRENT_Pos*/)    /*!< SysTick VAL: CURRENT Mask */
+S
+S/* SysTick Calibration Register Definitions */
+S#define SysTick_CALIB_NOREF_Pos            31U                                            /*!< SysTick CALIB: NOREF Position */
+S#define SysTick_CALIB_NOREF_Msk            (1UL << SysTick_CALIB_NOREF_Pos)               /*!< SysTick CALIB: NOREF Mask */
+S
+S#define SysTick_CALIB_SKEW_Pos             30U                                            /*!< SysTick CALIB: SKEW Position */
+S#define SysTick_CALIB_SKEW_Msk             (1UL << SysTick_CALIB_SKEW_Pos)                /*!< SysTick CALIB: SKEW Mask */
+S
+S#define SysTick_CALIB_TENMS_Pos             0U                                            /*!< SysTick CALIB: TENMS Position */
+S#define SysTick_CALIB_TENMS_Msk            (0xFFFFFFUL /*<< SysTick_CALIB_TENMS_Pos*/)    /*!< SysTick CALIB: TENMS Mask */
+S
+S/*@} end of group CMSIS_SysTick */
+S
+S#if defined (__MPU_PRESENT) && (__MPU_PRESENT == 1U)
+S/**
+S  \ingroup  CMSIS_core_register
+S  \defgroup CMSIS_MPU     Memory Protection Unit (MPU)
+S  \brief    Type definitions for the Memory Protection Unit (MPU)
+S  @{
+S */
+S
+S/**
+S  \brief  Structure type to access the Memory Protection Unit (MPU).
+S */
+Stypedef struct
+S{
+S  __IM  uint32_t TYPE;                   /*!< Offset: 0x000 (R/ )  MPU Type Register */
+S  __IOM uint32_t CTRL;                   /*!< Offset: 0x004 (R/W)  MPU Control Register */
+S  __IOM uint32_t RNR;                    /*!< Offset: 0x008 (R/W)  MPU Region RNRber Register */
+S  __IOM uint32_t RBAR;                   /*!< Offset: 0x00C (R/W)  MPU Region Base Address Register */
+S  __IOM uint32_t RASR;                   /*!< Offset: 0x010 (R/W)  MPU Region Attribute and Size Register */
+S} MPU_Type;
+S
+S#define MPU_TYPE_RALIASES                  1U
+S
+S/* MPU Type Register Definitions */
+S#define MPU_TYPE_IREGION_Pos               16U                                            /*!< MPU TYPE: IREGION Position */
+S#define MPU_TYPE_IREGION_Msk               (0xFFUL << MPU_TYPE_IREGION_Pos)               /*!< MPU TYPE: IREGION Mask */
+S
+S#define MPU_TYPE_DREGION_Pos                8U                                            /*!< MPU TYPE: DREGION Position */
+S#define MPU_TYPE_DREGION_Msk               (0xFFUL << MPU_TYPE_DREGION_Pos)               /*!< MPU TYPE: DREGION Mask */
+S
+S#define MPU_TYPE_SEPARATE_Pos               0U                                            /*!< MPU TYPE: SEPARATE Position */
+S#define MPU_TYPE_SEPARATE_Msk              (1UL /*<< MPU_TYPE_SEPARATE_Pos*/)             /*!< MPU TYPE: SEPARATE Mask */
+S
+S/* MPU Control Register Definitions */
+S#define MPU_CTRL_PRIVDEFENA_Pos             2U                                            /*!< MPU CTRL: PRIVDEFENA Position */
+S#define MPU_CTRL_PRIVDEFENA_Msk            (1UL << MPU_CTRL_PRIVDEFENA_Pos)               /*!< MPU CTRL: PRIVDEFENA Mask */
+S
+S#define MPU_CTRL_HFNMIENA_Pos               1U                                            /*!< MPU CTRL: HFNMIENA Position */
+S#define MPU_CTRL_HFNMIENA_Msk              (1UL << MPU_CTRL_HFNMIENA_Pos)                 /*!< MPU CTRL: HFNMIENA Mask */
+S
+S#define MPU_CTRL_ENABLE_Pos                 0U                                            /*!< MPU CTRL: ENABLE Position */
+S#define MPU_CTRL_ENABLE_Msk                (1UL /*<< MPU_CTRL_ENABLE_Pos*/)               /*!< MPU CTRL: ENABLE Mask */
+S
+S/* MPU Region Number Register Definitions */
+S#define MPU_RNR_REGION_Pos                  0U                                            /*!< MPU RNR: REGION Position */
+S#define MPU_RNR_REGION_Msk                 (0xFFUL /*<< MPU_RNR_REGION_Pos*/)             /*!< MPU RNR: REGION Mask */
+S
+S/* MPU Region Base Address Register Definitions */
+S#define MPU_RBAR_ADDR_Pos                   8U                                            /*!< MPU RBAR: ADDR Position */
+S#define MPU_RBAR_ADDR_Msk                  (0xFFFFFFUL << MPU_RBAR_ADDR_Pos)              /*!< MPU RBAR: ADDR Mask */
+S
+S#define MPU_RBAR_VALID_Pos                  4U                                            /*!< MPU RBAR: VALID Position */
+S#define MPU_RBAR_VALID_Msk                 (1UL << MPU_RBAR_VALID_Pos)                    /*!< MPU RBAR: VALID Mask */
+S
+S#define MPU_RBAR_REGION_Pos                 0U                                            /*!< MPU RBAR: REGION Position */
+S#define MPU_RBAR_REGION_Msk                (0xFUL /*<< MPU_RBAR_REGION_Pos*/)             /*!< MPU RBAR: REGION Mask */
+S
+S/* MPU Region Attribute and Size Register Definitions */
+S#define MPU_RASR_ATTRS_Pos                 16U                                            /*!< MPU RASR: MPU Region Attribute field Position */
+S#define MPU_RASR_ATTRS_Msk                 (0xFFFFUL << MPU_RASR_ATTRS_Pos)               /*!< MPU RASR: MPU Region Attribute field Mask */
+S
+S#define MPU_RASR_XN_Pos                    28U                                            /*!< MPU RASR: ATTRS.XN Position */
+S#define MPU_RASR_XN_Msk                    (1UL << MPU_RASR_XN_Pos)                       /*!< MPU RASR: ATTRS.XN Mask */
+S
+S#define MPU_RASR_AP_Pos                    24U                                            /*!< MPU RASR: ATTRS.AP Position */
+S#define MPU_RASR_AP_Msk                    (0x7UL << MPU_RASR_AP_Pos)                     /*!< MPU RASR: ATTRS.AP Mask */
+S
+S#define MPU_RASR_TEX_Pos                   19U                                            /*!< MPU RASR: ATTRS.TEX Position */
+S#define MPU_RASR_TEX_Msk                   (0x7UL << MPU_RASR_TEX_Pos)                    /*!< MPU RASR: ATTRS.TEX Mask */
+S
+S#define MPU_RASR_S_Pos                     18U                                            /*!< MPU RASR: ATTRS.S Position */
+S#define MPU_RASR_S_Msk                     (1UL << MPU_RASR_S_Pos)                        /*!< MPU RASR: ATTRS.S Mask */
+S
+S#define MPU_RASR_C_Pos                     17U                                            /*!< MPU RASR: ATTRS.C Position */
+S#define MPU_RASR_C_Msk                     (1UL << MPU_RASR_C_Pos)                        /*!< MPU RASR: ATTRS.C Mask */
+S
+S#define MPU_RASR_B_Pos                     16U                                            /*!< MPU RASR: ATTRS.B Position */
+S#define MPU_RASR_B_Msk                     (1UL << MPU_RASR_B_Pos)                        /*!< MPU RASR: ATTRS.B Mask */
+S
+S#define MPU_RASR_SRD_Pos                    8U                                            /*!< MPU RASR: Sub-Region Disable Position */
+S#define MPU_RASR_SRD_Msk                   (0xFFUL << MPU_RASR_SRD_Pos)                   /*!< MPU RASR: Sub-Region Disable Mask */
+S
+S#define MPU_RASR_SIZE_Pos                   1U                                            /*!< MPU RASR: Region Size Field Position */
+S#define MPU_RASR_SIZE_Msk                  (0x1FUL << MPU_RASR_SIZE_Pos)                  /*!< MPU RASR: Region Size Field Mask */
+S
+S#define MPU_RASR_ENABLE_Pos                 0U                                            /*!< MPU RASR: Region enable bit Position */
+S#define MPU_RASR_ENABLE_Msk                (1UL /*<< MPU_RASR_ENABLE_Pos*/)               /*!< MPU RASR: Region enable bit Disable Mask */
+S
+S/*@} end of group CMSIS_MPU */
+S#endif
+S
+S
+S/**
+S  \ingroup  CMSIS_core_register
+S  \defgroup CMSIS_CoreDebug       Core Debug Registers (CoreDebug)
+S  \brief    Cortex-M0+ Core Debug Registers (DCB registers, SHCSR, and DFSR) are only accessible over DAP and not via processor.
+S            Therefore they are not covered by the Cortex-M0+ header file.
+S  @{
+S */
+S/*@} end of group CMSIS_CoreDebug */
+S
+S
+S/**
+S  \ingroup    CMSIS_core_register
+S  \defgroup   CMSIS_core_bitfield     Core register bit field macros
+S  \brief      Macros for use with bit field definitions (xxx_Pos, xxx_Msk).
+S  @{
+S */
+S
+S/**
+S  \brief   Mask and shift a bit field value for use in a register bit range.
+S  \param[in] field  Name of the register bit field.
+S  \param[in] value  Value of the bit field. This parameter is interpreted as an uint32_t type.
+S  \return           Masked and shifted value.
+S*/
+S#define _VAL2FLD(field, value)    (((uint32_t)(value) << field ## _Pos) & field ## _Msk)
+S
+S/**
+S  \brief     Mask and shift a register value to extract a bit filed value.
+S  \param[in] field  Name of the register bit field.
+S  \param[in] value  Value of register. This parameter is interpreted as an uint32_t type.
+S  \return           Masked and shifted bit field value.
+S*/
+S#define _FLD2VAL(field, value)    (((uint32_t)(value) & field ## _Msk) >> field ## _Pos)
+S
+S/*@} end of group CMSIS_core_bitfield */
+S
+S
+S/**
+S  \ingroup    CMSIS_core_register
+S  \defgroup   CMSIS_core_base     Core Definitions
+S  \brief      Definitions for base addresses, unions, and structures.
+S  @{
+S */
+S
+S/* Memory mapping of Core Hardware */
+S#define SCS_BASE            (0xE000E000UL)                            /*!< System Control Space Base Address */
+S#define SysTick_BASE        (SCS_BASE +  0x0010UL)                    /*!< SysTick Base Address */
+S#define NVIC_BASE           (SCS_BASE +  0x0100UL)                    /*!< NVIC Base Address */
+S#define SCB_BASE            (SCS_BASE +  0x0D00UL)                    /*!< System Control Block Base Address */
+S
+S#define SCB                 ((SCB_Type       *)     SCB_BASE      )   /*!< SCB configuration struct */
+S#define SysTick             ((SysTick_Type   *)     SysTick_BASE  )   /*!< SysTick configuration struct */
+S#define NVIC                ((NVIC_Type      *)     NVIC_BASE     )   /*!< NVIC configuration struct */
+S
+S#if defined (__MPU_PRESENT) && (__MPU_PRESENT == 1U)
+S  #define MPU_BASE          (SCS_BASE +  0x0D90UL)                    /*!< Memory Protection Unit */
+S  #define MPU               ((MPU_Type       *)     MPU_BASE      )   /*!< Memory Protection Unit */
+S#endif
+S
+S/*@} */
+S
+S
+S
+S/*******************************************************************************
+S *                Hardware Abstraction Layer
+S  Core Function Interface contains:
+S  - Core NVIC Functions
+S  - Core SysTick Functions
+S  - Core Register Access Functions
+S ******************************************************************************/
+S/**
+S  \defgroup CMSIS_Core_FunctionInterface Functions and Instructions Reference
+S*/
+S
+S
+S
+S/* ##########################   NVIC functions  #################################### */
+S/**
+S  \ingroup  CMSIS_Core_FunctionInterface
+S  \defgroup CMSIS_Core_NVICFunctions NVIC Functions
+S  \brief    Functions that manage interrupts and exceptions via the NVIC.
+S  @{
+S */
+S
+S#ifdef CMSIS_NVIC_VIRTUAL
+S  #ifndef CMSIS_NVIC_VIRTUAL_HEADER_FILE
+S    #define CMSIS_NVIC_VIRTUAL_HEADER_FILE "cmsis_nvic_virtual.h"
+S  #endif
+S  #include CMSIS_NVIC_VIRTUAL_HEADER_FILE
+S#else
+S  #define NVIC_SetPriorityGrouping    __NVIC_SetPriorityGrouping
+S  #define NVIC_GetPriorityGrouping    __NVIC_GetPriorityGrouping
+S  #define NVIC_EnableIRQ              __NVIC_EnableIRQ
+S  #define NVIC_GetEnableIRQ           __NVIC_GetEnableIRQ
+S  #define NVIC_DisableIRQ             __NVIC_DisableIRQ
+S  #define NVIC_GetPendingIRQ          __NVIC_GetPendingIRQ
+S  #define NVIC_SetPendingIRQ          __NVIC_SetPendingIRQ
+S  #define NVIC_ClearPendingIRQ        __NVIC_ClearPendingIRQ
+S/*#define NVIC_GetActive              __NVIC_GetActive             not available for Cortex-M0+ */
+S  #define NVIC_SetPriority            __NVIC_SetPriority
+S  #define NVIC_GetPriority            __NVIC_GetPriority
+S  #define NVIC_SystemReset            __NVIC_SystemReset
+S#endif /* CMSIS_NVIC_VIRTUAL */
+S
+S#ifdef CMSIS_VECTAB_VIRTUAL
+S  #ifndef CMSIS_VECTAB_VIRTUAL_HEADER_FILE
+S    #define CMSIS_VECTAB_VIRTUAL_HEADER_FILE "cmsis_vectab_virtual.h"
+S  #endif
+S  #include CMSIS_VECTAB_VIRTUAL_HEADER_FILE
+S#else
+S  #define NVIC_SetVector              __NVIC_SetVector
+S  #define NVIC_GetVector              __NVIC_GetVector
+S#endif  /* (CMSIS_VECTAB_VIRTUAL) */
+S
+S#define NVIC_USER_IRQ_OFFSET          16
+S
+S
+S/* The following EXC_RETURN values are saved the LR on exception entry */
+S#define EXC_RETURN_HANDLER         (0xFFFFFFF1UL)     /* return to Handler mode, uses MSP after return                               */
+S#define EXC_RETURN_THREAD_MSP      (0xFFFFFFF9UL)     /* return to Thread mode, uses MSP after return                                */
+S#define EXC_RETURN_THREAD_PSP      (0xFFFFFFFDUL)     /* return to Thread mode, uses PSP after return                                */
+S
+S
+S/* Interrupt Priorities are WORD accessible only under Armv6-M                  */
+S/* The following MACROS handle generation of the register offset and byte masks */
+S#define _BIT_SHIFT(IRQn)         (  ((((uint32_t)(int32_t)(IRQn))         )      &  0x03UL) * 8UL)
+S#define _SHP_IDX(IRQn)           ( (((((uint32_t)(int32_t)(IRQn)) & 0x0FUL)-8UL) >>    2UL)      )
+S#define _IP_IDX(IRQn)            (   (((uint32_t)(int32_t)(IRQn))                >>    2UL)      )
+S
+S#define __NVIC_SetPriorityGrouping(X) (void)(X)
+S#define __NVIC_GetPriorityGrouping()  (0U)
+S
+S/**
+S  \brief   Enable Interrupt
+S  \details Enables a device specific interrupt in the NVIC interrupt controller.
+S  \param [in]      IRQn  Device specific interrupt number.
+S  \note    IRQn must not be negative.
+S */
+S__STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
+S{
+S  if ((int32_t)(IRQn) >= 0)
+S  {
+S    NVIC->ISER[0U] = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
+S  }
+S}
+S
+S
+S/**
+S  \brief   Get Interrupt Enable status
+S  \details Returns a device specific interrupt enable status from the NVIC interrupt controller.
+S  \param [in]      IRQn  Device specific interrupt number.
+S  \return             0  Interrupt is not enabled.
+S  \return             1  Interrupt is enabled.
+S  \note    IRQn must not be negative.
+S */
+S__STATIC_INLINE uint32_t __NVIC_GetEnableIRQ(IRQn_Type IRQn)
+S{
+S  if ((int32_t)(IRQn) >= 0)
+S  {
+S    return((uint32_t)(((NVIC->ISER[0U] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
+S  }
+S  else
+S  {
+S    return(0U);
+S  }
+S}
+S
+S
+S/**
+S  \brief   Disable Interrupt
+S  \details Disables a device specific interrupt in the NVIC interrupt controller.
+S  \param [in]      IRQn  Device specific interrupt number.
+S  \note    IRQn must not be negative.
+S */
+S__STATIC_INLINE void __NVIC_DisableIRQ(IRQn_Type IRQn)
+S{
+S  if ((int32_t)(IRQn) >= 0)
+S  {
+S    NVIC->ICER[0U] = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
+S    __DSB();
+S    __ISB();
+S  }
+S}
+S
+S
+S/**
+S  \brief   Get Pending Interrupt
+S  \details Reads the NVIC pending register and returns the pending bit for the specified device specific interrupt.
+S  \param [in]      IRQn  Device specific interrupt number.
+S  \return             0  Interrupt status is not pending.
+S  \return             1  Interrupt status is pending.
+S  \note    IRQn must not be negative.
+S */
+S__STATIC_INLINE uint32_t __NVIC_GetPendingIRQ(IRQn_Type IRQn)
+S{
+S  if ((int32_t)(IRQn) >= 0)
+S  {
+S    return((uint32_t)(((NVIC->ISPR[0U] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
+S  }
+S  else
+S  {
+S    return(0U);
+S  }
+S}
+S
+S
+S/**
+S  \brief   Set Pending Interrupt
+S  \details Sets the pending bit of a device specific interrupt in the NVIC pending register.
+S  \param [in]      IRQn  Device specific interrupt number.
+S  \note    IRQn must not be negative.
+S */
+S__STATIC_INLINE void __NVIC_SetPendingIRQ(IRQn_Type IRQn)
+S{
+S  if ((int32_t)(IRQn) >= 0)
+S  {
+S    NVIC->ISPR[0U] = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
+S  }
+S}
+S
+S
+S/**
+S  \brief   Clear Pending Interrupt
+S  \details Clears the pending bit of a device specific interrupt in the NVIC pending register.
+S  \param [in]      IRQn  Device specific interrupt number.
+S  \note    IRQn must not be negative.
+S */
+S__STATIC_INLINE void __NVIC_ClearPendingIRQ(IRQn_Type IRQn)
+S{
+S  if ((int32_t)(IRQn) >= 0)
+S  {
+S    NVIC->ICPR[0U] = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
+S  }
+S}
+S
+S
+S/**
+S  \brief   Set Interrupt Priority
+S  \details Sets the priority of a device specific interrupt or a processor exception.
+S           The interrupt number can be positive to specify a device specific interrupt,
+S           or negative to specify a processor exception.
+S  \param [in]      IRQn  Interrupt number.
+S  \param [in]  priority  Priority to set.
+S  \note    The priority cannot be set for every processor exception.
+S */
+S__STATIC_INLINE void __NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
+S{
+S  if ((int32_t)(IRQn) >= 0)
+S  {
+S    NVIC->IP[_IP_IDX(IRQn)]  = ((uint32_t)(NVIC->IP[_IP_IDX(IRQn)]  & ~(0xFFUL << _BIT_SHIFT(IRQn))) |
+S       (((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL) << _BIT_SHIFT(IRQn)));
+S  }
+S  else
+S  {
+S    SCB->SHP[_SHP_IDX(IRQn)] = ((uint32_t)(SCB->SHP[_SHP_IDX(IRQn)] & ~(0xFFUL << _BIT_SHIFT(IRQn))) |
+S       (((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL) << _BIT_SHIFT(IRQn)));
+S  }
+S}
+S
+S
+S/**
+S  \brief   Get Interrupt Priority
+S  \details Reads the priority of a device specific interrupt or a processor exception.
+S           The interrupt number can be positive to specify a device specific interrupt,
+S           or negative to specify a processor exception.
+S  \param [in]   IRQn  Interrupt number.
+S  \return             Interrupt Priority.
+S                      Value is aligned automatically to the implemented priority bits of the microcontroller.
+S */
+S__STATIC_INLINE uint32_t __NVIC_GetPriority(IRQn_Type IRQn)
+S{
+S
+S  if ((int32_t)(IRQn) >= 0)
+S  {
+S    return((uint32_t)(((NVIC->IP[ _IP_IDX(IRQn)] >> _BIT_SHIFT(IRQn) ) & (uint32_t)0xFFUL) >> (8U - __NVIC_PRIO_BITS)));
+S  }
+S  else
+S  {
+S    return((uint32_t)(((SCB->SHP[_SHP_IDX(IRQn)] >> _BIT_SHIFT(IRQn) ) & (uint32_t)0xFFUL) >> (8U - __NVIC_PRIO_BITS)));
+S  }
+S}
+S
+S
+S/**
+S  \brief   Encode Priority
+S  \details Encodes the priority for an interrupt with the given priority group,
+S           preemptive priority value, and subpriority value.
+S           In case of a conflict between priority grouping and available
+S           priority bits (__NVIC_PRIO_BITS), the smallest possible priority group is set.
+S  \param [in]     PriorityGroup  Used priority group.
+S  \param [in]   PreemptPriority  Preemptive priority value (starting from 0).
+S  \param [in]       SubPriority  Subpriority value (starting from 0).
+S  \return                        Encoded priority. Value can be used in the function \ref NVIC_SetPriority().
+S */
+S__STATIC_INLINE uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t PreemptPriority, uint32_t SubPriority)
+S{
+S  uint32_t PriorityGroupTmp = (PriorityGroup & (uint32_t)0x07UL);   /* only values 0..7 are used          */
+S  uint32_t PreemptPriorityBits;
+S  uint32_t SubPriorityBits;
+S
+S  PreemptPriorityBits = ((7UL - PriorityGroupTmp) > (uint32_t)(__NVIC_PRIO_BITS)) ? (uint32_t)(__NVIC_PRIO_BITS) : (uint32_t)(7UL - PriorityGroupTmp);
+S  SubPriorityBits     = ((PriorityGroupTmp + (uint32_t)(__NVIC_PRIO_BITS)) < (uint32_t)7UL) ? (uint32_t)0UL : (uint32_t)((PriorityGroupTmp - 7UL) + (uint32_t)(__NVIC_PRIO_BITS));
+S
+S  return (
+S           ((PreemptPriority & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL)) << SubPriorityBits) |
+S           ((SubPriority     & (uint32_t)((1UL << (SubPriorityBits    )) - 1UL)))
+S         );
+S}
+S
+S
+S/**
+S  \brief   Decode Priority
+S  \details Decodes an interrupt priority value with a given priority group to
+S           preemptive priority value and subpriority value.
+S           In case of a conflict between priority grouping and available
+S           priority bits (__NVIC_PRIO_BITS) the smallest possible priority group is set.
+S  \param [in]         Priority   Priority value, which can be retrieved with the function \ref NVIC_GetPriority().
+S  \param [in]     PriorityGroup  Used priority group.
+S  \param [out] pPreemptPriority  Preemptive priority value (starting from 0).
+S  \param [out]     pSubPriority  Subpriority value (starting from 0).
+S */
+S__STATIC_INLINE void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGroup, uint32_t* const pPreemptPriority, uint32_t* const pSubPriority)
+S{
+S  uint32_t PriorityGroupTmp = (PriorityGroup & (uint32_t)0x07UL);   /* only values 0..7 are used          */
+S  uint32_t PreemptPriorityBits;
+S  uint32_t SubPriorityBits;
+S
+S  PreemptPriorityBits = ((7UL - PriorityGroupTmp) > (uint32_t)(__NVIC_PRIO_BITS)) ? (uint32_t)(__NVIC_PRIO_BITS) : (uint32_t)(7UL - PriorityGroupTmp);
+S  SubPriorityBits     = ((PriorityGroupTmp + (uint32_t)(__NVIC_PRIO_BITS)) < (uint32_t)7UL) ? (uint32_t)0UL : (uint32_t)((PriorityGroupTmp - 7UL) + (uint32_t)(__NVIC_PRIO_BITS));
+S
+S  *pPreemptPriority = (Priority >> SubPriorityBits) & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL);
+S  *pSubPriority     = (Priority                   ) & (uint32_t)((1UL << (SubPriorityBits    )) - 1UL);
+S}
+S
+S
+S/**
+S  \brief   Set Interrupt Vector
+S  \details Sets an interrupt vector in SRAM based interrupt vector table.
+S           The interrupt number can be positive to specify a device specific interrupt,
+S           or negative to specify a processor exception.
+S           VTOR must been relocated to SRAM before.
+S           If VTOR is not present address 0 must be mapped to SRAM.
+S  \param [in]   IRQn      Interrupt number
+S  \param [in]   vector    Address of interrupt handler function
+S */
+S__STATIC_INLINE void __NVIC_SetVector(IRQn_Type IRQn, uint32_t vector)
+S{
+S#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+S  uint32_t *vectors = (uint32_t *)SCB->VTOR;
+S#else
+S    uint32_t *vectors = (uint32_t *)0x0U;
+S#endif
+S  vectors[(int32_t)IRQn + NVIC_USER_IRQ_OFFSET] = vector;
+S}
+S
+S
+S/**
+S  \brief   Get Interrupt Vector
+S  \details Reads an interrupt vector from interrupt vector table.
+S           The interrupt number can be positive to specify a device specific interrupt,
+S           or negative to specify a processor exception.
+S  \param [in]   IRQn      Interrupt number.
+S  \return                 Address of interrupt handler function
+S */
+S__STATIC_INLINE uint32_t __NVIC_GetVector(IRQn_Type IRQn)
+S{
+S#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+S  uint32_t *vectors = (uint32_t *)SCB->VTOR;
+S#else
+S  uint32_t *vectors = (uint32_t *)0x0U;
+S#endif
+S  return vectors[(int32_t)IRQn + NVIC_USER_IRQ_OFFSET];
+S
+S}
+S
+S
+S/**
+S  \brief   System Reset
+S  \details Initiates a system reset request to reset the MCU.
+S */
+S__NO_RETURN __STATIC_INLINE void __NVIC_SystemReset(void)
+S{
+S  __DSB();                                                          /* Ensure all outstanding memory accesses included
+S                                                                       buffered write are completed before reset */
+S  SCB->AIRCR  = ((0x5FAUL << SCB_AIRCR_VECTKEY_Pos) |
+S                 SCB_AIRCR_SYSRESETREQ_Msk);
+S  __DSB();                                                          /* Ensure completion of memory access */
+S
+S  for(;;)                                                           /* wait until reset */
+S  {
+S    __NOP();
+S  }
+S}
+S
+S/*@} end of CMSIS_Core_NVICFunctions */
+S
+S/* ##########################  MPU functions  #################################### */
+S
+S#if defined (__MPU_PRESENT) && (__MPU_PRESENT == 1U)
+S
+S#include "mpu_armv7.h"
+S
+S#endif
+S
+S/* ##########################  FPU functions  #################################### */
+S/**
+S  \ingroup  CMSIS_Core_FunctionInterface
+S  \defgroup CMSIS_Core_FpuFunctions FPU Functions
+S  \brief    Function that provides FPU type.
+S  @{
+S */
+S
+S/**
+S  \brief   get FPU type
+S  \details returns the FPU type
+S  \returns
+S   - \b  0: No FPU
+S   - \b  1: Single precision FPU
+S   - \b  2: Double + Single precision FPU
+S */
+S__STATIC_INLINE uint32_t SCB_GetFPUType(void)
+S{
+S    return 0U;           /* No FPU */
+S}
+S
+S
+S/*@} end of CMSIS_Core_FpuFunctions */
+S
+S
+S
+S/* ##################################    SysTick function  ############################################ */
+S/**
+S  \ingroup  CMSIS_Core_FunctionInterface
+S  \defgroup CMSIS_Core_SysTickFunctions SysTick Functions
+S  \brief    Functions that configure the System.
+S  @{
+S */
+S
+S#if defined (__Vendor_SysTickConfig) && (__Vendor_SysTickConfig == 0U)
+S
+S/**
+S  \brief   System Tick Configuration
+S  \details Initializes the System Timer and its interrupt, and starts the System Tick Timer.
+S           Counter is in free running mode to generate periodic interrupts.
+S  \param [in]  ticks  Number of ticks between two interrupts.
+S  \return          0  Function succeeded.
+S  \return          1  Function failed.
+S  \note    When the variable <b>__Vendor_SysTickConfig</b> is set to 1, then the
+S           function <b>SysTick_Config</b> is not included. In this case, the file <b><i>device</i>.h</b>
+S           must contain a vendor-specific implementation of this function.
+S */
+S__STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)
+S{
+S  if ((ticks - 1UL) > SysTick_LOAD_RELOAD_Msk)
+S  {
+S    return (1UL);                                                   /* Reload value impossible */
+S  }
+S
+S  SysTick->LOAD  = (uint32_t)(ticks - 1UL);                         /* set reload register */
+S  NVIC_SetPriority (SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL); /* set Priority for Systick Interrupt */
+S  SysTick->VAL   = 0UL;                                             /* Load the SysTick Counter Value */
+S  SysTick->CTRL  = SysTick_CTRL_CLKSOURCE_Msk |
+S                   SysTick_CTRL_TICKINT_Msk   |
+S                   SysTick_CTRL_ENABLE_Msk;                         /* Enable SysTick IRQ and SysTick Timer */
+S  return (0UL);                                                     /* Function successful */
+S}
+S
+S#endif
+S
+S/*@} end of CMSIS_Core_SysTickFunctions */
+S
+S
+S
+S
+S#ifdef __cplusplus
+S}
+S#endif
+S
+N#endif /* __CORE_CM0PLUS_H_DEPENDANT */
+N
+N#endif /* __CMSIS_GENERIC */
+L 24 "..\User\HeadFiles\SysFunVarDefine.h" 2
+N/**************************************Generated by EasyCodeCube*************************************/
+N//Forbid editing areas between the labels !!!
+N
+N/*************************************.Generated by EasyCodeCube.************************************/
+Nextern volatile unsigned char DMA_SPI_FLAG;
+Nextern volatile uint16_t UI_DisplayTime_1st;
+Nextern volatile uint16_t UI_DisplayTime_2nd;
+N
+Nextern void ChangeTouchKeyvalue(void);
+Nextern void Sys_Scan(void);
+Nextern void IcResourceInit(void);
+L 62 "..\User\main.c" 2
+N#include "TFT_Lcd.h"
+N#include <stdio.h> 
+N#include "Data_Acquisition.h" // 务必包含此头文件
+N
+N// =========================================================
+N//  外部变量引用
+N// =========================================================
+Nextern volatile uint8_t Acq_Done_Flag;      // 采集完成标志
+Nextern volatile uint32_t Debug_ISR_Count;   // 中断计数器
+N// AD 在 Data_Acquisition.h 中定义为 Acq_Data 的别名
+N
+N// =========================================================
+N//  调试函数：直接显示8个通道的数值
+N// =========================================================
+Nvoid Debug_Show_8_Channels(void)
 N{
-N    IcResourceInit();     // ?????
-N    screen_init();        // ?????
+N    char buf[50];
+N    uint16_t y_pos = 10; // 起始Y坐标
 N    
-N    // ??? ???(????)
-X    
-N    LCD_Fill(0, 0, 240, 320, BLACK);   // ????
-X    LCD_Fill(0, 0, 240, 320, 0x0000);   
-N    LCD_DrawGrid(200, 255, 20, 15, BLUE);  // ???
-X    LCD_DrawGrid(200, 255, 20, 15, 0x03bD);  
-N    
-N    // (????????,????)
-X    
-N    // TFT_DrawLine(0, 160, 240, 160, RED);
-N    // TFT_DrawLine(120, 0, 120, 320, RED);
-N		Data_Acquisition_Init();
-N    while(1)
-N    {
-N        
-N					menu();
-N        // 【新增 2】 检查采集是否完成
-N        if(Acq_Done_Flag == 1)
-N        {
-N            /* 
-N               数据已存放在 Acq_Data.Buffer[] 中
-N               0~499 是通道1，500~999 是通道2
-N               在这里处理数据（如发送串口、计算等），不需要画图
-N            */
-N					
-N            // 【重要】 处理完数据后，必须调用此函数启动下一轮采集
-N            Data_Acquisition_Start_Next();
-N        }
-N        Sys_Scan();        // ????
-N        key_Get();
+N    // 1. 显示标题
+N    LCD_ShowString(10, y_pos, "ADC 8-CH RAW DEBUG", RED, BLACK, 16);
+X    LCD_ShowString(10, y_pos, "ADC 8-CH RAW DEBUG", 0xF882, 0x0000, 16);
+N    y_pos += 24; // 标题高度
 N
-N        // ??????(????)
-X        
-N       
+N    // 2. 循环显示 8 个通道
+N    for(int i = 0; i < 8; i++)
+N    {
+N        uint16_t raw = AD.v[i]; // 获取原始值 (0~16383)
+X        uint16_t raw = Acq_Data .v[i]; 
+N        // 换算电压: Raw * 3.3 / 16383
+N        float volt = (float)raw * 3.3f / 16383.0f; 
+N        
+N        // 格式化字符串: "CH0: 16383 = 3.300V"
+N        sprintf(buf, "CH%d: %5d = %.3fV", i, raw, volt);
+N        
+N        // 显示一行
+W "..\User\main.c" 96 35 argument of type "char *" is incompatible with parameter of type "const uint8_t *"
+N        LCD_ShowString(10, y_pos, buf, WHITE, BLACK, 16);
+X        LCD_ShowString(10, y_pos, buf, 0xffff, 0x0000, 16);
+N        y_pos += 20; // 行间距
 N    }
 N}
 N
+N// =========================================================
+N//  Main 函数
+N// =========================================================
+Nint main(void)
+N{
+N    // 1. 硬件初始化
+N    IcResourceInit();    
+N    // 【关键】开启全局中断，否则 DMA 中断进不去
+N    __enable_irq(); 	
+N    
+N    screen_init();        
+N    
+N    // 2. 界面初始化 (清黑屏)
+N    LCD_Fill(0, 0, 240, 320, BLACK);
+X    LCD_Fill(0, 0, 240, 320, 0x0000);
+N    
+N    // 3. 初始化采集 (DMA + ADC)
+N    Data_Acquisition_Init();
 N
+N    while(1)
+N    {
+N        // ---------------------------------------------------------
+N        // 任务 1: 实时监控寄存器状态 (调试用，如果不动说明挂了)
+N        // ---------------------------------------------------------
+N        // 读取 DMA0 状态 (0x07 表示传输完成且中断置位)
+N        uint32_t dma_status = DMA0->DMA_STS; 
+X        uint32_t dma_status = ((DMA_TypeDef *) (((0x40000000UL)+0x10800) +(0x00000000UL)))->DMA_STS; 
+N        
+N        // 读取 ADC 状态 (0x01 表示转换完成)
+N        uint32_t adc_status = ADC->ADC_STS;
+X        uint32_t adc_status = ((ADC_TypeDef *) (((0x40000000UL)+0x22000) +(0x00000110UL)))->ADC_STS;
 N
+N        char buf[50];
+N        // 在屏幕底部显示: DMA状态, ADC状态, 中断进入次数
+N        // 如果 Cnt 不涨，说明中断没进去；如果 D:00，说明 DMA 没动
+N        sprintf(buf, "D:%02X A:%02X Cnt:%d", dma_status, adc_status, Debug_ISR_Count);
+W "..\User\main.c" 134 33 argument of type "char *" is incompatible with parameter of type "const uint8_t *"
+N        LCD_ShowString(10, 220, buf, YELLOW, BLACK, 16);
+X        LCD_ShowString(10, 220, buf, 0xFFE0, 0x0000, 16);
+N				Debug_Show_8_Channels();
+N        // ---------------------------------------------------------
+N        // 任务 2: 处理采集数据
+N        // ---------------------------------------------------------
+N        if(Acq_Done_Flag == 1)
+N        {
+N            // 1. 清除标志
+N            Acq_Done_Flag = 0;
 N
+N            // 2. 显示 8 个通道的数据
+N            Debug_Show_8_Channels();
 N
+N            // 3. 启动下一轮采集 (接力)
+N            Data_Acquisition_Start_Next();
+N        }
 N
-N
-N
+N        // ---------------------------------------------------------
+N        // 任务 3: 系统扫描
+N        // ---------------------------------------------------------
+N        Sys_Scan();
+N    }
+N}
 N
 Nvoid screen_init()//屏幕初始化
 N{
@@ -23689,8 +25003,8 @@ N	UART3_TxPacket[8]=0x54;
 N	UART3_TxPacket[9]=0x43;
 N	UART_SendArray(UART3,UART3_TxPacket, 10);					
 X	UART_SendArray(((UART_TypeDef *) (((0x40000000UL)+0x22000) +(0x00000020UL))),UART3_TxPacket, 10);					
-W "..\User\main.c" 122 17 variable "RxState"  was declared but never referenced
-W "..\User\main.c" 123 17 variable "pRxPacket"  was declared but never referenced
+W "..\User\main.c" 181 17 variable "RxState"  was declared but never referenced
+W "..\User\main.c" 182 17 variable "pRxPacket"  was declared but never referenced
 N}
 N
 Nvoid UART3_Send_String()//wifi串口发送文本

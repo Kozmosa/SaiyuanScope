@@ -4,272 +4,53 @@ L 1 "..\User\Menu.h" 1
 N#ifndef __MENU_H
 N#define __MENU_H
 N
-N
-N#include "sc32_conf.h"
-L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32_conf.h" 1
+N// 根据你的工程实际情况包含基础头文件
+N// 如果你的工程报错找不到 sc32.h，请改为 sc32_conf.h 或其他你工程里的头文件
+N#include "sc32.h"           
+L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32.h" 1
 N/**
 N ******************************************************************************
-N * @file    sc32_conf.h
+N * @file    SC32.h
 N * @author  SOC AE Team
 N * @version V1.9-BetaV0
 N * @date    2025-06-20
-N * @brief   This file includes all the header files for peripheral functions
-N ******************************************************************************
-N * @attention
-N *
-N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
-N *intended for use with SinOne products. No other uses are authorized. This 
-N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
-N *all applicable laws, including copyright laws. 
-N *2.The software which is for guidance only aims at providing customers with 
-N *coding information regarding their products in order for them to save time. 
-N *As a result, SinOne shall not be held liable for any direct, indirect or 
-N *consequential damages with respect to any claims arising from the content of 
-N *such software and/or the use made by customers of the coding information 
-N *contained herein in connection with their products.
-N *
-N *  COPYRIGHT 2025 SinOne Microelectronics
-N ******************************************************************************
+N * @brief   The macro definition of `assert_param(expr)` is used to check whether 
+N            the expression `expr` evaluates to true. If the expression is false, it calls 
+N            the `assert_failed` function to report an assertion failure.
+N  ******************************************************************************
+N  * @attention
+N  *
+N  *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N  *intended for use with SinOne products. No other uses are authorized. This 
+N  *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N  *all applicable laws, including copyright laws. 
+N  *2.The software which is for guidance only aims at providing customers with 
+N  *coding information regarding their products in order for them to save time. 
+N  *As a result, SinOne shall not be held liable for any direct, indirect or 
+N  *consequential damages with respect to any claims arising from the content of 
+N  *such software and/or the use made by customers of the coding information 
+N  *contained herein in connection with their products.
+N  *
+N  *  COPYRIGHT 2025 SinOne Microelectronics
+N  ******************************************************************************
 N */
-N#ifndef _sc32_CONF_H_
-N#define _sc32_CONF_H_
-N#include "sc32f1xxx.h"
-L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx.h" 1
-N/**
-N ******************************************************************************
-N * @file    SC32F1XXX.h
-N * @author  SOC SA Team
-N * @version V1.9-BetaV0
-N * @date    2025-06-20
-N * @brief   CMSIS SC32F1xxx Device Peripheral Access Layer Header File.
-N *          The file is the unique include file that the application programmer
-N *          is using in the C source code, usually in main.c. This file contains:
-N *           - Configuration section that allows to select:
-N *           - The SC32F1xxx device used in the target application
-N *
-N ******************************************************************************
-N * @attention
-N *
-N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
-N *intended for use with SinOne products. No other uses are authorized. This 
-N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
-N *all applicable laws, including copyright laws. 
-N *2.The software which is for guidance only aims at providing customers with 
-N *coding information regarding their products in order for them to save time. 
-N *As a result, SinOne shall not be held liable for any direct, indirect or 
-N *consequential damages with respect to any claims arising from the content of 
-N *such software and/or the use made by customers of the coding information 
-N *contained herein in connection with their products.
-N *
-N *  COPYRIGHT 2025 SinOne Microelectronics
-N ******************************************************************************
-N */
-N
-N
 N/** @addtogroup CMSIS_Device
-N  * @{
-N  */
-N
-N/** @addtogroup sc32f1xxx
-N  * @{
-N  */
-N
-N#ifndef SC32F1XXX_H
-N#define SC32F1XXX_H
-N
-N
-N#ifdef __cplusplus
-Sextern "C" {
-N#endif /* __cplusplus */
-N
-N/** @addtogroup Library_configuration_section
-N  * @{
-N  */
-N
-N#if !defined  (SC32F1)
-X#if !0L
-N#define SC32F1
-N#endif /* SC32F1 */
-N
-N
-N#if defined(SC32f10xx)
-X#if 0L
-S  #include "SC32f10xx.h"
-N#elif defined(SC32R803)
-X#elif 1L
-N  #include "SC32R803.h"
-L 1 "..\FWLib\SC32F1XXX_Lib\inc\SC32R803.h" 1
-N/**
-N ******************************************************************************
-N * @file    sc32r803.h
-N * @author  SOC SA Team
-N * @version V1.9-BetaV0
-N * @date    2025-06-20
-N * @brief   CMSIS Cortex-M0+ Device Peripheral Access Layer Header File.
-N *          This file contains all the peripheral register's definitions, bits
-N *          definitions and memory mapping for sc32r803 devices.
-N *
-N *          This file contains:
-N *           - Data structures and the address mapping for all peripherals
-N *           - Peripheral's registers declarations and bits definition
-N *           - Macros to access peripheral's registers hardware
-N ******************************************************************************
-N * @attention
-N *
-N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
-N *intended for use with SinOne products. No other uses are authorized. This 
-N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
-N *all applicable laws, including copyright laws. 
-N *2.The software which is for guidance only aims at providing customers with 
-N *coding information regarding their products in order for them to save time. 
-N *As a result, SinOne shall not be held liable for any direct, indirect or 
-N *consequential damages with respect to any claims arising from the content of 
-N *such software and/or the use made by customers of the coding information 
-N *contained herein in connection with their products.
-N *
-N *  COPYRIGHT 2025 SinOne Microelectronics
-N ******************************************************************************
+N* @{
 N*/
 N
-N/** @addtogroup CMSIS_Device
+N/** @addtogroup sc32
 N  * @{
 N  */
 N
-N/** @addtogroup SC32R803
-N  * @{
-N  */
-N
-N#ifndef SC32R803_H
-N#define SC32R803_H
-N
-N
+N#ifndef SC32_H
+N#define SC32_H
 N
 N#ifdef __cplusplus
 S extern "C" {
-N#endif /* __cplusplus */
-N
-N/** @addtogroup Configuration_section_for_CMSIS
-N  * @{
-N  */
-N#if !defined  (LXT_VALUE) 
-X#if !0L 
-N  #define LXT_VALUE    ((uint32_t)32768) /*!< Default value of the External oscillator in Hz */
-N#endif /* LXT_VALUE */
-N#if !defined  (HXT_VALUE) 
-X#if !0L 
-N  #define HXT_VALUE    ((uint32_t)16000000) /*!< Default value of the External oscillator in Hz */
-N#endif /* HXT_VALUE */
-N#if !defined  (HIRC_VALUE) 
-X#if !0L 
-N  #define HIRC_VALUE    ((uint32_t)64000000) /*!< Default value of the External oscillator in Hz */
-N#endif /* HIRC_VALUE */
-N#if !defined  (LIRC_VALUE) 
-X#if !0L 
-N  #define LIRC_VALUE    ((uint32_t)32000) /*!< Default value of the External oscillator in Hz */
-N#endif /* LIRC_VALUE */
-N/**
-N  * @brief Configuration of the Cortex-M0+ Processor and Core Peripherals
-N   */
-N#define __CM0PLUS_REV             0U /*!< Core Revision r0p0                            */
-N#define __MPU_PRESENT             1U /*!< Coretex Mo+  provides an MPU                  */
-N#define __VTOR_PRESENT            1U /*!< Vector  Table  Register supported             */
-N#define __NVIC_PRIO_BITS          2U /*!< SC32R803 uses 2 Bits for the Priority Levels 			*/
-N#define __Vendor_SysTickConfig    0U /*!< Set to 1 if different SysTick Config is used  */
-N
-N/**
-N  * @}
-N  */
-N
-N/** @addtogroup Peripheral_interrupt_number_definition
-N  * @{
-N  */
-N
-N/**
-N * @brief SC32R803 Interrupt Number Definition, according to the selected device
-N *        in @ref Library_configuration_section
-N */
-N
-N/*!< Interrupt Number Definition */
-Ntypedef enum
-N{
-N/******  Cortex-M0+ Processor Exceptions Numbers ***************************************************************/
-N  NonMaskableInt_IRQn         = -14,    /*!< 2 Non Maskable Interrupt                                          */
-N  HardFault_IRQn              = -13,    /*!< 3 Cortex-M Hard Fault Interrupt                                   */
-N  SVC_IRQn                    = -5,     /*!< 11 Cortex-M SV Call Interrupt                                     */
-N  PendSV_IRQn                 = -2,     /*!< 14 Cortex-M Pend SV Interrupt                                     */
-N  SysTick_IRQn                = -1,     /*!< 15 Cortex-M System Tick Interrupt                                 */
-N/******  SC32R803 specific Interrupt Numbers ****************************************************************/
-N  INT0_IRQn                  = 0,      /*!< INT  0 Interrupt                                                 */
-N  INT1_7_IRQn                = 1,      /*!< INT Line from 1 to 7  Interrupt                                  */
-N  INT8_11_IRQn               = 2,      /*!< INT Line from 8 to 11  Interrupt                                 */
-N  INT12_15_IRQn              = 3,      /*!< INT Line from 12 to 15  Interrupt                                */
-N  RCC_IRQn                    = 4,      /*!< RCC shut down Interrupts                                          */
-N  BTM_IRQn                    = 6,      /*!< BTM  Interrupts                                                   */
-N  UART0_2_4_IRQn              = 7,      /*!< UART0 and UART2 Interrupts                                        */
-N  UART1_3_5_IRQn              = 8,      /*!< UART1 and UART3 Interrupts                                        */
-N  TWIx_QSPIx_0_2_IRQn         = 9,      /*!< TWIx_QSPIx_0_2_IRQn Interrupts                                    */
-N  TWIx_QSPIx_1_3_IRQn         = 10,     /*!< TWIx_QSPIx_1_3 Interrupts                                           */
-N  DMA0_IRQn                   = 11,     /*!< DMA0 Interrupts                                                   */
-N  DMA1_IRQn                   = 12,     /*!< DMA1 Interrupts                                                   */
-N  DMA2_IRQn                   = 13,     /*!< DMA2 Interrupts                                                   */
-N  DMA3_IRQn                   = 14,     /*!< DMA3 Interrupts                                                   */
-N  TIMER0_IRQn                 = 15,     /*!< TIMER0 global Interrupts                                          */
-N  TIMER1_IRQn                 = 16,     /*!< TIMER1 global Interrupt                                           */
-N  TIMER2_IRQn                 = 17,     /*!< TIMER2 global Interrupt                                           */
-N  TIMER3_IRQn                 = 18,     /*!< TIMER3 global Interrupt                                           */
-N  TIMER4_5_IRQn               = 19,     /*!< TIMER4 and TIMER5 global Interrupt                                */
-N  TIMER6_7_IRQn               = 20,     /*!< TIMER6 global TIMER7 Interrupt                                    */
-N  PWM0_IRQn                   = 21,     /*!< PWM0 Interrupt                                                    */
-N  LEDPWM_IRQn                 = 22,     /*!< LEDPWM Interrupt                                                  */
-N  CAN_IRQn                    = 28,     /*!< CAN  Interrupt                                                    */
-N  ADC_IRQn                    = 29,     /*!< ADC  Interrupt                                            	       */
-N  CMP_IRQn                    = 30,     /*!< CMP  Interrupt                                            	       */
-N  TK_IRQn                     = 31,     /*!< TouchKey  Interrupt                                               */
-N} IRQn_Type;
-N
-N/**
-N  * @}
-N  */
-N
-N#include "core_cm0plus.h"               /* Cortex-M0+ processor and core peripherals */
-L 1 "..\CMSIS\core_cm0plus.h" 1
-N/**************************************************************************//**
-N * @file     core_cm0plus.h
-N * @brief    CMSIS Cortex-M0+ Core Peripheral Access Layer Header File
-N * @version  V5.0.6
-N * @date     28. May 2018
-N ******************************************************************************/
-N/*
-N * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
-N *
-N * SPDX-License-Identifier: Apache-2.0
-N *
-N * Licensed under the Apache License, Version 2.0 (the License); you may
-N * not use this file except in compliance with the License.
-N * You may obtain a copy of the License at
-N *
-N * www.apache.org/licenses/LICENSE-2.0
-N *
-N * Unless required by applicable law or agreed to in writing, software
-N * distributed under the License is distributed on an AS IS BASIS, WITHOUT
-N * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-N * See the License for the specific language governing permissions and
-N * limitations under the License.
-N */
-N
-N#if   defined ( __ICCARM__ )
-X#if   0L
-S  #pragma system_include         /* treat file as system include file for MISRA check */
-S#elif defined (__clang__)
-X#elif 0L
-S  #pragma clang system_header   /* treat file as system include file */
 N#endif
 N
-N#ifndef __CORE_CM0PLUS_H_GENERIC
-N#define __CORE_CM0PLUS_H_GENERIC
-N
 N#include <stdint.h>
-L 1 "D:\STM32\ARM\ARMCC\Bin\..\include\stdint.h" 1
+L 1 "D:\Develop\Keil\Keil_V5\ARM\ARMCC\bin\..\include\stdint.h" 1
 N/* Copyright (C) ARM Ltd., 1999,2014 */
 N/* All rights reserved */
 N
@@ -281,7 +62,7 @@ N */
 N
 N#ifndef __stdint_h
 N#define __stdint_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060044
 N
 N  #ifdef __INT64_TYPE__
 S    /* armclang predefines '__INT64_TYPE__' and '__INT64_C_SUFFIX__' */
@@ -599,7 +380,339 @@ N
 N#endif /* __stdint_h */
 N
 N/* end of stdint.h */
-L 35 "..\CMSIS\core_cm0plus.h" 2
+L 43 "..\FWLib\SC32F1XXX_Lib\inc\sc32.h" 2
+N
+N/* Exported macro ------------------------------------------------------------*/
+N#ifdef  USE_FULL_ASSERT
+S/**
+S  * @brief  The assert_param macro is used for function's parameters check.
+S  * @param  expr: If expr is false, it calls assert_failed function
+S  *         which reports the name of the source file and the source
+S  *         line number of the call that failed.
+S  *         If expr is true, it returns no value.
+S  * @retval None
+S  */
+S#define assert_param(expr) ((expr) ? (void)0 : assert_failed((uint8_t *)__FILE__, __LINE__))
+S/* Exported functions ------------------------------------------------------- */
+Svoid assert_failed(uint8_t* file, uint32_t line);
+N#else
+N#define assert_param(expr) ((void)0U)
+N#endif /* USE_FULL_ASSERT */
+N
+N
+N#ifdef __cplusplus
+S}
+N#endif /* __cplusplus */
+N
+N#endif /* SC32_H */
+N
+N/**
+N  * @}
+N  */
+N
+N/**
+N* @}
+N*/
+N
+N/************************ (C) COPYRIGHT SIN ONE CHIP *****END OF FILE****/
+L 7 "..\User\Menu.h" 2
+N#include "TFT_Lcd.h"        
+L 1 "..\Apps\TFT_Lcd.h" 1
+N//************************************************************
+N//  Copyright (c)
+N//	FileName	  : TFT_Lcd.h
+N//	Function	  : TFT LCD Display
+N//  Instructions  :
+N//  Date          : 2023/09/01
+N// 	Version		  : V1.0
+N//*************************************************************
+N#ifndef __TFT_LCD_H
+N#define __TFT_LCD_H
+N
+N#include "SC_Init.h"
+L 1 "..\User\SC_Init.h" 1
+N/**
+N *****************************************************************************************************
+N  * @copyright	(c)  Shenzhen Saiyuan Microelectronics Co., Ltd
+N  * @file	         SC_Init.h
+N  * @author	 
+N  * @version 	     
+N  * @date	         2024.03.11
+N  * @brief	         Contains the MCU initialization function and its H file
+N  * @details         
+N *****************************************************************************************************
+N * @attention
+N *
+N *****************************************************************************************************
+N */
+N
+N#ifndef _SC_INIT_H_
+N#define _SC_INIT_H_
+N
+N#include "sc32_conf.h"
+L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32_conf.h" 1
+N/**
+N ******************************************************************************
+N * @file    sc32_conf.h
+N * @author  SOC AE Team
+N * @version V1.9-BetaV0
+N * @date    2025-06-20
+N * @brief   This file includes all the header files for peripheral functions
+N ******************************************************************************
+N * @attention
+N *
+N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N *intended for use with SinOne products. No other uses are authorized. This 
+N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N *all applicable laws, including copyright laws. 
+N *2.The software which is for guidance only aims at providing customers with 
+N *coding information regarding their products in order for them to save time. 
+N *As a result, SinOne shall not be held liable for any direct, indirect or 
+N *consequential damages with respect to any claims arising from the content of 
+N *such software and/or the use made by customers of the coding information 
+N *contained herein in connection with their products.
+N *
+N *  COPYRIGHT 2025 SinOne Microelectronics
+N ******************************************************************************
+N */
+N#ifndef _sc32_CONF_H_
+N#define _sc32_CONF_H_
+N#include "sc32f1xxx.h"
+L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx.h" 1
+N/**
+N ******************************************************************************
+N * @file    SC32F1XXX.h
+N * @author  SOC SA Team
+N * @version V1.9-BetaV0
+N * @date    2025-06-20
+N * @brief   CMSIS SC32F1xxx Device Peripheral Access Layer Header File.
+N *          The file is the unique include file that the application programmer
+N *          is using in the C source code, usually in main.c. This file contains:
+N *           - Configuration section that allows to select:
+N *           - The SC32F1xxx device used in the target application
+N *
+N ******************************************************************************
+N * @attention
+N *
+N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N *intended for use with SinOne products. No other uses are authorized. This 
+N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N *all applicable laws, including copyright laws. 
+N *2.The software which is for guidance only aims at providing customers with 
+N *coding information regarding their products in order for them to save time. 
+N *As a result, SinOne shall not be held liable for any direct, indirect or 
+N *consequential damages with respect to any claims arising from the content of 
+N *such software and/or the use made by customers of the coding information 
+N *contained herein in connection with their products.
+N *
+N *  COPYRIGHT 2025 SinOne Microelectronics
+N ******************************************************************************
+N */
+N
+N
+N/** @addtogroup CMSIS_Device
+N  * @{
+N  */
+N
+N/** @addtogroup sc32f1xxx
+N  * @{
+N  */
+N
+N#ifndef SC32F1XXX_H
+N#define SC32F1XXX_H
+N
+N
+N#ifdef __cplusplus
+Sextern "C" {
+N#endif /* __cplusplus */
+N
+N/** @addtogroup Library_configuration_section
+N  * @{
+N  */
+N
+N#if !defined  (SC32F1)
+X#if !0L
+N#define SC32F1
+N#endif /* SC32F1 */
+N
+N
+N#if defined(SC32f10xx)
+X#if 0L
+S  #include "SC32f10xx.h"
+N#elif defined(SC32R803)
+X#elif 1L
+N  #include "SC32R803.h"
+L 1 "..\FWLib\SC32F1XXX_Lib\inc\SC32R803.h" 1
+N/**
+N ******************************************************************************
+N * @file    sc32r803.h
+N * @author  SOC SA Team
+N * @version V1.9-BetaV0
+N * @date    2025-06-20
+N * @brief   CMSIS Cortex-M0+ Device Peripheral Access Layer Header File.
+N *          This file contains all the peripheral register's definitions, bits
+N *          definitions and memory mapping for sc32r803 devices.
+N *
+N *          This file contains:
+N *           - Data structures and the address mapping for all peripherals
+N *           - Peripheral's registers declarations and bits definition
+N *           - Macros to access peripheral's registers hardware
+N ******************************************************************************
+N * @attention
+N *
+N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N *intended for use with SinOne products. No other uses are authorized. This 
+N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N *all applicable laws, including copyright laws. 
+N *2.The software which is for guidance only aims at providing customers with 
+N *coding information regarding their products in order for them to save time. 
+N *As a result, SinOne shall not be held liable for any direct, indirect or 
+N *consequential damages with respect to any claims arising from the content of 
+N *such software and/or the use made by customers of the coding information 
+N *contained herein in connection with their products.
+N *
+N *  COPYRIGHT 2025 SinOne Microelectronics
+N ******************************************************************************
+N*/
+N
+N/** @addtogroup CMSIS_Device
+N  * @{
+N  */
+N
+N/** @addtogroup SC32R803
+N  * @{
+N  */
+N
+N#ifndef SC32R803_H
+N#define SC32R803_H
+N
+N
+N
+N#ifdef __cplusplus
+S extern "C" {
+N#endif /* __cplusplus */
+N
+N/** @addtogroup Configuration_section_for_CMSIS
+N  * @{
+N  */
+N#if !defined  (LXT_VALUE) 
+X#if !0L 
+N  #define LXT_VALUE    ((uint32_t)32768) /*!< Default value of the External oscillator in Hz */
+N#endif /* LXT_VALUE */
+N#if !defined  (HXT_VALUE) 
+X#if !0L 
+N  #define HXT_VALUE    ((uint32_t)16000000) /*!< Default value of the External oscillator in Hz */
+N#endif /* HXT_VALUE */
+N#if !defined  (HIRC_VALUE) 
+X#if !0L 
+N  #define HIRC_VALUE    ((uint32_t)64000000) /*!< Default value of the External oscillator in Hz */
+N#endif /* HIRC_VALUE */
+N#if !defined  (LIRC_VALUE) 
+X#if !0L 
+N  #define LIRC_VALUE    ((uint32_t)32000) /*!< Default value of the External oscillator in Hz */
+N#endif /* LIRC_VALUE */
+N/**
+N  * @brief Configuration of the Cortex-M0+ Processor and Core Peripherals
+N   */
+N#define __CM0PLUS_REV             0U /*!< Core Revision r0p0                            */
+N#define __MPU_PRESENT             1U /*!< Coretex Mo+  provides an MPU                  */
+N#define __VTOR_PRESENT            1U /*!< Vector  Table  Register supported             */
+N#define __NVIC_PRIO_BITS          2U /*!< SC32R803 uses 2 Bits for the Priority Levels 			*/
+N#define __Vendor_SysTickConfig    0U /*!< Set to 1 if different SysTick Config is used  */
+N
+N/**
+N  * @}
+N  */
+N
+N/** @addtogroup Peripheral_interrupt_number_definition
+N  * @{
+N  */
+N
+N/**
+N * @brief SC32R803 Interrupt Number Definition, according to the selected device
+N *        in @ref Library_configuration_section
+N */
+N
+N/*!< Interrupt Number Definition */
+Ntypedef enum
+N{
+N/******  Cortex-M0+ Processor Exceptions Numbers ***************************************************************/
+N  NonMaskableInt_IRQn         = -14,    /*!< 2 Non Maskable Interrupt                                          */
+N  HardFault_IRQn              = -13,    /*!< 3 Cortex-M Hard Fault Interrupt                                   */
+N  SVC_IRQn                    = -5,     /*!< 11 Cortex-M SV Call Interrupt                                     */
+N  PendSV_IRQn                 = -2,     /*!< 14 Cortex-M Pend SV Interrupt                                     */
+N  SysTick_IRQn                = -1,     /*!< 15 Cortex-M System Tick Interrupt                                 */
+N/******  SC32R803 specific Interrupt Numbers ****************************************************************/
+N  INT0_IRQn                  = 0,      /*!< INT  0 Interrupt                                                 */
+N  INT1_7_IRQn                = 1,      /*!< INT Line from 1 to 7  Interrupt                                  */
+N  INT8_11_IRQn               = 2,      /*!< INT Line from 8 to 11  Interrupt                                 */
+N  INT12_15_IRQn              = 3,      /*!< INT Line from 12 to 15  Interrupt                                */
+N  RCC_IRQn                    = 4,      /*!< RCC shut down Interrupts                                          */
+N  BTM_IRQn                    = 6,      /*!< BTM  Interrupts                                                   */
+N  UART0_2_4_IRQn              = 7,      /*!< UART0 and UART2 Interrupts                                        */
+N  UART1_3_5_IRQn              = 8,      /*!< UART1 and UART3 Interrupts                                        */
+N  TWIx_QSPIx_0_2_IRQn         = 9,      /*!< TWIx_QSPIx_0_2_IRQn Interrupts                                    */
+N  TWIx_QSPIx_1_3_IRQn         = 10,     /*!< TWIx_QSPIx_1_3 Interrupts                                           */
+N  DMA0_IRQn                   = 11,     /*!< DMA0 Interrupts                                                   */
+N  DMA1_IRQn                   = 12,     /*!< DMA1 Interrupts                                                   */
+N  DMA2_IRQn                   = 13,     /*!< DMA2 Interrupts                                                   */
+N  DMA3_IRQn                   = 14,     /*!< DMA3 Interrupts                                                   */
+N  TIMER0_IRQn                 = 15,     /*!< TIMER0 global Interrupts                                          */
+N  TIMER1_IRQn                 = 16,     /*!< TIMER1 global Interrupt                                           */
+N  TIMER2_IRQn                 = 17,     /*!< TIMER2 global Interrupt                                           */
+N  TIMER3_IRQn                 = 18,     /*!< TIMER3 global Interrupt                                           */
+N  TIMER4_5_IRQn               = 19,     /*!< TIMER4 and TIMER5 global Interrupt                                */
+N  TIMER6_7_IRQn               = 20,     /*!< TIMER6 global TIMER7 Interrupt                                    */
+N  PWM0_IRQn                   = 21,     /*!< PWM0 Interrupt                                                    */
+N  LEDPWM_IRQn                 = 22,     /*!< LEDPWM Interrupt                                                  */
+N  CAN_IRQn                    = 28,     /*!< CAN  Interrupt                                                    */
+N  ADC_IRQn                    = 29,     /*!< ADC  Interrupt                                            	       */
+N  CMP_IRQn                    = 30,     /*!< CMP  Interrupt                                            	       */
+N  TK_IRQn                     = 31,     /*!< TouchKey  Interrupt                                               */
+N} IRQn_Type;
+N
+N/**
+N  * @}
+N  */
+N
+N#include "core_cm0plus.h"               /* Cortex-M0+ processor and core peripherals */
+L 1 "..\CMSIS\core_cm0plus.h" 1
+N/**************************************************************************//**
+N * @file     core_cm0plus.h
+N * @brief    CMSIS Cortex-M0+ Core Peripheral Access Layer Header File
+N * @version  V5.0.6
+N * @date     28. May 2018
+N ******************************************************************************/
+N/*
+N * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+N *
+N * SPDX-License-Identifier: Apache-2.0
+N *
+N * Licensed under the Apache License, Version 2.0 (the License); you may
+N * not use this file except in compliance with the License.
+N * You may obtain a copy of the License at
+N *
+N * www.apache.org/licenses/LICENSE-2.0
+N *
+N * Unless required by applicable law or agreed to in writing, software
+N * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+N * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+N * See the License for the specific language governing permissions and
+N * limitations under the License.
+N */
+N
+N#if   defined ( __ICCARM__ )
+X#if   0L
+S  #pragma system_include         /* treat file as system include file for MISRA check */
+S#elif defined (__clang__)
+X#elif 0L
+S  #pragma clang system_header   /* treat file as system include file */
+N#endif
+N
+N#ifndef __CORE_CM0PLUS_H_GENERIC
+N#define __CORE_CM0PLUS_H_GENERIC
+N
+N#include <stdint.h>
 N
 N#ifdef __cplusplus
 S extern "C" {
@@ -794,7 +907,7 @@ N#define __CMSIS_ARMCC_H
 N
 N
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 400677)
-X#if 1L && (5060528 < 400677)
+X#if 1L && (5060960 < 400677)
 S  #error "Please use Arm Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -6895,84 +7008,6 @@ N
 N/*!< Includes ----------------------------------------------------------------*/
 N#include "sc32f1xxx.h"
 N#include "sc32.h"
-L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32.h" 1
-N/**
-N ******************************************************************************
-N * @file    SC32.h
-N * @author  SOC AE Team
-N * @version V1.9-BetaV0
-N * @date    2025-06-20
-N * @brief   The macro definition of `assert_param(expr)` is used to check whether 
-N            the expression `expr` evaluates to true. If the expression is false, it calls 
-N            the `assert_failed` function to report an assertion failure.
-N  ******************************************************************************
-N  * @attention
-N  *
-N  *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
-N  *intended for use with SinOne products. No other uses are authorized. This 
-N  *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
-N  *all applicable laws, including copyright laws. 
-N  *2.The software which is for guidance only aims at providing customers with 
-N  *coding information regarding their products in order for them to save time. 
-N  *As a result, SinOne shall not be held liable for any direct, indirect or 
-N  *consequential damages with respect to any claims arising from the content of 
-N  *such software and/or the use made by customers of the coding information 
-N  *contained herein in connection with their products.
-N  *
-N  *  COPYRIGHT 2025 SinOne Microelectronics
-N  ******************************************************************************
-N */
-N/** @addtogroup CMSIS_Device
-N* @{
-N*/
-N
-N/** @addtogroup sc32
-N  * @{
-N  */
-N
-N#ifndef SC32_H
-N#define SC32_H
-N
-N#ifdef __cplusplus
-S extern "C" {
-N#endif
-N
-N#include <stdint.h>
-N
-N/* Exported macro ------------------------------------------------------------*/
-N#ifdef  USE_FULL_ASSERT
-S/**
-S  * @brief  The assert_param macro is used for function's parameters check.
-S  * @param  expr: If expr is false, it calls assert_failed function
-S  *         which reports the name of the source file and the source
-S  *         line number of the call that failed.
-S  *         If expr is true, it returns no value.
-S  * @retval None
-S  */
-S#define assert_param(expr) ((expr) ? (void)0 : assert_failed((uint8_t *)__FILE__, __LINE__))
-S/* Exported functions ------------------------------------------------------- */
-Svoid assert_failed(uint8_t* file, uint32_t line);
-N#else
-N#define assert_param(expr) ((void)0U)
-N#endif /* USE_FULL_ASSERT */
-N
-N
-N#ifdef __cplusplus
-S}
-N#endif /* __cplusplus */
-N
-N#endif /* SC32_H */
-N
-N/**
-N  * @}
-N  */
-N
-N/**
-N* @}
-N*/
-N
-N/************************ (C) COPYRIGHT SIN ONE CHIP *****END OF FILE****/
-L 39 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_rcc.h" 2
 N
 N/** @addtogroup sc32f1xxx_StdPeriph_Driver
 N * @{
@@ -9690,7 +9725,7 @@ N#include "sc32f1xxx.h"
 N#include "sc32.h"
 N#include "sc32f1xxx_rcc.h"
 N#include "stdio.h"
-L 1 "D:\STM32\ARM\ARMCC\Bin\..\include\stdio.h" 1
+L 1 "D:\Develop\Keil\Keil_V5\ARM\ARMCC\bin\..\include\stdio.h" 1
 N/* stdio.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.9 */
 N/* Copyright (C) Codemist Ltd., 1988-1993                       */
 N/* Copyright 1991-1998 ARM Limited. All rights reserved.        */
@@ -9710,7 +9745,7 @@ N */
 N
 N#ifndef __stdio_h
 N#define __stdio_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060044
 N
 N/*
 N * Depending on compiler version __int64 or __INT64_TYPE__ should be defined.
@@ -17770,148 +17805,7 @@ S#include "sc32f1xxx_qep.h"
 N#endif
 N#endif
 N
-L 6 "..\User\Menu.h" 2
-N#include "system_sc32f1xxx.h"
-L 1 "..\FWLib\SC32F1XXX_Lib\inc\system_sc32f1xxx.h" 1
-N/**
-N******************************************************************************
-N * @file    SYSTEM_sc32f1xxx.h
-N * @author  SOC SA Team
-N * @version V1.9-BetaV0
-N * @date    2025-06-20
-N * @brief   CMSIS Cortex-M0+ Device System Source File for sc32f1xxx devices.
-N ******************************************************************************
-N * @attention
-N *
-N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
-N *intended for use with SinOne products. No other uses are authorized. This 
-N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
-N *all applicable laws, including copyright laws. 
-N *2.The software which is for guidance only aims at providing customers with 
-N *coding information regarding their products in order for them to save time. 
-N *As a result, SinOne shall not be held liable for any direct, indirect or 
-N *consequential damages with respect to any claims arising from the content of 
-N *such software and/or the use made by customers of the coding information 
-N *contained herein in connection with their products.
-N *
-N *  COPYRIGHT 2025 SinOne Microelectronics
-N ******************************************************************************
-N */
-N
-N/** @addtogroup CMSIS
-N  * @{
-N  */
-N
-N/** @addtogroup sc32f10xx_system
-N  * @{
-N  */
-N
-N/**
-N  * @brief Define to prevent recursive inclusion
-N  */
-N#ifndef SYSTEM_SOC0003_H
-N#define SYSTEM_SOC0003_H
-N
-N#ifdef __cplusplus
-S extern "C" {
-N#endif
-N
-N/** @addtogroup sc32f1xxx_System_Includes
-N  * @{
-N  */
-N
-N/**
-N  * @}
-N  */
-N
-N
-N/** @addtogroup sc32f1xxx_System_Exported_types
-N  * @{
-N  */
-Nextern uint32_t SystemCoreClock;         /*!< System Clock Frequency (Core Clock) */
-N
-Nextern const uint32_t AHBPrescTable[16];  /*!<  AHB prescalers table values */
-Nextern const uint32_t APBPrescTable[8];   /*!< APB prescalers table values */
-N
-N/**
-N  * @}
-N  */
-N
-N/** @addtogroup sc32f1xxx_System_Exported_Constants
-N  * @{
-N  */
-N
-N/**
-N  * @}
-N  */
-N
-N/** @addtogroup sc32f1xxx_System_Exported_Macros
-N  * @{
-N  */
-N
-N/**
-N  * @}
-N  */
-N
-N/** @addtogroup sc32f1xxx_System_Exported_Functions
-N  * @{
-N  */
-N
-Nextern void SystemInit(void);
-Nextern void SystemCoreClockUpdate(void);
-N/**
-N  * @}
-N  */
-N
-N#ifdef __cplusplus
-S}
-N#endif
-N
-N#endif /*SYSTEM_SC32F1XXX_H */
-N
-N/**
-N  * @}
-N  */
-N
-N/**
-N  * @}
-N  */
-N/************************ (C) COPYRIGHT SOC Microelectronics *****END OF FILE****/
-L 7 "..\User\Menu.h" 2
-N#include "TFT_Lcd.h"       // ?? LCD ????
-L 1 "..\Apps\TFT_Lcd.h" 1
-N//************************************************************
-N//  Copyright (c)
-N//	FileName	  : TFT_Lcd.h
-N//	Function	  : TFT LCD Display
-N//  Instructions  :
-N//  Date          : 2023/09/01
-N// 	Version		  : V1.0
-N//*************************************************************
-N#ifndef __TFT_LCD_H
-N#define __TFT_LCD_H
-N
-N#include "SC_Init.h"
-L 1 "..\User\SC_Init.h" 1
-N/**
-N *****************************************************************************************************
-N  * @copyright	(c)  Shenzhen Saiyuan Microelectronics Co., Ltd
-N  * @file	         SC_Init.h
-N  * @author	 
-N  * @version 	     
-N  * @date	         2024.03.11
-N  * @brief	         Contains the MCU initialization function and its H file
-N  * @details         
-N *****************************************************************************************************
-N * @attention
-N *
-N *****************************************************************************************************
-N */
-N
-N#ifndef _SC_INIT_H_
-N#define _SC_INIT_H_
-N
-N#include "sc32_conf.h"
+L 20 "..\User\SC_Init.h" 2
 N
 Nvoid SC_Init(void);
 Nvoid SC_NVIC_Init(void);
@@ -18390,6 +18284,9 @@ L 15 "..\Apps\..\Drivers\SCDriver_list.h" 2
 N/*<Generated by EasyCodeCube end>*/
 N
 N#endif
+N
+N
+N
 N
 N
 N
@@ -21819,75 +21716,127 @@ Nvoid LCD_ShowChinese12x12(uint16_t x,uint16_t y,uint8_t *s,uint16_t fc,uint16_t
 N#endif
 L 8 "..\User\Menu.h" 2
 N
-N
-N#define MENU_BG_COLOR       RED
-N#define MENU_TEXT_SEL       WHITE  // ?????
-N#define MENU_TEXT_UNSEL     BLACK  // ??????
-N// ????
-Nvoid menu(void);
-N
-N
+N// ================= 1. 颜色安全定义 =================
+N// 防止 TFT_Lcd.h 没定义这些颜色导致报错
+N#ifndef RED
+S#define RED   0xF800
+N#endif
+N#ifndef BLACK
+S#define BLACK 0x0000
+N#endif
+N#ifndef WHITE
+S#define WHITE 0xFFFF
+N#endif
+N#ifndef BLUE
+S#define BLUE  0x001F
 N#endif
 N
+N// ================= 2. 菜单配色配置 =================
+N#define MENU_BG_COLOR       RED    // 背景色
+N#define MENU_TEXT_SEL       WHITE  // 选中项颜色
+N#define MENU_TEXT_UNSEL     BLACK  // 未选中项颜色
 N
+N// ================= 3. 函数声明 =================
+Nvoid menu(void);
+N
+W "..\User\Menu.h" 32 22 last line of file ends without a newline
+N#endif /* __MENU_H */
 L 2 "..\User\Menu.c" 2
-N#include <stdio.h>  // 用于 sprintf (如果需要格式化显示)
+N#include <stdio.h>  
+N#include "Data_Acquisition.h" // 【关键】引入头文件以读取 Acq_Data
+L 1 "..\User\Data_Acquisition.h" 1
+N#ifndef __DATA_ACQUISITION_H
+N#define __DATA_ACQUISITION_H
+N
+N#include "sc32f1xxx.h"
+N
+N// ================= 定义 =================
+N// 采集深度定义为 8 (满足底层需求)
+N#define DAQ_SAMPLE_DEPTH 8
+N
+N// 引脚定义 (根据你的实际电路修改)
+N#define DAQ_CH1_GPIO_PORT   GPIOA
+N#define DAQ_CH1_PIN         GPIO_Pin_0
+N#define DAQ_CH2_PIN         GPIO_Pin_1
+N// 注意：AIN10-15 的引脚也需要确保在 Init 中初始化
+N
+N// ================= 数据结构统一 =================
+N// 使用 Union 使得一套数据可以被不同的名称访问，兼容旧代码
+Ntypedef union {
+N    uint16_t Buffer[DAQ_SAMPLE_DEPTH]; // Wave_Show_gy.c 使用这个名字
+X    uint16_t Buffer[8]; 
+N    uint16_t v[DAQ_SAMPLE_DEPTH];      // main.c 可能使用这个名字
+X    uint16_t v[8];      
+N} Data_Acq_Buffer_t;
+N
+N// 为了兼容 main.c 中的 "extern AD_TypeDef AD;"
+Ntypedef Data_Acq_Buffer_t AD_TypeDef;
+N
+N// ================= 全局变量声明 =================
+Nextern Data_Acq_Buffer_t Acq_Data;
+N
+N// 宏定义：将 main.c 里的 AD 映射到 Acq_Data，解决变量名冲突
+N#define AD Acq_Data 
+N
+Nextern volatile uint8_t Acq_Done_Flag;
+N
+N// ================= 函数声明 =================
+Nvoid Data_Acquisition_Init(void);
+Nvoid Data_Acquisition_Start(void);      
+Nvoid Data_Acquisition_Start_Next(void); 
+N
+W "..\User\Data_Acquisition.h" 39 34 last line of file ends without a newline
+N#endif /* __DATA_ACQUISITION_H */
+L 4 "..\User\Menu.c" 2
+N#include "TFT_Lcd.h"          
 N
 N// ==================================================================
-N//  1. 外部变量引用声明
-N//  (这些变量定义在 main.c 或其他文件中，此处通过 extern 引用)
+N//  1. 外部变量引用声明 (保持不变)
 N// ==================================================================
+Nextern uint8_t menu_page;           
+Nextern uint8_t menu_choice;         
+Nextern uint16_t key_count;          
+Nextern uint8_t KeyValue;            
+Nextern uint16_t Encoder_Count;      
+Nextern uint16_t Encoder_Count_last; 
+Nextern uint8_t Encoder_mode;        
 N
-N// 系统控制变量
-Nextern uint8_t menu_page;           // 当前菜单页码
-Nextern uint8_t menu_choice;         // 当前选中的菜单项索引
-Nextern uint16_t key_count;          // 按键计数
-Nextern uint8_t KeyValue;            // 按键值
-Nextern uint16_t Encoder_Count;      // 旋钮计数值
-Nextern uint16_t Encoder_Count_last; // 上一次旋钮计数值
-Nextern uint8_t Encoder_mode;        // 旋钮模式 (0:导航, 1:参数修改)
+Nextern uint8_t is_show[10];         
+Nextern uint8_t CH1_TIME_DIV_mode;   
+Nextern uint8_t CH1_VOLT_DIV_mode;   
+Nextern uint8_t CH2_TIME_DIV_mode;   
+Nextern uint8_t CH2_VOLT_DIV_mode;   
+Nextern uint8_t Trigger_mode;        
 N
-N// 示波器参数变量
-Nextern uint8_t is_show[10];         // 各项数据显示开关数组
-Nextern uint8_t CH1_TIME_DIV_mode;   // CH1 时间档位索引
-Nextern uint8_t CH1_VOLT_DIV_mode;   // CH1 电压档位索引
-Nextern uint8_t CH2_TIME_DIV_mode;   // CH2 时间档位索引
-Nextern uint8_t CH2_VOLT_DIV_mode;   // CH2 电压档位索引
-Nextern uint8_t Trigger_mode;        // 触发模式索引
-N
-N// 波形位移变量 (注意是带符号类型)
 Nextern int16_t Horiziontal1_offset;
 Nextern int16_t Vertical1_offset;
 Nextern int16_t Horiziontal2_offset;
 Nextern int16_t Vertical2_offset;
 N
-N// 功能控制变量
 Nextern uint8_t Wave_show_mode;
 Nextern uint8_t show_wave_save_count;
 Nextern uint8_t wave_save_count;
 Nextern uint8_t uart3_enable;
 N
-N// 字符串数组资源 (定义在 main.c 或 const_data.c 中)
 Nextern char* CH1_TIME_DIV[];
 Nextern char* CH1_VOLT_DIV[];
 Nextern char* CH2_TIME_DIV[];
 Nextern char* CH2_VOLT_DIV[];
 Nextern char* Trigger[];
 N
-N// 波形数据缓冲 (用于保存功能)
 Nextern uint16_t wave1_value[];
 Nextern uint16_t wave2_value[];
 Nextern uint16_t wave1_save_value[5][200]; 
 Nextern uint16_t wave2_save_value[5][200];
 N
+N// 【新增】定义一个缓冲区，用于存放转换后的字符串
+Nstatic char disp_buf[32]; 
+N
 N// ==================================================================
-N//  2. 私有辅助函数
+N//  2. 私有辅助函数 (保持不变)
 N// ==================================================================
 N
-N/**
-N * @brief 处理旋钮输入的通用逻辑
-N * @return 0:无动作, 1:正转(加), -1:反转(减)
-N */
+N// 处理旋钮方向
 Nstatic int Handle_Encoder(void) 
 N{
 N    int direction = 0;
@@ -21895,15 +21844,13 @@ N    if (Encoder_Count > Encoder_Count_last) direction = 1;
 N    else if (Encoder_Count < Encoder_Count_last) direction = -1;
 N
 N    if (direction != 0) {
-N        Encoder_Count = 10000;      // 复位计数值
+N        Encoder_Count = 10000;
 N        Encoder_Count_last = 10000;
 N    }
 N    return direction;
 N}
 N
-N/**
-N * @brief 清除菜单显示区域
-N */
+N// 清除菜单区域
 Nstatic void Clear_Menu_Area(void) 
 N{
 N    for(int i = 0; i <= 15; i++) {
@@ -21912,33 +21859,25 @@ X        LCD_ShowString(207, 16 * i, "               ", 0xF882, 0x0000, 16);
 N    }
 N}
 N
-N/**
-N * @brief 显示菜单文本项 (自动处理选中颜色)
-N */
+N// 显示菜单文本 (带高亮逻辑)
 Nstatic void Draw_Menu_Item_Str(uint16_t x, uint16_t y, char* str, uint8_t current_choice, uint8_t my_index) 
 N{
 N    uint16_t color = (current_choice == my_index) ? MENU_TEXT_SEL : MENU_TEXT_UNSEL;
 X    uint16_t color = (current_choice == my_index) ? 0xffff : 0x0000;
-W "..\User\Menu.c" 88 26 argument of type "char *" is incompatible with parameter of type "const uint8_t *"
+W "..\User\Menu.c" 78 26 argument of type "char *" is incompatible with parameter of type "const uint8_t *"
 N    LCD_ShowString(x, y, str, MENU_BG_COLOR, color, 16);
 X    LCD_ShowString(x, y, str, 0xF882, color, 16);
 N}
 N
-N/**
-N * @brief 显示带正负号的数字 (自动处理选中颜色)
-N */
+N// 显示菜单数字 (带高亮逻辑)
 Nstatic void Draw_Menu_Item_Num(uint16_t x, uint16_t y, int num, uint8_t current_choice, uint8_t my_index) 
 N{
 N    uint16_t color = (current_choice == my_index) ? MENU_TEXT_SEL : MENU_TEXT_UNSEL;
 X    uint16_t color = (current_choice == my_index) ? 0xffff : 0x0000;
-N    
-N    // 显示 +/- 符号
 N    if (num >= 0) LCD_ShowString(x - 8, y, "+", MENU_BG_COLOR, color, 16);
 X    if (num >= 0) LCD_ShowString(x - 8, y, "+", 0xF882, color, 16);
 N    else          LCD_ShowString(x - 8, y, "-", MENU_BG_COLOR, color, 16);
 X    else          LCD_ShowString(x - 8, y, "-", 0xF882, color, 16);
-N    
-N    // 显示绝对值数字
 N    LCD_ShowIntNum(x, y, (num >= 0 ? num : -num), 3, MENU_BG_COLOR, color, 16);
 X    LCD_ShowIntNum(x, y, (num >= 0 ? num : -num), 3, 0xF882, color, 16);
 N}
@@ -21948,9 +21887,7 @@ N//  3. 主菜单逻辑函数
 N// ==================================================================
 Nvoid menu(void)
 N{
-N    // ---------------------------------------------------------
-N    // 页面 0: 初始化/清屏 -> 跳转页面 1
-N    // ---------------------------------------------------------
+N    // Page 0: 初始化/清屏
 N    if (menu_page == 0)
 N    {
 N        Clear_Menu_Area();
@@ -21958,15 +21895,14 @@ N        menu_page = 1;
 N        return; 
 N    }
 N
-N    // ---------------------------------------------------------
-N    // 页面 1: 监视页面 (CH1/CH2 参数显示)
-N    // ---------------------------------------------------------
+N    // ------------------------------------------------------------------
+N    // Page 1: 监视页面 (修改部分：显示采集到的原始值)
+N    // ------------------------------------------------------------------
 N    if (menu_page == 1)
 N    {
-N        // --- 1. 输入处理 ---
+N        // --- 输入处理 ---
 N        int enc_dir = Handle_Encoder();
 N        
-N        // 导航：上下移动光标
 N        if (KeyValue == 8 || enc_dir == 1) { 
 N            menu_choice++;
 N            if (menu_choice > 12) menu_choice = 12;
@@ -21981,28 +21917,23 @@ N
 N        // 确认键逻辑
 N        if (key_count >= 1) {
 N            key_count = 0; 
-N            
 N            if (menu_choice <= 10) {
-N                is_show[menu_choice - 1] ^= 1; // 切换显示开关
-N            }
-N            else if (menu_choice == 11) {
-N                // AutoSet 代码占位
+N                is_show[menu_choice - 1] ^= 1; 
 N            }
 N            else if (menu_choice == 12) {
-N                menu_page = 2; // 跳转下一页
+N                menu_page = 2; 
 N                menu_choice = 21;
 N                return;
 N            }
 N        }
 N
-N        // --- 2. 显示处理 ---
-N        // 静态标签
+N        // --- 显示静态标签 (稍微修改了文字以匹配Raw显示) ---
 N        LCD_ShowString(270, 0,   "CH1",  MENU_BG_COLOR, BLACK, 16);
 X        LCD_ShowString(270, 0,   "CH1",  0xF882, 0x0000, 16);
-N        LCD_ShowString(210, 16,  "MAX",  MENU_BG_COLOR, BLACK, 16);
-X        LCD_ShowString(210, 16,  "MAX",  0xF882, 0x0000, 16);
-N        LCD_ShowString(210, 32,  "MIN",  MENU_BG_COLOR, BLACK, 16);
-X        LCD_ShowString(210, 32,  "MIN",  0xF882, 0x0000, 16);
+N        LCD_ShowString(210, 16,  "Raw",  MENU_BG_COLOR, BLACK, 16); // 原MAX改为Raw
+X        LCD_ShowString(210, 16,  "Raw",  0xF882, 0x0000, 16); 
+N        LCD_ShowString(210, 32,  "Volt", MENU_BG_COLOR, BLACK, 16); // 原MIN改为Volt(模拟电压)
+X        LCD_ShowString(210, 32,  "Volt", 0xF882, 0x0000, 16); 
 N        LCD_ShowString(210, 48,  "AMP",  MENU_BG_COLOR, BLACK, 16);
 X        LCD_ShowString(210, 48,  "AMP",  0xF882, 0x0000, 16);
 N        LCD_ShowString(210, 64,  "Freq", MENU_BG_COLOR, BLACK, 16);
@@ -22012,10 +21943,10 @@ X        LCD_ShowString(210, 80,  "DUTY", 0xF882, 0x0000, 16);
 N        
 N        LCD_ShowString(270, 100, "CH2",  MENU_BG_COLOR, BLACK, 16);
 X        LCD_ShowString(270, 100, "CH2",  0xF882, 0x0000, 16);
-N        LCD_ShowString(210, 116, "MAX",  MENU_BG_COLOR, BLACK, 16);
-X        LCD_ShowString(210, 116, "MAX",  0xF882, 0x0000, 16);
-N        LCD_ShowString(210, 132, "MIN",  MENU_BG_COLOR, BLACK, 16);
-X        LCD_ShowString(210, 132, "MIN",  0xF882, 0x0000, 16);
+N        LCD_ShowString(210, 116, "Raw",  MENU_BG_COLOR, BLACK, 16);
+X        LCD_ShowString(210, 116, "Raw",  0xF882, 0x0000, 16);
+N        LCD_ShowString(210, 132, "Volt", MENU_BG_COLOR, BLACK, 16);
+X        LCD_ShowString(210, 132, "Volt", 0xF882, 0x0000, 16);
 N        LCD_ShowString(210, 148, "AMP",  MENU_BG_COLOR, BLACK, 16);
 X        LCD_ShowString(210, 148, "AMP",  0xF882, 0x0000, 16);
 N        LCD_ShowString(210, 164, "Freq", MENU_BG_COLOR, BLACK, 16);
@@ -22023,26 +21954,61 @@ X        LCD_ShowString(210, 164, "Freq", 0xF882, 0x0000, 16);
 N        LCD_ShowString(210, 180, "DUTY", MENU_BG_COLOR, BLACK, 16);
 X        LCD_ShowString(210, 180, "DUTY", 0xF882, 0x0000, 16);
 N
-N        // 动态数据项 (这里暂时用固定字符串演示，实际可结合 sprintf)
-N        Draw_Menu_Item_Str(270, 16,  is_show[0] ? "2.15V"  : "     ", menu_choice, 1);
-N        Draw_Menu_Item_Str(270, 32,  is_show[1] ? "1.02V"  : "     ", menu_choice, 2);
-N        Draw_Menu_Item_Str(270, 48,  is_show[2] ? "1.13V"  : "     ", menu_choice, 3);
-N        Draw_Menu_Item_Str(270, 64,  is_show[3] ? "1000Hz" : "      ", menu_choice, 4);
-N        Draw_Menu_Item_Str(270, 80,  is_show[4] ? "50%"    : "   ",    menu_choice, 5);
+N        // ========================================================
+N        // 动态数据项：显示采集到的数值
+N        // ========================================================
+N        
+N// ========================================================
+N// 动态数据项：显示采集到的数值
+N// ========================================================
 N
-N        Draw_Menu_Item_Str(270, 116, is_show[5] ? "2.15V"  : "     ", menu_choice, 6);
-N        Draw_Menu_Item_Str(270, 132, is_show[6] ? "1.02V"  : "     ", menu_choice, 7);
-N        Draw_Menu_Item_Str(270, 148, is_show[7] ? "1.13V"  : "     ", menu_choice, 8);
-N        Draw_Menu_Item_Str(270, 164, is_show[8] ? "1000Hz" : "      ", menu_choice, 9);
-N        Draw_Menu_Item_Str(270, 180, is_show[9] ? "50%"    : "   ",    menu_choice, 10);
+N        // --- CH1 数据 ---
+N        if (is_show[0]) {
+N            // 1. 显示原始ADC值 (0~16383)
+N            // 使用 %5d 以便对齐5位数字
+N            sprintf(disp_buf, "%5d", Acq_Data.Buffer[0]); 
+N            Draw_Menu_Item_Str(260, 16, disp_buf, menu_choice, 1);
+N
+N            // 2. 转换成电压显示 (3.3V 参考电压, 14位精度)
+N            // 公式修改：除以 16383.0f
+N            float voltage = (float)Acq_Data.Buffer[0] * 3.3f / 16383.0f;
+N            
+N            sprintf(disp_buf, "%.2fV", voltage);
+N            Draw_Menu_Item_Str(260, 32, disp_buf, menu_choice, 2);
+N        } else {
+N            Draw_Menu_Item_Str(270, 16, "OFF", menu_choice, 1);
+N            Draw_Menu_Item_Str(270, 32, "OFF", menu_choice, 2);
+N        }
+N
+N        // ... 中间代码 ...
+N
+N        // --- CH2 数据 ---
+N        if (is_show[5]) {
+N            // 1. 显示原始ADC值
+N            sprintf(disp_buf, "%5d", Acq_Data.Buffer[1]);
+N            Draw_Menu_Item_Str(260, 116, disp_buf, menu_choice, 6);
+N
+N            // 2. 显示电压 (14位精度)
+N            float voltage = (float)Acq_Data.Buffer[1] * 3.3f / 16383.0f;
+N            
+N            sprintf(disp_buf, "%.2fV", voltage);
+N            Draw_Menu_Item_Str(260, 132, disp_buf, menu_choice, 7);
+N        } else {
+N            Draw_Menu_Item_Str(270, 116, "OFF", menu_choice, 6);
+N            Draw_Menu_Item_Str(270, 132, "OFF", menu_choice, 7);
+N}
+N
+N        // 其他参数暂时留空
+N        Draw_Menu_Item_Str(270, 148, "----", menu_choice, 8);
+N        Draw_Menu_Item_Str(270, 164, "----", menu_choice, 9);
+N        Draw_Menu_Item_Str(270, 180, "----", menu_choice, 10);
 N
 N        Draw_Menu_Item_Str(250, 196, "AUTOSET", menu_choice, 11);
 N        Draw_Menu_Item_Str(270, 224, "->",      menu_choice, 12);
 N    }
 N
-N    // ---------------------------------------------------------
-N    // 页面 2: 初始化/清屏 -> 跳转页面 3
-N    // ---------------------------------------------------------
+N    // ... (Page 2 和 Page 3 的代码保持原样，不用修改) ...
+N    // Page 2: 初始化/清屏
 N    if (menu_page == 2)
 N    {
 N        Clear_Menu_Area();
@@ -22050,27 +22016,19 @@ N        menu_page = 3;
 N        return;
 N    }
 N
-N    // ---------------------------------------------------------
-N    // 页面 3: 控制页面 (设置参数、功能)
-N    // ---------------------------------------------------------
+N    // Page 3: 控制页面
 N    if (menu_page == 3)
 N    {
+N        // ... (此处粘贴你原来 Page 3 的所有代码) ...
 N        int enc_dir = Handle_Encoder();
 N
-N        // --- 输入逻辑 ---
-N        if (Encoder_mode == 0) // 导航模式
-N        {
-N            if (enc_dir == 1) {
-N                menu_choice++;
-N                if (menu_choice > 38) menu_choice = 38;
-N            }
-N            else if (enc_dir == -1) {
-N                menu_choice--;
-N                if (menu_choice < 21) menu_choice = 21;
-N            }
+N        // 输入逻辑
+N        if (Encoder_mode == 0) { 
+N            if (enc_dir == 1) { menu_choice++; if (menu_choice > 38) menu_choice = 38; }
+N            else if (enc_dir == -1) { menu_choice--; if (menu_choice < 21) menu_choice = 21; }
 N        }
-N        else if (Encoder_mode == 1) // 编辑模式
-N        {
+N        else if (Encoder_mode == 1) { 
+N            // ... (编辑模式逻辑保持不变) ...
 N            if (enc_dir != 0) {
 N                switch(menu_choice) {
 N                    case 21: if(enc_dir==1 && CH1_TIME_DIV_mode<17) CH1_TIME_DIV_mode++; else if(enc_dir==-1 && CH1_TIME_DIV_mode>0) CH1_TIME_DIV_mode--; break;
@@ -22078,64 +22036,39 @@ N                    case 22: if(enc_dir==1 && CH1_VOLT_DIV_mode<7)  CH1_VOLT_DI
 N                    case 23: if(enc_dir==1 && CH2_TIME_DIV_mode<17) CH2_TIME_DIV_mode++; else if(enc_dir==-1 && CH2_TIME_DIV_mode>0) CH2_TIME_DIV_mode--; break;
 N                    case 24: if(enc_dir==1 && CH2_VOLT_DIV_mode<7)  CH2_VOLT_DIV_mode++; else if(enc_dir==-1 && CH2_VOLT_DIV_mode>0) CH2_VOLT_DIV_mode--; break;
 N                    case 25: if(enc_dir==1 && Trigger_mode<2)       Trigger_mode++;      else if(enc_dir==-1 && Trigger_mode>0)      Trigger_mode--;      break;
-N                    
-N                    case 26: Horiziontal1_offset += enc_dir; 
-N                             if(Horiziontal1_offset > 0) Horiziontal1_offset = 0; 
-N                             if(Horiziontal1_offset < -19) Horiziontal1_offset = -19; break;
-N                    case 27: Vertical1_offset += enc_dir;    
-N                             if(Vertical1_offset > 10) Vertical1_offset = 10;   
-N                             if(Vertical1_offset < -10) Vertical1_offset = -10;    break;
-N                    case 28: Horiziontal2_offset += enc_dir; 
-N                             if(Horiziontal2_offset > 0) Horiziontal2_offset = 0; 
-N                             if(Horiziontal2_offset < -19) Horiziontal2_offset = -19; break;
-N                    case 29: Vertical2_offset += enc_dir;    
-N                             if(Vertical2_offset > 10) Vertical2_offset = 10;   
-N                             if(Vertical2_offset < -10) Vertical2_offset = -10;    break;
-N                    
-N                    case 34: // 查看保存波形
-N                        if(enc_dir==1) { show_wave_save_count++; if(show_wave_save_count>4) show_wave_save_count=0; }
-N                        else           { if(show_wave_save_count>0) show_wave_save_count--; else show_wave_save_count=4; }
-N                        Wave_show_mode=8; 
-N                        break;
+N                    case 26: Horiziontal1_offset += enc_dir; if(Horiziontal1_offset > 0) Horiziontal1_offset = 0; if(Horiziontal1_offset < -19) Horiziontal1_offset = -19; break;
+N                    case 27: Vertical1_offset += enc_dir;    if(Vertical1_offset > 10) Vertical1_offset = 10;   if(Vertical1_offset < -10) Vertical1_offset = -10;    break;
+N                    case 28: Horiziontal2_offset += enc_dir; if(Horiziontal2_offset > 0) Horiziontal2_offset = 0; if(Horiziontal2_offset < -19) Horiziontal2_offset = -19; break;
+N                    case 29: Vertical2_offset += enc_dir;    if(Vertical2_offset > 10) Vertical2_offset = 10;   if(Vertical2_offset < -10) Vertical2_offset = -10;    break;
+N                    case 34: if(enc_dir==1) { show_wave_save_count++; if(show_wave_save_count>4) show_wave_save_count=0; } else { if(show_wave_save_count>0) show_wave_save_count--; else show_wave_save_count=4; } Wave_show_mode=8; break;
 N                }
 N            }
 N        }
 N
-N        // --- 确认键逻辑 ---
-N        if (key_count >= 1)
-N        {
+N        // 确认键逻辑
+N        if (key_count >= 1) {
 N            key_count = 0;
-N            
-N            // 需要进入编辑模式的选项
-N            if ((menu_choice >= 21 && menu_choice <= 29) || 
-N                menu_choice == 30 || menu_choice == 34 || menu_choice == 36 || menu_choice == 37) 
-N            {
-N                Encoder_mode = !Encoder_mode; // 切换 编辑/导航 模式
-N                
-N                // 特定功能逻辑
-N                if (menu_choice == 30) Wave_show_mode = (Encoder_mode == 1) ? 6 : 0; // STOP
-N                if (menu_choice == 34) Wave_show_mode = (Encoder_mode == 1) ? 8 : 0; // VIEW
-N                if (menu_choice == 36) Wave_show_mode = (Encoder_mode == 1) ? 2 : 0; // FFT1
-N                if (menu_choice == 37) Wave_show_mode = (Encoder_mode == 1) ? 4 : 0; // FFT2
+N            if ((menu_choice >= 21 && menu_choice <= 29) || menu_choice == 30 || menu_choice == 34 || menu_choice == 36 || menu_choice == 37) {
+N                Encoder_mode = !Encoder_mode;
+N                if (menu_choice == 30) Wave_show_mode = (Encoder_mode == 1) ? 6 : 0; 
+N                if (menu_choice == 34) Wave_show_mode = (Encoder_mode == 1) ? 8 : 0; 
+N                if (menu_choice == 36) Wave_show_mode = (Encoder_mode == 1) ? 2 : 0; 
+N                if (menu_choice == 37) Wave_show_mode = (Encoder_mode == 1) ? 4 : 0; 
 N            }
-N            // 单次动作
-N            else if (menu_choice == 31) { uart3_enable = 1; }
-N            else if (menu_choice == 32) { /* CLEAR */ }
-N            else if (menu_choice == 33) { // SAVE
-N                for(int i=0; i<=198; i++) {
+N            else if (menu_choice == 31) uart3_enable = 1; 
+N            else if (menu_choice == 33) {
+N                // Save logic
+N                int i;
+N                for(i=0; i<=198; i++) {
 N                    wave1_save_value[wave_save_count][i] = wave1_value[200+i];
 N                    wave2_save_value[wave_save_count][i] = wave2_value[200+i];
 N                }
-N                wave_save_count++;
-N                if(wave_save_count >= 5) wave_save_count = 0;
+N                wave_save_count++; if(wave_save_count >= 5) wave_save_count = 0;
 N            }
-N            else if (menu_choice == 38) { // 返回首页
-N                menu_choice = 1;
-N                menu_page = 0;
-N            }
+N            else if (menu_choice == 38) { menu_choice = 1; menu_page = 0; }
 N        }
 N
-N        // --- 2. 显示处理 ---
+N        // Page 3 显示处理
 N        LCD_ShowString(210, 0,  "CH1", MENU_BG_COLOR, BLACK, 16);
 X        LCD_ShowString(210, 0,  "CH1", 0xF882, 0x0000, 16);
 N        Draw_Menu_Item_Str(250, 0,  CH1_TIME_DIV[CH1_TIME_DIV_mode], menu_choice, 21);
@@ -22150,23 +22083,15 @@ N        LCD_ShowString(210, 64, "TRG", MENU_BG_COLOR, BLACK, 16);
 X        LCD_ShowString(210, 64, "TRG", 0xF882, 0x0000, 16);
 N        Draw_Menu_Item_Str(250, 64, Trigger[Trigger_mode], menu_choice, 25);
 N
-N        LCD_ShowString(210, 80,  "HPOS1", MENU_BG_COLOR, BLACK, 16);
-X        LCD_ShowString(210, 80,  "HPOS1", 0xF882, 0x0000, 16);
-N        Draw_Menu_Item_Num(270, 80,  Horiziontal1_offset, menu_choice, 26);
+N        LCD_ShowString(210, 80,  "HPOS1", MENU_BG_COLOR, BLACK, 16); Draw_Menu_Item_Num(270, 80,  Horiziontal1_offset, menu_choice, 26);
+X        LCD_ShowString(210, 80,  "HPOS1", 0xF882, 0x0000, 16); Draw_Menu_Item_Num(270, 80,  Horiziontal1_offset, menu_choice, 26);
+N        LCD_ShowString(210, 96,  "VPOS1", MENU_BG_COLOR, BLACK, 16); Draw_Menu_Item_Num(270, 96,  Vertical1_offset,    menu_choice, 27);
+X        LCD_ShowString(210, 96,  "VPOS1", 0xF882, 0x0000, 16); Draw_Menu_Item_Num(270, 96,  Vertical1_offset,    menu_choice, 27);
+N        LCD_ShowString(210, 112, "HPOS2", MENU_BG_COLOR, BLACK, 16); Draw_Menu_Item_Num(270, 112, Horiziontal2_offset, menu_choice, 28);
+X        LCD_ShowString(210, 112, "HPOS2", 0xF882, 0x0000, 16); Draw_Menu_Item_Num(270, 112, Horiziontal2_offset, menu_choice, 28);
+N        LCD_ShowString(210, 128, "VPOS2", MENU_BG_COLOR, BLACK, 16); Draw_Menu_Item_Num(270, 128, Vertical2_offset,    menu_choice, 29);
+X        LCD_ShowString(210, 128, "VPOS2", 0xF882, 0x0000, 16); Draw_Menu_Item_Num(270, 128, Vertical2_offset,    menu_choice, 29);
 N
-N        LCD_ShowString(210, 96,  "VPOS1", MENU_BG_COLOR, BLACK, 16);
-X        LCD_ShowString(210, 96,  "VPOS1", 0xF882, 0x0000, 16);
-N        Draw_Menu_Item_Num(270, 96,  Vertical1_offset,    menu_choice, 27);
-N
-N        LCD_ShowString(210, 112, "HPOS2", MENU_BG_COLOR, BLACK, 16); 
-X        LCD_ShowString(210, 112, "HPOS2", 0xF882, 0x0000, 16); 
-N        Draw_Menu_Item_Num(270, 112, Horiziontal2_offset, menu_choice, 28);
-N
-N        LCD_ShowString(210, 128, "VPOS2", MENU_BG_COLOR, BLACK, 16);
-X        LCD_ShowString(210, 128, "VPOS2", 0xF882, 0x0000, 16);
-N        Draw_Menu_Item_Num(270, 128, Vertical2_offset,    menu_choice, 29);
-N
-N        // 功能键区域
 N        Draw_Menu_Item_Str(205, 144, "STOP",   menu_choice, 30);
 N        Draw_Menu_Item_Str(238, 144, "SEND1",  menu_choice, 31);
 N        Draw_Menu_Item_Str(279, 144, "CLEAR",  menu_choice, 32);
@@ -22175,8 +22100,7 @@ N        Draw_Menu_Item_Str(260, 160, "VIEW",   menu_choice, 34);
 N        Draw_Menu_Item_Str(230, 176, "DECODE", menu_choice, 35);
 N        Draw_Menu_Item_Str(210, 192, "FFT1",   menu_choice, 36);
 N        Draw_Menu_Item_Str(260, 192, "FFT2",   menu_choice, 37);
-N        
 N        Draw_Menu_Item_Str(270, 224, "<-",     menu_choice, 38);
 N    }
-W "..\User\Menu.c" 322 2 last line of file ends without a newline
+W "..\User\Menu.c" 291 2 last line of file ends without a newline
 N}

@@ -1,152 +1,164 @@
 /**
  *****************************************************************************************************
-  * @copyright	(c)  Shenzhen Saiyuan Microelectronics Co., Ltd
-  * @file	         main.c
-  * @author	 
-  * @version 	
-  * @date	
-  * @brief	         
-  * @details         Contains the MCU initialization function and its H file
- *****************************************************************************************************
- * @attention
- *
+  * @file           main.c
+  * @brief          SC32R803 8通道采集主程序
  *****************************************************************************************************
  */
-/*******************Includes************************************************************************/
-#include "sc32f1xxx_adc.h"
+
 #include "SC_Init.h"
 #include "SC_it.h"
-#include "Wave_Show_gy.h"
 #include "..\Drivers\SCDriver_list.h"
 #include "HeadFiles\SysFunVarDefine.h"
 #include "TFT_Lcd.h"
 #include "Picture.h"
 #include "lcdfont.h"
-#include "Data_Acquisition.H"
-#include "FFT_xtc.h"
+
+// 引入功能模块
+#include "Data_Acquisition.h" // 【关键】包含此头文件以访问 AD 宏和 Acq_Data
 #include "Menu.h"
+#include "Wave_Show_gy.h" 
+#include "FFT_xtc.h"
+#include <string.h> 
 
+// =========================================================
+//  外部变量引用
+// =========================================================
 
-static volatile FlagStatus ADC_Flag;//自定义标志位
+// 【修改点1】: 
+// 不需要再手动 extern AD_TypeDef AD; 
+// 因为 Data_Acquisition.h 中已经有了 #define AD Acq_Data
+// 只要包含头文件，就可以直接使用 AD.v[0] 或 Acq_Data.Buffer[0]
 
-void screen_init();//屏幕启动
-void ADC_Conversion_IRQ();//处理ADC中断
-void ADC_Conversion();//ADC采样
-void key_Get();//按压旋转编码器
-void UART3_Send_Packet();//wifi串口发送数据包
-void UART3_Send_String();//wifi串口发送文本
-void UART3_receive_Packet();//wifi串口接受数据
-void UART3_receive_String();//wifi串口接受数据
+// 【修改点2】: 变量名修正
+// Data_Acquisition.c 中定义的是 Acq_Done_Flag，而不是 ADC_Flag
+extern volatile uint8_t Acq_Done_Flag;   
 
+// 引用 Global_Variables.c 中的变量
+extern uint16_t wave1_value[1000]; 
+extern uint16_t wave2_value[1000];
+extern uint16_t key_count;         
+extern uint8_t  KeyValue;          
 
-extern uint8_t KeyValue ;	//触控信息
-extern uint16_t TIM0_count;//定时器 1ms中断一次 每1ms,count+=1
-extern uint16_t Encoder_Count;//转动旋转编码器计数,初始值10000，向左旋转1格-1，向右旋转一格+1
-uint16_t key_count;//按压旋转编码器计数,每按压一次加1
-extern uint8_t UART3_RxFlag;	
-uint8_t UART3_RxPacket[100];				//定义接收数据包数组，数据包格式"@MSG\r\n"
-uint8_t UART3_RxFlag;					//定义接收数据包标志位
-char UART3_RxString[100];				//定义接收数据包数组，数据包格式"@MSG\r\n"
+// =========================================================
+//  全局变量定义
+// =========================================================
+uint8_t UART3_RxPacket[100];
+uint8_t UART3_RxFlag = 0;
+char    UART3_RxString[100];
+extern uint8_t UART3_TxPacket[10];
 
-typedef struct {
-	uint16_t v[8];   // v[0]..v[7] 对应原来的 AD1..AD8
-} ADC_Values_t;
+// =========================================================
+//  函数声明
+// =========================================================
+void screen_init(void);
+void key_Get(void);
+// 其他串口函数声明略...
+#include <stdio.h> // 确保包含这个以使用 sprintf
 
-ADC_Values_t AD; // 全局结构体实例，保存8路ADC采样结果
+#include "SC_Init.h"
+#include "SC_it.h"
+#include "..\Drivers\SCDriver_list.h"
+#include "HeadFiles\SysFunVarDefine.h"
+#include "TFT_Lcd.h"
+#include <stdio.h> 
+#include "Data_Acquisition.h" // 务必包含此头文件
 
-/* 为兼容原有代码中的 AD1..AD8 名称，保留宏映射 */
-#define AD1 (AD.v[0])
-#define AD2 (AD.v[1])
-#define AD3 (AD.v[2])
-#define AD4 (AD.v[3])
-#define AD5 (AD.v[4])
-#define AD6 (AD.v[5])
-#define AD7 (AD.v[6])
-#define AD8 (AD.v[7])
-/**
-  * @brief This function implements main function.
-  * @note 
-  * @param
-  */
-int main(void)
+// =========================================================
+//  外部变量引用
+// =========================================================
+extern volatile uint8_t Acq_Done_Flag;      // 采集完成标志
+extern volatile uint32_t Debug_ISR_Count;   // 中断计数器
+// AD 在 Data_Acquisition.h 中定义为 Acq_Data 的别名
+
+// =========================================================
+//  调试函数：直接显示8个通道的数值
+// =========================================================
+void Debug_Show_8_Channels(void)
 {
-    IcResourceInit();     // ?????
-    screen_init();        // ?????
+    char buf[50];
+    uint16_t y_pos = 10; // 起始Y坐标
     
-    // ??? ???(????)
-    LCD_Fill(0, 0, 240, 320, BLACK);   // ????
-    LCD_DrawGrid(200, 255, 20, 15, BLUE);  // ???
-    
-    // (????????,????)
-    // TFT_DrawLine(0, 160, 240, 160, RED);
-    // TFT_DrawLine(120, 0, 120, 320, RED);
-		Data_Acquisition_Init();
-    while(1)
-    {
-        
-		menu();
-        // 【新增 2】 检查采集是否完成
-        if(Acq_Done_Flag == 1)
-        {
-            /* 
-               数据已存放在 Acq_Data.Buffer[] 中
-               0~499 是通道1，500~999 是通道2
-               在这里处理数据（如发送串口、计算等），不需要画图
-            */
-					
-            // 【重要】 处理完数据后，必须调用此函数启动下一轮采集
-            Data_Acquisition_Start_Next();
-        }
-        Sys_Scan();        // ????
-        key_Get();
+    // 1. 显示标题
+    LCD_ShowString(10, y_pos, "ADC 8-CH RAW DEBUG", RED, BLACK, 16);
+    y_pos += 24; // 标题高度
 
-        // ??????(????)
-       
+    // 2. 循环显示 8 个通道
+    for(int i = 0; i < 8; i++)
+    {
+        uint16_t raw = AD.v[i]; // 获取原始值 (0~16383)
+        // 换算电压: Raw * 3.3 / 16383
+        float volt = (float)raw * 3.3f / 16383.0f; 
+        
+        // 格式化字符串: "CH0: 16383 = 3.300V"
+        sprintf(buf, "CH%d: %5d = %.3fV", i, raw, volt);
+        
+        // 显示一行
+        LCD_ShowString(10, y_pos, buf, WHITE, BLACK, 16);
+        y_pos += 20; // 行间距
     }
 }
 
+// =========================================================
+//  Main 函数
+// =========================================================
+int main(void)
+{
+    // 1. 硬件初始化
+    IcResourceInit();    
+    // 【关键】开启全局中断，否则 DMA 中断进不去
+    __enable_irq(); 	
+    
+    screen_init();        
+    
+    // 2. 界面初始化 (清黑屏)
+    LCD_Fill(0, 0, 240, 320, BLACK);
+    
+    // 3. 初始化采集 (DMA + ADC)
+    Data_Acquisition_Init();
 
+    while(1)
+    {
+        // ---------------------------------------------------------
+        // 任务 1: 实时监控寄存器状态 (调试用，如果不动说明挂了)
+        // ---------------------------------------------------------
+        // 读取 DMA0 状态 (0x07 表示传输完成且中断置位)
+        uint32_t dma_status = DMA0->DMA_STS; 
+        
+        // 读取 ADC 状态 (0x01 表示转换完成)
+        uint32_t adc_status = ADC->ADC_STS;
 
+        char buf[50];
+        // 在屏幕底部显示: DMA状态, ADC状态, 中断进入次数
+        // 如果 Cnt 不涨，说明中断没进去；如果 D:00，说明 DMA 没动
+        sprintf(buf, "D:%02X A:%02X Cnt:%d", dma_status, adc_status, Debug_ISR_Count);
+        LCD_ShowString(10, 220, buf, YELLOW, BLACK, 16);
+				Debug_Show_8_Channels();
+        // ---------------------------------------------------------
+        // 任务 2: 处理采集数据
+        // ---------------------------------------------------------
+        if(Acq_Done_Flag == 1)
+        {
+            // 1. 清除标志
+            Acq_Done_Flag = 0;
 
+            // 2. 显示 8 个通道的数据
+            Debug_Show_8_Channels();
 
+            // 3. 启动下一轮采集 (接力)
+            Data_Acquisition_Start_Next();
+        }
 
-
-
+        // ---------------------------------------------------------
+        // 任务 3: 系统扫描
+        // ---------------------------------------------------------
+        Sys_Scan();
+    }
+}
 
 void screen_init()//屏幕初始化
 {
 	Lcd_Init();
 	LCD_Fill ( 1, 1, 320, 240, BLACK );//本来是花屏，刷新后为白屏
-}
-
-
-void ADC_Conversion_IRQ()//ADC中断处理
-{
-  if(ADC_GetFlagStatus(ADC, ADC_Flag_ADCIF))//判断ADC标志位
-  {
-    ADC_ClearFlag(ADC, ADC_Flag_ADCIF);//清除ADC标志位
-    ADC_Flag = SET;//自定义标志位置起
-  }
-}
-
-
-void ADC_Conversion(void) // ADC采集
-{
-    // ADC通道映射表
-    uint8_t ADC_Channel_Table[8] = {
-        ADC_Channel_0, ADC_Channel_1, ADC_Channel_10, ADC_Channel_11,
-        ADC_Channel_12, ADC_Channel_13, ADC_Channel_14, ADC_Channel_15
-    };
-
-    for (int i = 0; i < 8; i++) {
-        ADC_SetChannel(ADC, ADC_Channel_Table[i]);   // 选择通道
-        ADC_SoftwareStartConv(ADC);                  // 软件触发ADC
-        while (ADC_Flag == RESET);                   // 等待ADC转换完成
-        ADC_Flag = RESET;
-
-        AD.v[i] = ADC_GetConversionValue(ADC);       // 存入结构体数组
-        LCD_ShowIntNum(270, 20*(i+1), AD.v[i], 6, RED, WHITE, 16); // 显示
-    }
 }
 
 

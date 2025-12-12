@@ -1,2 +1,2 @@
-..\output\lcdfont.o: ..\Apps\lcdfont.c
-..\output\lcdfont.o: ..\Apps\lcdfont.h
+..\Output\lcdfont.o: ..\Apps\lcdfont.c
+..\Output\lcdfont.o: ..\Apps\lcdfont.h

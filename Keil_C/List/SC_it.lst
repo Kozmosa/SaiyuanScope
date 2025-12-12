@@ -297,7 +297,7 @@ N#ifndef __CORE_CM0PLUS_H_GENERIC
 N#define __CORE_CM0PLUS_H_GENERIC
 N
 N#include <stdint.h>
-L 1 "D:\STM32\ARM\ARMCC\Bin\..\include\stdint.h" 1
+L 1 "D:\Develop\Keil\Keil_V5\ARM\ARMCC\bin\..\include\stdint.h" 1
 N/* Copyright (C) ARM Ltd., 1999,2014 */
 N/* All rights reserved */
 N
@@ -309,7 +309,7 @@ N */
 N
 N#ifndef __stdint_h
 N#define __stdint_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060044
 N
 N  #ifdef __INT64_TYPE__
 S    /* armclang predefines '__INT64_TYPE__' and '__INT64_C_SUFFIX__' */
@@ -822,7 +822,7 @@ N#define __CMSIS_ARMCC_H
 N
 N
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 400677)
-X#if 1L && (5060528 < 400677)
+X#if 1L && (5060960 < 400677)
 S  #error "Please use Arm Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -9718,7 +9718,7 @@ N#include "sc32f1xxx.h"
 N#include "sc32.h"
 N#include "sc32f1xxx_rcc.h"
 N#include "stdio.h"
-L 1 "D:\STM32\ARM\ARMCC\Bin\..\include\stdio.h" 1
+L 1 "D:\Develop\Keil\Keil_V5\ARM\ARMCC\bin\..\include\stdio.h" 1
 N/* stdio.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.9 */
 N/* Copyright (C) Codemist Ltd., 1988-1993                       */
 N/* Copyright 1991-1998 ARM Limited. All rights reserved.        */
@@ -9738,7 +9738,7 @@ N */
 N
 N#ifndef __stdio_h
 N#define __stdio_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060044
 N
 N/*
 N * Depending on compiler version __int64 or __INT64_TYPE__ should be defined.
@@ -21525,6 +21525,9 @@ N
 N
 N
 N
+N
+N
+N
 L 21 "..\User\SC_it.c" 2
 N#include "TFT_Lcd.h"
 L 1 "..\Apps\TFT_Lcd.h" 1
@@ -22878,40 +22881,44 @@ L 1 "..\User\Data_Acquisition.h" 1
 N#ifndef __DATA_ACQUISITION_H
 N#define __DATA_ACQUISITION_H
 N
-N#include "sc32.h"
-N#include "sc32f1xxx_adc.h"
-N#include "sc32f1xxx_dma.h"
-N#include "sc32f1xxx_gpio.h"
-N#include "sc32f1xxx_rcc.h"
+N#include "sc32f1xxx.h"
 N
-N// é…ç½®åŒºåŸŸ
-N#define DAQ_SAMPLE_DEPTH    500
-N#define DAQ_TOTAL_BUF_SIZE  (DAQ_SAMPLE_DEPTH * 2)
+N// ================= å®šä¹‰ =================
+N// é‡‡é›†æ·±åº¦å®šä¹‰ä¸º 8 (æ»¡è¶³åº•å±‚éœ€æ±‚)
+N#define DAQ_SAMPLE_DEPTH 8
 N
+N// å¼•è„šå®šä¹‰ (æ ¹æ®ä½ çš„å®žé™…ç”µè·¯ä¿®æ”¹)
 N#define DAQ_CH1_GPIO_PORT   GPIOA
-N#define DAQ_CH1_PIN         GPIO_Pin_0 
-N#define DAQ_CH1_ADC_CH      ADC_Channel_0
+N#define DAQ_CH1_PIN         GPIO_Pin_0
+N#define DAQ_CH2_PIN         GPIO_Pin_1
+N// æ³¨æ„ï¼šAIN10-15 çš„å¼•è„šä¹Ÿéœ€è¦ç¡®ä¿åœ¨ Init ä¸­åˆå§‹åŒ–
 N
-N#define DAQ_CH2_GPIO_PORT   GPIOA
-N#define DAQ_CH2_PIN         GPIO_Pin_1 
-N#define DAQ_CH2_ADC_CH      ADC_Channel_1
-N
-Ntypedef struct {
-N    uint16_t Buffer[DAQ_TOTAL_BUF_SIZE]; 
-X    uint16_t Buffer[(500 * 2)]; 
+N// ================= æ•°æ®ç»“æž„ç»Ÿä¸€ =================
+N// ä½¿ç”¨ Union ä½¿å¾—ä¸€å¥—æ•°æ®å¯ä»¥è¢«ä¸åŒçš„åç§°è®¿é—®ï¼Œå…¼å®¹æ—§ä»£ç 
+Ntypedef union {
+N    uint16_t Buffer[DAQ_SAMPLE_DEPTH]; // Wave_Show_gy.c ä½¿ç”¨è¿™ä¸ªåå­—
+X    uint16_t Buffer[8]; 
+N    uint16_t v[DAQ_SAMPLE_DEPTH];      // main.c å¯èƒ½ä½¿ç”¨è¿™ä¸ªåå­—
+X    uint16_t v[8];      
 N} Data_Acq_Buffer_t;
 N
+N// ä¸ºäº†å…¼å®¹ main.c ä¸­çš„ "extern AD_TypeDef AD;"
+Ntypedef Data_Acq_Buffer_t AD_TypeDef;
+N
+N// ================= å…¨å±€å˜é‡å£°æ˜Ž =================
 Nextern Data_Acq_Buffer_t Acq_Data;
-Nextern volatile uint8_t  Acq_Done_Flag;
-N// ... å…¶ä»– extern ...
 N
-Nextern volatile uint8_t Current_Ch_Index; 
+N// å®å®šä¹‰ï¼šå°† main.c é‡Œçš„ AD æ˜ å°„åˆ° Acq_Dataï¼Œè§£å†³å˜é‡åå†²çª
+N#define AD Acq_Data 
 N
+Nextern volatile uint8_t Acq_Done_Flag;
 N
-N// ... å‡½æ•°å£°æ˜Ž ...
+N// ================= å‡½æ•°å£°æ˜Ž =================
 Nvoid Data_Acquisition_Init(void);
-Nvoid Data_Acquisition_Start_Next(void);
+Nvoid Data_Acquisition_Start(void);      
+Nvoid Data_Acquisition_Start_Next(void); 
 N
+W "..\User\Data_Acquisition.h" 39 34 last line of file ends without a newline
 N#endif /* __DATA_ACQUISITION_H */
 L 23 "..\User\SC_it.c" 2
 N
@@ -23006,62 +23013,9 @@ S
 S}
 N#endif
 N
-Nvoid DMA0_IRQHandler(void)
-N{
-N    // ¼ì²éÊÇ·ñÊÇ´«ÊäÍê³ÉÖÐ¶Ï (TCIF)
-N    if(DMA_GetFlagStatus(DMA0, DMA_FLAG_TCIF) == SET)
-X    if(DMA_GetFlagStatus(((DMA_TypeDef *) (((0x40000000UL)+0x10800) +(0x00000000UL))), DMA_FLAG_TCIF) == SET)
-N    {
-N        // Çå³ýÖÐ¶Ï±êÖ¾
-N        DMA_ClearFlag(DMA0, DMA_FLAG_TCIF); 
-X        DMA_ClearFlag(((DMA_TypeDef *) (((0x40000000UL)+0x10800) +(0x00000000UL))), DMA_FLAG_TCIF); 
 N
-N        // ÔÝÊ±Í£Ö¹ DMA£¬×¼±¸ÖØ¹¹ÅäÖÃ
-N        DMA_Cmd(DMA0, DISABLE);
-X        DMA_Cmd(((DMA_TypeDef *) (((0x40000000UL)+0x10800) +(0x00000000UL))), DISABLE);
-N        
-N        // --- ×´Ì¬»ú£ºÇÐ»»Í¨µÀ ---
-N        if(Current_Ch_Index == 0)
-N        {
-N            // === Í¨µÀ 1 ²É¼¯Íê±Ï£¬ÏÖÔÚÇÐ»»µ½Í¨µÀ 2 ===
-N            
-N            // A. ÇÐ»» ADC ÎïÀíÍ¨µÀ
-N            ADC_SetChannel(ADC, DAQ_CH2_ADC_CH);
-X            ADC_SetChannel(((ADC_TypeDef *) (((0x40000000UL)+0x22000) +(0x00000110UL))), ADC_Channel_1);
-N            
-N            // B. ÐÞ¸Ä DMA Ä¿±êµØÖ· -> Ö¸Ïò»º³åÇøºó°ë²¿·Ö
-N            DMA_SetDstAddress(DMA0, (uint32_t)&Acq_Data.Buffer[DAQ_SAMPLE_DEPTH]);
-X            DMA_SetDstAddress(((DMA_TypeDef *) (((0x40000000UL)+0x10800) +(0x00000000UL))), (uint32_t)&Acq_Data.Buffer[500]);
-N            
-N            // C. ÖØ×°¼ÆÊýÆ÷
-N            DMA_SetCurrDataCounter(DMA0, DAQ_SAMPLE_DEPTH); 
-X            DMA_SetCurrDataCounter(((DMA_TypeDef *) (((0x40000000UL)+0x10800) +(0x00000000UL))), 500); 
-N            
-N            // D. ¸üÐÂ×´Ì¬
-N            Current_Ch_Index = 1;
-N            
-N            // E. ÖØÐÂÆô¶¯ DMA ºÍ ADC
-N            DMA_Cmd(DMA0, ENABLE);
-X            DMA_Cmd(((DMA_TypeDef *) (((0x40000000UL)+0x10800) +(0x00000000UL))), ENABLE);
-N            ADC_SoftwareStartConv(ADC); // ´¥·¢ÐÂÍ¨µÀ×ª»»
-X            ADC_SoftwareStartConv(((ADC_TypeDef *) (((0x40000000UL)+0x22000) +(0x00000110UL)))); 
-N        }
-N        else
-N        {
-N            // === Í¨µÀ 2 ²É¼¯Íê±Ï£¬Ò»ÂÖË«Í¨µÀ²É¼¯½áÊø ===
-N            
-N            // A. Í£Ö¹²É¼¯Á÷³Ì
-N            // DMA ±£³Ö Disable ×´Ì¬£¬²»ÔÙ¿ªÆô
-N            
-N            // B. ÖÃÎ»Íê³É±êÖ¾£¬Í¨Öª main() º¯Êý´¦ÀíÊý¾Ý
-N            Acq_Done_Flag = 1;
-N            
-N            // ×¢Òâ£º´ËÊ± DMA ºÍ ADC ¾ùÔÝÍ££¬µÈ´ý Data_Acquisition_Start_Next() »½ÐÑ
-N        }
-N    }
-N}
 N
-Nvolatile FlagStatus ADC_Flag = RESET;
+N
 Nvoid DMA1_IRQHandler(void)
 N{
 N
@@ -23117,7 +23071,7 @@ N
 Nvoid TIMER4_5_IRQHandler(void)
 N{
 N
-W "..\User\SC_it.c" 209 28 enumerated type mixed with another type
+W "..\User\SC_it.c" 164 28 enumerated type mixed with another type
 Nif(TIM_GetFlagStatus(TIM5, TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 Xif(TIM_GetFlagStatus(((TIM_TypeDef *) (((0x40000000UL)+0x21000) +(0x00000140UL))), TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 N{
@@ -23132,7 +23086,7 @@ N			}
 N		}
 N
 N}
-W "..\User\SC_it.c" 220 28 enumerated type mixed with another type
+W "..\User\SC_it.c" 175 28 enumerated type mixed with another type
 Nif(TIM_GetFlagStatus(TIM5, TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 Xif(TIM_GetFlagStatus(((TIM_TypeDef *) (((0x40000000UL)+0x21000) +(0x00000140UL))), TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 N{
@@ -23154,7 +23108,7 @@ N
 Nvoid TIMER6_7_IRQHandler(void)
 N{
 N
-W "..\User\SC_it.c" 237 28 enumerated type mixed with another type
+W "..\User\SC_it.c" 192 28 enumerated type mixed with another type
 Nif(TIM_GetFlagStatus(TIM6, TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 Xif(TIM_GetFlagStatus(((TIM_TypeDef *) (((0x40000000UL)+0x21000) +(0x00000180UL))), TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 N{
@@ -23169,7 +23123,7 @@ N			}
 N		}
 N
 N}
-W "..\User\SC_it.c" 248 28 enumerated type mixed with another type
+W "..\User\SC_it.c" 203 28 enumerated type mixed with another type
 Nif(TIM_GetFlagStatus(TIM6, TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 Xif(TIM_GetFlagStatus(((TIM_TypeDef *) (((0x40000000UL)+0x21000) +(0x00000180UL))), TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
 N{
@@ -23312,4 +23266,11 @@ N}
 N
 Nvoid TWIx_QSPIx_1_3_IRQHandler(void)
 N{
+N}
+Nvoid DMA0_IRQHandler(void)
+N{
+N	/*<Generated by EasyCodeCube begin>*/
+N	/*<Generated by EasyCodeCube end>*/
+N	DMA_ClearFlag(DMA0, DMA_FLAG_GIF|DMA_FLAG_TCIF|DMA_FLAG_HTIF|DMA_FLAG_TEIF);//Generated by EasyCodeCube, forbid editing!!!
+X	DMA_ClearFlag(((DMA_TypeDef *) (((0x40000000UL)+0x10800) +(0x00000000UL))), DMA_FLAG_GIF|DMA_FLAG_TCIF|DMA_FLAG_HTIF|DMA_FLAG_TEIF);
 N}

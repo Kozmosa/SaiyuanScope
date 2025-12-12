@@ -1,1 +1,1 @@
-..\output\startup_sc32r803.o: startup_sc32r803.s
+..\Output\startup_sc32r803.o: .\startup_sc32r803.s

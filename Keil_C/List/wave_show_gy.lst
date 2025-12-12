@@ -48,7 +48,7 @@ S extern "C" {
 N#endif
 N
 N#include <stdint.h>
-L 1 "D:\STM32\ARM\ARMCC\Bin\..\include\stdint.h" 1
+L 1 "D:\Develop\Keil\Keil_V5\ARM\ARMCC\bin\..\include\stdint.h" 1
 N/* Copyright (C) ARM Ltd., 1999,2014 */
 N/* All rights reserved */
 N
@@ -60,7 +60,7 @@ N */
 N
 N#ifndef __stdint_h
 N#define __stdint_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060044
 N
 N  #ifdef __INT64_TYPE__
 S    /* armclang predefines '__INT64_TYPE__' and '__INT64_C_SUFFIX__' */
@@ -905,7 +905,7 @@ N#define __CMSIS_ARMCC_H
 N
 N
 N#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 400677)
-X#if 1L && (5060528 < 400677)
+X#if 1L && (5060960 < 400677)
 S  #error "Please use Arm Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -9723,7 +9723,7 @@ N#include "sc32f1xxx.h"
 N#include "sc32.h"
 N#include "sc32f1xxx_rcc.h"
 N#include "stdio.h"
-L 1 "D:\STM32\ARM\ARMCC\Bin\..\include\stdio.h" 1
+L 1 "D:\Develop\Keil\Keil_V5\ARM\ARMCC\bin\..\include\stdio.h" 1
 N/* stdio.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.9 */
 N/* Copyright (C) Codemist Ltd., 1988-1993                       */
 N/* Copyright 1991-1998 ARM Limited. All rights reserved.        */
@@ -9743,7 +9743,7 @@ N */
 N
 N#ifndef __stdio_h
 N#define __stdio_h
-N#define __ARMCLIB_VERSION 5060034
+N#define __ARMCLIB_VERSION 5060044
 N
 N/*
 N * Depending on compiler version __int64 or __INT64_TYPE__ should be defined.
@@ -20398,6 +20398,9 @@ N
 N
 N
 N
+N
+N
+N
 L 15 "..\Apps\TFT_Lcd.h" 2
 N#include "HeadFiles\SysFunVarDefine.h"
 L 1 "..\User\HeadFiles\SysFunVarDefine.h" 1
@@ -21715,40 +21718,44 @@ L 1 "..\User\Data_Acquisition.h" 1
 N#ifndef __DATA_ACQUISITION_H
 N#define __DATA_ACQUISITION_H
 N
-N#include "sc32.h"
-N#include "sc32f1xxx_adc.h"
-N#include "sc32f1xxx_dma.h"
-N#include "sc32f1xxx_gpio.h"
-N#include "sc32f1xxx_rcc.h"
+N#include "sc32f1xxx.h"
 N
-N// 配置区域
-N#define DAQ_SAMPLE_DEPTH    500
-N#define DAQ_TOTAL_BUF_SIZE  (DAQ_SAMPLE_DEPTH * 2)
+N// ================= 定义 =================
+N// 采集深度定义为 8 (满足底层需求)
+N#define DAQ_SAMPLE_DEPTH 8
 N
+N// 引脚定义 (根据你的实际电路修改)
 N#define DAQ_CH1_GPIO_PORT   GPIOA
-N#define DAQ_CH1_PIN         GPIO_Pin_0 
-N#define DAQ_CH1_ADC_CH      ADC_Channel_0
+N#define DAQ_CH1_PIN         GPIO_Pin_0
+N#define DAQ_CH2_PIN         GPIO_Pin_1
+N// 注意：AIN10-15 的引脚也需要确保在 Init 中初始化
 N
-N#define DAQ_CH2_GPIO_PORT   GPIOA
-N#define DAQ_CH2_PIN         GPIO_Pin_1 
-N#define DAQ_CH2_ADC_CH      ADC_Channel_1
-N
-Ntypedef struct {
-N    uint16_t Buffer[DAQ_TOTAL_BUF_SIZE]; 
-X    uint16_t Buffer[(500 * 2)]; 
+N// ================= 数据结构统一 =================
+N// 使用 Union 使得一套数据可以被不同的名称访问，兼容旧代码
+Ntypedef union {
+N    uint16_t Buffer[DAQ_SAMPLE_DEPTH]; // Wave_Show_gy.c 使用这个名字
+X    uint16_t Buffer[8]; 
+N    uint16_t v[DAQ_SAMPLE_DEPTH];      // main.c 可能使用这个名字
+X    uint16_t v[8];      
 N} Data_Acq_Buffer_t;
 N
+N// 为了兼容 main.c 中的 "extern AD_TypeDef AD;"
+Ntypedef Data_Acq_Buffer_t AD_TypeDef;
+N
+N// ================= 全局变量声明 =================
 Nextern Data_Acq_Buffer_t Acq_Data;
-Nextern volatile uint8_t  Acq_Done_Flag;
-N// ... 其他 extern ...
 N
-Nextern volatile uint8_t Current_Ch_Index; 
+N// 宏定义：将 main.c 里的 AD 映射到 Acq_Data，解决变量名冲突
+N#define AD Acq_Data 
 N
+Nextern volatile uint8_t Acq_Done_Flag;
 N
-N// ... 函数声明 ...
+N// ================= 函数声明 =================
 Nvoid Data_Acquisition_Init(void);
-Nvoid Data_Acquisition_Start_Next(void);
+Nvoid Data_Acquisition_Start(void);      
+Nvoid Data_Acquisition_Start_Next(void); 
 N
+W "..\User\Data_Acquisition.h" 39 34 last line of file ends without a newline
 N#endif /* __DATA_ACQUISITION_H */
 L 7 "..\User\Wave_Show_gy.h" 2
 N
@@ -21787,7 +21794,11 @@ N
 W "..\User\Wave_Show_gy.h" 40 30 last line of file ends without a newline
 N#endif /* __WAVE_SHOW_GY_H */
 L 2 "..\User\Wave_Show_gy.c" 2
+N#include "Data_Acquisition.h" 
 N
+N// 引用外部变量 (来自 Global_Variables.c)
+Nextern int16_t Vertical1_offset	; // CH1 垂直位移
+Nextern int16_t Vertical2_offset; // CH2 垂直位移
 N// ??????
 Nextern int16_t Vertical1_offset; 
 Nextern int16_t Vertical2_offset; 
@@ -21866,7 +21877,7 @@ N
 N    // 1. ?????
 N    start_idx_1 = Software_Trigger(&Acq_Data.Buffer[0], 200);
 N    start_idx_2 = Software_Trigger(&Acq_Data.Buffer[DAQ_SAMPLE_DEPTH], 200);
-X    start_idx_2 = Software_Trigger(&Acq_Data.Buffer[500], 200);
+X    start_idx_2 = Software_Trigger(&Acq_Data.Buffer[8], 200);
 N
 N    // 2. ????
 N    for(x = 0; x < WAVE_DISP_WIDTH - 1; x++)
@@ -21877,9 +21888,9 @@ N        uint16_t val1_now  = Acq_Data.Buffer[start_idx_1 + x];
 N        uint16_t val1_next = Acq_Data.Buffer[start_idx_1 + x + 1];
 N        
 N        uint16_t val2_now  = Acq_Data.Buffer[DAQ_SAMPLE_DEPTH + start_idx_2 + x];
-X        uint16_t val2_now  = Acq_Data.Buffer[500 + start_idx_2 + x];
+X        uint16_t val2_now  = Acq_Data.Buffer[8 + start_idx_2 + x];
 N        uint16_t val2_next = Acq_Data.Buffer[DAQ_SAMPLE_DEPTH + start_idx_2 + x + 1];
-X        uint16_t val2_next = Acq_Data.Buffer[500 + start_idx_2 + x + 1];
+X        uint16_t val2_next = Acq_Data.Buffer[8 + start_idx_2 + x + 1];
 N
 N        // --- B. ????? ---
 N        new_y1      = Calc_Y_Pos(val1_now,  Vertical1_offset);
@@ -21936,5 +21947,5 @@ N    for(t = 0; t <= width; t += grid_w)
 N    {
 N        TFT_DrawLine(t, 0, t, height, color);
 N    }
-W "..\User\Wave_Show_gy.c" 129 2 last line of file ends without a newline
+W "..\User\Wave_Show_gy.c" 133 2 last line of file ends without a newline
 N}

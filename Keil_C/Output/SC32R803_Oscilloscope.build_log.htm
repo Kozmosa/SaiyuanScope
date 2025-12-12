@@ -3,68 +3,177 @@
 <pre>
 <h1>�Vision Build Log</h1>
 <h2>Tool Versions:</h2>
-IDE-Version: ��Vision V5.40.0.0
-Copyright (C) 2024 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: 3319602829@qq.com 3319602829@qq.com, 3319602829@qq.com3319602829@qq.com, LIC=EXJT4-F5TK5-56PQ2-9SQ9Z-BTK58-343FL
+IDE-Version: ��Vision V5.43.1.0
+Copyright (C) 2025 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Shiro Kozmosa, SCUT, LIC=X96CK-Z7ATY-GKTBG-VNALZ-PG199-VN7G2
  
 Tool Versions:
-Toolchain:       MDK-ARM Plus  Version: 5.40.0.3
-Toolchain Path:  D:\STM32\ARM\ARMCC\Bin
-C Compiler:      Armcc.exe V5.06 update 5 (build 528)
-Assembler:       Armasm.exe V5.06 update 5 (build 528)
-Linker/Locator:  ArmLink.exe V5.06 update 5 (build 528)
-Library Manager: ArmAr.exe V5.06 update 5 (build 528)
-Hex Converter:   FromElf.exe V5.06 update 5 (build 528)
-CPU DLL:         SARMCM3.DLL V5.40.0.3
+Toolchain:       MDK-ARM Plus  Version: 5.43.0.0
+Toolchain Path:  D:\Develop\Keil\Keil_V5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 7 (build 960)
+Assembler:       Armasm.exe V5.06 update 7 (build 960)
+Linker/Locator:  ArmLink.exe V5.06 update 7 (build 960)
+Library Manager: ArmAr.exe V5.06 update 7 (build 960)
+Hex Converter:   FromElf.exe V5.06 update 7 (build 960)
+CPU DLL:         SARMCM3.DLL V5.43.0.0
 Dialog DLL:      DARMCM1.DLL V1.19.6.0
-Target DLL:      CMSIS_AGDI.dll V1.33.18.0
+Target DLL:      CMSIS_AGDI.dll V1.33.24.0
 Dialog DLL:      TARMCM1.DLL V1.14.6.0
  
 <h2>Project:</h2>
-D:\SaiYuan_Project\SaiyuanScope-main\Keil_C\Project\SC32R803_Oscilloscope.uvprojx
-Project File Date:  11/28/2025
+E:\Code\SaiyuanScope-main\Keil_C\Project\SC32R803_Oscilloscope.uvprojx
+Project File Date:  12/12/2025
 
 <h2>Output:</h2>
-*** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\STM32\ARM\ARMCC\Bin'
-Build target 'SC32R803_Oscilloscope'
+*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\Develop\Keil\Keil_V5\ARM\ARMCC\Bin'
+Rebuild target 'SC32R803_Oscilloscope'
+compiling lcdfont.c...
+compiling FFT_XTC.c...
+compiling Global_Variables.c...
+..\User\Global_Variables.c(75): warning:  #1-D: last line of file ends without a newline
+  uint16_t wave2_save_value[5][200] = {0};
+..\User\Global_Variables.c: 1 warning, 0 errors
+compiling Picture.c...
+compiling CompCtrlDefine.c...
+..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
+  void UART_SendPacket();
+..\User\CompCtrlDefine.c: 1 warning, 0 errors
+compiling SC_it.c...
+..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
+  void UART_SendPacket();
+..\User\Data_Acquisition.h(39): warning:  #1-D: last line of file ends without a newline
+  #endif /* __DATA_ACQUISITION_H */
+..\User\SC_it.c(74): warning:  #223-D: function "UART3_receive_Packet" declared implicitly
+  	UART3_receive_Packet();
+..\User\SC_it.c(164): warning:  #188-D: enumerated type mixed with another type
+  if(TIM_GetFlagStatus(TIM5, TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
+..\User\SC_it.c(175): warning:  #188-D: enumerated type mixed with another type
+  if(TIM_GetFlagStatus(TIM5, TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
+..\User\SC_it.c(192): warning:  #188-D: enumerated type mixed with another type
+  if(TIM_GetFlagStatus(TIM6, TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
+..\User\SC_it.c(203): warning:  #188-D: enumerated type mixed with another type
+  if(TIM_GetFlagStatus(TIM6, TIM_Flag_TI|TIM_Flag_EXR|TIM_Flag_EXF)==SET)
+..\User\SC_it.c: 7 warnings, 0 errors
+compiling CallBackFunction.c...
+..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
+  void UART_SendPacket();
+..\User\CallBackFunction.c: 1 warning, 0 errors
+compiling TKDriver.c...
+..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
+  void UART_SendPacket();
+..\Drivers\TKDriverNew\C\TKDriver.c(1268): warning:  #550-D: variable "SlideCount"  was set but never used
+  	unsigned char SlideCount = 0;
+..\Drivers\TKDriverNew\C\TKDriver.c(1372): warning:  #177-D: variable "MultipleCnt"  was declared but never referenced
+      unsigned char   	MultipleCnt = 0;//��������
+..\Drivers\TKDriverNew\C\TKDriver.c: 3 warnings, 0 errors
+compiling TFT_Lcd.c...
+..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
+  void UART_SendPacket();
+..\Apps\TFT_Lcd.c: 1 warning, 0 errors
+compiling Menu.c...
+..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
+  void UART_SendPacket();
+..\User\Menu.h(32): warning:  #1-D: last line of file ends without a newline
+  #endif /* __MENU_H */
+..\User\Data_Acquisition.h(39): warning:  #1-D: last line of file ends without a newline
+  #endif /* __DATA_ACQUISITION_H */
+..\User\Menu.c(78): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "const uint8_t *"
+      LCD_ShowString(x, y, str, MENU_BG_COLOR, color, 16);
+..\User\Menu.c(291): warning:  #1-D: last line of file ends without a newline
+  }
+..\User\Menu.c: 5 warnings, 0 errors
 compiling main.c...
 ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
   void UART_SendPacket();
+..\User\Data_Acquisition.h(39): warning:  #1-D: last line of file ends without a newline
+  #endif /* __DATA_ACQUISITION_H */
+..\User\Menu.h(32): warning:  #1-D: last line of file ends without a newline
+  #endif /* __MENU_H */
 ..\User\Wave_Show_gy.h(40): warning:  #1-D: last line of file ends without a newline
   #endif /* __WAVE_SHOW_GY_H */
-..\User\main.c(32): warning:  #1295-D: Deprecated declaration screen_init - give arg types
-  void screen_init();//屏幕启动
-..\User\main.c(33): warning:  #1295-D: Deprecated declaration ADC_Conversion_IRQ - give arg types
-  void ADC_Conversion_IRQ();//处理ADC中断
-..\User\main.c(34): warning:  #1295-D: Deprecated declaration ADC_Conversion - give arg types
-  void ADC_Conversion();//ADC采样
-..\User\main.c(35): warning:  #1295-D: Deprecated declaration key_Get - give arg types
-  void key_Get();//按压旋转编码�?
-..\User\main.c(36): warning:  #1295-D: Deprecated declaration UART3_Send_Packet - give arg types
-  void UART3_Send_Packet();//wifi串口发送数据包
-..\User\main.c(37): warning:  #1295-D: Deprecated declaration UART3_Send_String - give arg types
-  void UART3_Send_String();//wifi串口发送文�?
-..\User\main.c(38): warning:  #1295-D: Deprecated declaration UART3_receive_Packet - give arg types
-  void UART3_receive_Packet();//wifi串口接受数据
-..\User\main.c(39): warning:  #1295-D: Deprecated declaration UART3_receive_String - give arg types
-  void UART3_receive_String();//wifi串口接受数据
-..\User\main.c(122): warning:  #177-D: variable "RxState"  was declared but never referenced
+..\User\main.c(96): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "const uint8_t *"
+          LCD_ShowString(10, y_pos, buf, WHITE, BLACK, 16);
+..\User\main.c(134): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "const uint8_t *"
+          LCD_ShowString(10, 220, buf, YELLOW, BLACK, 16);
+..\User\main.c(181): warning:  #177-D: variable "RxState"  was declared but never referenced
   	static uint8_t RxState = 0;		//定义表示当前状态机状态的静态变�?
-..\User\main.c(123): warning:  #177-D: variable "pRxPacket"  was declared but never referenced
+..\User\main.c(182): warning:  #177-D: variable "pRxPacket"  was declared but never referenced
   	static uint8_t pRxPacket = 0;	//定义表示当前接收数据位置的静态变�?
-..\User\main.c: 12 warnings, 0 errors
+..\User\main.c: 8 warnings, 0 errors
 compiling Wave_Show_gy.c...
 ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
   void UART_SendPacket();
+..\User\Data_Acquisition.h(39): warning:  #1-D: last line of file ends without a newline
+  #endif /* __DATA_ACQUISITION_H */
 ..\User\Wave_Show_gy.h(40): warning:  #1-D: last line of file ends without a newline
   #endif /* __WAVE_SHOW_GY_H */
-..\User\Wave_Show_gy.c(129): warning:  #1-D: last line of file ends without a newline
+..\User\Wave_Show_gy.c(133): warning:  #1-D: last line of file ends without a newline
   }
-..\User\Wave_Show_gy.c: 3 warnings, 0 errors
+..\User\Wave_Show_gy.c: 4 warnings, 0 errors
+compiling system_sc32f1xxx.c...
+..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
+  void UART_SendPacket();
+..\User\system_sc32f1xxx.c: 1 warning, 0 errors
+compiling SysFunVarDefine.c...
+..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
+  void UART_SendPacket();
+..\User\SysFunVarDefine.c: 1 warning, 0 errors
+compiling Data_Acquisition.c...
+..\User\Data_Acquisition.h(39): warning:  #1-D: last line of file ends without a newline
+  #endif /* __DATA_ACQUISITION_H */
+..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
+  void UART_SendPacket();
+..\User\Data_Acquisition.c(149): warning:  #1-D: last line of file ends without a newline
+  }
+..\User\Data_Acquisition.c: 3 warnings, 0 errors
+compiling SC_Init.c...
+..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
+  void UART_SendPacket();
+..\User\SC_Init.c: 1 warning, 0 errors
+compiling sc32f1xxx_tim.c...
+compiling sc32f1xxx_spi.c...
+compiling sc32f1xxx_adc.c...
+..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
+  void UART_SendPacket();
+..\FWLib\SC32F1XXX_Lib\src\sc32f1xxx_adc.c: 1 warning, 0 errors
+compiling sc32f1xxx_uart.c...
+..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_uart.h(306): warning:  #1295-D: Deprecated declaration UART_SendPacket - give arg types
+  void UART_SendPacket();
+..\FWLib\SC32F1XXX_Lib\src\sc32f1xxx_uart.c(279): warning:  #223-D: function "delay_ms" declared implicitly
+  		delay_ms(1000);
+..\FWLib\SC32F1XXX_Lib\src\sc32f1xxx_uart.c(293): warning:  #223-D: function "delay_ms" declared implicitly
+  		delay_ms(1000);
+..\FWLib\SC32F1XXX_Lib\src\sc32f1xxx_uart.c: 3 warnings, 0 errors
+compiling sc32f1xxx_rcc.c...
+compiling sc32f1xxx_option.c...
+compiling sc32f1xxx_gpio.c...
+compiling sc32f1xxx_btm.c...
+compiling sc32f1xxx_dma.c...
+compiling sc32f1xxx_dac.c...
+compiling sc32f1xxx_can.c...
+compiling sc32f1xxx_cmp.c...
+compiling sc32f1xxx_crc.c...
+compiling sc32f1xxx_pga.c...
+compiling sc32f1xxx_iap.c...
+compiling sc32f1xxx_int.c...
+compiling sc32f1xxx_lcd.c...
+compiling sc32f1xxx_led.c...
+compiling sc32f1xxx_qep.c...
+compiling sc32f1xxx_ledpwm.c...
+compiling sc32f1xxx_spi1_twi1.c...
+compiling sc32f1xxx_op.c...
+compiling sc32f1xxx_temper.c...
+compiling sc32f1xxx_vref.c...
+compiling sc32f1xxx_pwm.c...
+compiling sc32f1xxx_pwr.c...
+assembling startup_sc32r803.s...
+compiling sc32f1xxx_qspi.c...
+compiling sc32f1xxx_twi.c...
+compiling sc32f1xxx_wdt.c...
 linking...
-Program Size: Code=18400 RO-data=8304 RW-data=428 ZI-data=11948  
+Program Size: Code=19884 RO-data=8344 RW-data=180 ZI-data=1964  
 FromELF: creating hex file...
-"..\Output\SC32R803_Oscilloscope.axf" - 0 Error(s), 15 Warning(s).
+"..\Output\SC32R803_Oscilloscope.axf" - 0 Error(s), 41 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -74,10 +183,10 @@ Package Vendor: SinOne
                 SinOneMicroelectronics ARM Series Device Support
 
 <h2>Collection of Component include folders:</h2>
-  D:/STM32/ARM/PACK/Keil/SC32F1xxx_DFP/1.1.5/Device/SC32F10xx/FWLib/SC32_Lib/inc
+  D:/Develop/Keil/Arm/Packs/Keil/SC32F1xxx_DFP/1.1.5/Device/SC32F10xx/FWLib/SC32_Lib/inc
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>

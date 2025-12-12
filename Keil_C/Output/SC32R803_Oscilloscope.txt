@@ -1,1 +1,4 @@
-Program Size: Code=14504 RO-data=572 RW-data=172 ZI-data=1748  
+Error: L6200E: Symbol DMA0_IRQHandler multiply defined (by Data_Acquisition.o and SC_it.o).
+Not enough information to list image symbols.
+Not enough information to list load addresses in the image map.
+Finished: 2 information, 0 warning and 1 error messages.
