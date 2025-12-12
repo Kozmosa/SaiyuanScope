@@ -1,0 +1,468 @@
+L 1 "..\FWLib\SC32F1XXX_Lib\src\sc32f1xxx_qep.c"
+N/**
+N ******************************************************************************
+N * @file    sc32f1xxx_qep.c
+N * @author  SOC AE Team
+N * @version V1.9-BetaV0
+N * @date    2025-06-20
+N * @brief   QEP function module
+N ******************************************************************************
+N * @attention
+N *
+N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N *intended for use with SinOne products. No other uses are authorized. This 
+N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N *all applicable laws, including copyright laws. 
+N *2.The software which is for guidance only aims at providing customers with 
+N *coding information regarding their products in order for them to save time. 
+N *As a result, SinOne shall not be held liable for any direct, indirect or 
+N *consequential damages with respect to any claims arising from the content of 
+N *such software and/or the use made by customers of the coding information 
+N *contained herein in connection with their products.
+N *
+N *  COPYRIGHT 2025 SinOne Microelectronics
+N ******************************************************************************
+N */
+N
+N/* Includes ------------------------------------------------------------------*/
+N#if defined (SC32f15xx)||defined (SC32R601)
+X#if 0L||0L
+S#include "sc32f1xxx_qep.h"
+S
+S
+S/** @defgroup QEP_Exported_Functions_Group1 Configuration of the QEP computation unit functions
+S *  @brief   Configuration of the QEP computation unit functions
+S *
+S@verbatim
+S ===============================================================================
+S                     ##### QEP configuration functions #####
+S ===============================================================================
+S@endverbatim
+S  * @{
+S  */
+S
+S/**
+S * @brief  DeInitializes the QEP peripheral
+S * @param  QEPx[out]:where x only can be 0 or 1 to select QEP peripherals.
+S *               - QEPQ0: select the PCAP peripheral
+S *               - QEP1: select the PCAP peripheral
+S * @retval None
+S */
+Svoid QEP_DeInit(QEP_TypeDef* QEPx)
+S{
+S    /* Check the parameters */
+S    assert_param(IS_QEP_ALL_PERIPH(QEPx));
+S
+S    QEPx->QEP_CON  = (uint32_t)0x00000000U;
+S    QEPx->QEP_PCNT = (uint32_t)0x00000000U;
+S    QEPx->QEP_PMAX = (uint32_t)0x00000000U;
+S    QEPx->QEP_STS  = (uint32_t)0x0000000FU;
+S    QEPx->QEP_IDE  = (uint32_t)0x00000000U;
+S}
+S
+S/**
+S * @brief  Initializes the QEP peripheral
+S * @param  QEPx[out]:where x only can be 0 or 1 to select QEP peripherals.
+S *               - QEPQ0: select the PCAP peripheral
+S *               - QEP1: select the PCAP peripheral
+S *         QEP_InitStruct[out]: Pointer to structure QEP_InitTypeDef, to be initialized.
+S * @retval None
+S */
+Svoid QEP_Init(QEP_TypeDef* QEPx, QEP_InitTypeDef* QEP_InitStruct)
+S{
+S    uint32_t tmpreg;
+S    /* Check the parameters */
+S    assert_param(IS_QEP_ALL_PERIPH(QEPx));
+S    assert_param(IS_QEP_CEN(QEP_InitStruct->QEP_CEN));
+S    assert_param(IS_QEP_GATE(QEP_InitStruct->QEP_GATE));
+S    assert_param(IS_QEP_FILTERINGDIV(QEP_InitStruct->QEP_QFDIV));
+S    assert_param(IS_QEP_POLARITY(QEP_InitStruct->QEP_QAP));
+S    assert_param(IS_QEP_POLARITY(QEP_InitStruct->QEP_QBP));
+S    assert_param(IS_QEP_SWAP(QEP_InitStruct->QEP_SWAP));
+S
+S    tmpreg = QEPx->QEP_CON;
+S    tmpreg &= ~(QEP_CON_QSRC | QEP_CON_RPCEN | QEP_CON_FPCEN|QEP_CON_QIP
+S              | QEP_CON_QAGATE | QEP_CON_QBGATE | QEP_CON_IGATE | QEP_CON_QFDIV
+S              | QEP_CON_QAP | QEP_CON_QBP | QEP_CON_PCRM | QEP_CON_SWAP);
+S
+S    tmpreg |= (QEP_InitStruct->QEP_Mode | QEP_InitStruct->QEP_CEN | QEP_InitStruct->QEP_GATE |
+S              QEP_InitStruct->QEP_QFDIV | QEP_InitStruct->QEP_IndexMode | QEP_InitStruct->QEP_QEPnI|
+S	            QEP_InitStruct->QEP_SWAP);
+S
+S    tmpreg |= (QEP_InitStruct->QEP_QAP << QEP_CON_QAP_Pos) | (QEP_InitStruct->QEP_QBP << QEP_CON_QBP_Pos);
+S
+S    QEPx->QEP_CON = tmpreg;
+S
+S    QEPx->QEP_PMAX = QEP_InitStruct->QEP_PMAX;
+S
+S}
+S
+S/**
+S  * @brief  Fills each QEP_InitStruct member with its default value.
+S  * @param  QEP_InitStruct[out]: pointer to a QEP_InitTypeDef structure which will be initialized.
+S  * @retval None
+S  */
+Svoid QEP_StructInit(QEP_InitTypeDef* QEP_InitStruct)
+S{
+S    /* Check the parameters */
+S
+S    QEP_InitStruct->QEP_Mode     = QEP_Mode_Orthogonal;
+S    QEP_InitStruct->QEP_CEN      = QEP_CEN_Default;
+S    QEP_InitStruct->QEP_GATE     = QEP_GATE_Default;
+S    QEP_InitStruct->QEP_QFDIV    = QEP_FilteringDIV_1;
+S    QEP_InitStruct->QEP_QAP      = QEP_Polarity_Positive;
+S    QEP_InitStruct->QEP_QBP      = QEP_Polarity_Positive;
+S    QEP_InitStruct->QEP_IndexMode = QEP_IndexMode_Disable;
+S    QEP_InitStruct->QEP_SWAP     = QEP_SWAP_Default;
+S	  QEP_InitStruct->QEP_QEPnI    = QEP_QEPnI_Forward;
+S
+S}
+S
+S/**
+S * @brief  Enables or disables the specified QEP peripheral.
+S * @param  QEPx[out]:where x only can be 0 or 1 to select QEP peripherals.
+S *               - QEPQ0: select the PCAP peripheral
+S *               - QEP1: select the PCAP peripheral
+S * @param  NewState[in]: new state of the QEPx peripheral.
+S *                  - DISABLE:Function disable
+S *                  - ENABLE:Function enable  
+S * @retval None
+S */
+Svoid QEP_Cmd(QEP_TypeDef* QEPx, FunctionalState NewState)
+S{
+S    /* Check the parameters */
+S    assert_param(IS_QEP_ALL_PERIPH(QEPx));
+S    assert_param(IS_FUNCTIONAL_STATE(NewState));
+S
+S    if(NewState != DISABLE)
+S    {
+S    /* Enable the QEP Counter */
+S    QEPx->QEP_CON |= QEP_CON_QEPEN;
+S    }
+S    else
+S    {
+S    /* Disable the QEP Counter */
+S    QEPx->QEP_CON &= (uint32_t)~QEP_CON_QEPEN;
+S    }
+S}
+S
+S/**
+S * @brief  Enables or disables the QEPnI gate.
+S * @param  QEPx[out]:where x only can be 0 or 1 to select QEP peripherals.
+S *               - QEPQ0: select the PCAP peripheral
+S *               - QEP1: select the PCAP peripheral
+S * @param  NewState[in]: new state of the QEPx QEPnI.
+S *                  - DISABLE:Function disable
+S *                  - ENABLE:Function enable  
+S * @retval None
+S */
+Svoid QEP_QEPnICmd(QEP_TypeDef* QEPx, FunctionalState NewState)
+S{
+S    /* Check the parameters */
+S    assert_param(IS_QEP_ALL_PERIPH(QEPx));
+S    assert_param(IS_FUNCTIONAL_STATE(NewState));
+S
+S    if(NewState != DISABLE)
+S    {
+S    /* Enable the QEP Counter */
+S    QEPx->QEP_CON |= QEP_CON_IGATE;
+S    }
+S    else
+S    {
+S    /* Disable the QEP Counter */
+S    QEPx->QEP_CON &= (uint32_t)~QEP_CON_IGATE;
+S    }
+S}
+S
+S/**
+S * @brief  Location count source selection.
+S * @param  QEPx[out]:where x only can be 0 or 1 to select QEP peripherals.
+S *               - QEPQ0: select the PCAP peripheral
+S *               - QEP1: select the PCAP peripheral
+S * @param  QEP_Mode[in]: new state of the QEPx QEPnI.
+S *               - QEP_Mode_Orthogonal:Location count source selection Orthogonal 
+S *               - QEP_Mode_Direction:Location count source selection: Direction  
+S *               - QEP_Mode_Dipulse:Location count source selectione: Dipulse  
+S * @retval None
+S */
+Svoid QEP_QSRCModeSelect(QEP_TypeDef* QEPx, QEP_Mode_TypeDef QEP_Mode)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_QEP_ALL_PERIPH(QEPx));
+S
+S    QEPx->QEP_CON &= ~QEP_CON_QSRC;
+S    /* Enable the Interrupt sources */
+S    QEPx->QEP_CON |= QEP_Mode;
+S 
+S}
+S/**
+S * @brief  Digital input filter filter width selection.
+S * @param  QEPx[out]:where x only can be 0 or 1 to select QEP peripherals.
+S *               - QEPQ0: select the PCAP peripheral
+S *               - QEP1: select the PCAP peripheral
+S * @param  QEP_FilteringDIV[in]:  Digital input filter filter width.
+S *               - QEP_FilteringDIV_1:filter clock division: Fapb/1  
+S *               - QEP_FilteringDIV_2:filter clock division: Fapb/2   
+S *               - QEP_FilteringDIV_4:filter clock division: Fapb/4   
+S *               - QEP_FilteringDIV_8:filter clock division: Fapb/8   
+S *               - QEP_FilteringDIV_16:filter clock division: Fapb/16  
+S *               - QEP_FilteringDIV_32:filter clock division: Fapb/32  
+S *               - QEP_FilteringDIV_64:filter clock division: Fapb/64  
+S *               - QEP_FilteringDIV_128:filter clock division: Fapb/128  
+S * @retval None
+S */
+Svoid QEP_QFDIVSelect(QEP_TypeDef* QEPx, QEP_FilteringDIV_TypeDef QEP_FilteringDIV)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_QEP_ALL_PERIPH(QEPx));
+S
+S    QEPx->QEP_CON &= ~QEP_CON_QFDIV;
+S    /* Enable the Interrupt sources */
+S    QEPx->QEP_CON |= QEP_FilteringDIV;
+S 
+S}
+S
+S/**
+S * @brief  QEP count mode selection.
+S * @param  QEPx[out]:where x only can be 0 or 1 to select QEP peripherals.
+S *               - QEPQ0: select the PCAP peripheral
+S *               - QEP1: select the PCAP peripheral
+S * @param  QEP_CEN[in]:  Digital input filter filter width.
+S *               - QEP_CEN_Default:QEP Edge count: Default
+S *               - QEP_CEN_Rising:QEP Edge count: The rising edge is enabled 
+S *               - QEP_CEN_Falling:QEP Edge count: The falling edge is enabled 
+S * @retval None
+S */
+Svoid QEP_CountSelect(QEP_TypeDef* QEPx, QEP_CEN_TypeDef QEP_CEN)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_QEP_ALL_PERIPH(QEPx));
+S
+S    QEPx->QEP_CON &= ~(QEP_CON_RPCEN | QEP_CON_FPCEN);
+S    /* Enable the Interrupt sources */
+S    QEPx->QEP_CON |= QEP_CEN;
+S 
+S}
+S/**
+S * @brief  Set the QEP Count value.
+S * @param  QEPx[out]:where x only can be 0 or 1 to select QEP peripherals.
+S *               - QEPQ0: select the PCAP peripheral
+S *               - QEP1: select the PCAP peripheral
+S * @param QEP_CountValue:QEP Count Value
+S * @retval None
+S */
+Svoid QEP_SetCnt(QEP_TypeDef* QEPx,uint16_t QEP_CountValue)
+S{
+S    /* Check the parameters */
+S    assert_param(IS_QEP_ALL_PERIPH(QEPx));
+S
+S    QEPx->QEP_PCNT = QEP_CountValue;
+S}
+S
+S/**
+S * @brief  Gets the QEP Count value.
+S * @param  QEPx[out]:where x only can be 0 or 1 to select QEP peripherals.
+S *               - QEPQ0: select the PCAP peripheral
+S *               - QEP1: select the PCAP peripheral
+S * @retval QEP Count value
+S */
+Suint16_t QEP_GetCnt(QEP_TypeDef* QEPx)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_QEP_ALL_PERIPH(QEPx));
+S
+S  return QEPx->QEP_PCNT;
+S}
+S
+S/**
+S * @brief  Set PCAP position counter maximum value.
+S * @param  QEPx[out]:where x only can be 0 or 1 to select QEP peripherals.
+S *               - QEPQ0: select the PCAP peripheral
+S *               - QEP1: select the PCAP peripheral
+S * @param QEP_PmaxValue:PCAP position counter Maximum value
+S * @retval None
+S */
+Svoid QEP_SetPmax(QEP_TypeDef* QEPx,uint16_t QEP_PmaxValue)
+S{
+S    /* Check the parameters */
+S    assert_param(IS_QEP_ALL_PERIPH(QEPx));
+S
+S    QEPx->QEP_PMAX = QEP_PmaxValue;
+S}
+S
+S/**
+S * @brief  Gets PCAP position counter maximum value.
+S * @param  QEPx[out]:where x only can be 0 or 1 to select QEP peripherals.
+S *               - QEPQ0: select the PCAP peripheral
+S *               - QEP1: select the PCAP peripheral
+S * @retval PCAP position counter maximum value
+S */
+Suint16_t QEP_GetPmax(QEP_TypeDef* QEPx)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_QEP_ALL_PERIPH(QEPx));
+S
+S  return QEPx->QEP_PMAX;
+S}
+S/**
+S * @}
+S */
+S/* End of QEP_Group1.	*/
+S
+S
+S/** @defgroup QEP_Group2 Pin remap management functions
+S *  @brief  Pin remap management functions
+S *
+S@verbatim
+S ===============================================================================
+S                     ##### Pin remap management functions #####
+S ===============================================================================
+S@endverbatim
+S  * @{
+S  */
+S
+S/**
+S * @brief  Configure the remapping of QEPx pins
+S * @param  QEPx[out]: x only can be 1 to select QEP peripherals.
+S *               - QEP1: select the PCAP peripheral
+S * @param  QEP_Remap[in]: QEPx pin selection.
+S *               - QEP_PinRemap_Default :QEP Pin Remap: Disable 
+S *               - QEP_PinRemap_A:QEP Pin Remap: Remap mode A 
+S *         
+S * @retval None
+S */
+Svoid QEP_PinRemapConfig(QEP_TypeDef* QEPx, QEP_PinRemap_TypeDef QEP_Remap)
+S{
+S    /* Check the parameters */
+S    assert_param(IS_QEP_REMAP_PERIPH(QEPx));
+S    
+S	  QEP1->QEP_CON &= ~QEP_CON_SPOS;
+S    QEP1->QEP_CON |= QEP_Remap;
+S}
+S
+S
+S/**
+S * @}
+S */
+S/* End of QEP_Group2.	*/
+S
+S
+S/** @defgroup QEP_Group3 Interrupts, DMA and flags management functions
+S *  @brief    Interrupts, DMA and flags management functions
+S *
+S@verbatim
+S ===============================================================================
+S                     ##### Interrupts, DMA and flags management functions #####
+S ===============================================================================
+S@endverbatim
+S  * @{
+S  */
+S/**
+S * @brief  Enables or disables the specified QEP interrupts.
+S * @param  QEPx[out]:where x only can be 0 or 1 to select QEP peripherals.
+S *               - QEPQ0: select the PCAP peripheral
+S *               - QEP1: select the PCAP peripheral
+S * @param  QEP_IT[in]: specifies the QEP interrupts sources to be enabled or disabled.
+S *               - QEP_IT_INT: QEP Interrupt 
+S *               - QEP_IT_PCU: Location counter underflow interrupt 
+S *               - QEP_IT_PCO: Location counter overflow interrupt 
+S *               - QEP_IT_IER :event reset interrupt 
+S *               - QEP_IT_UPEVNT: location event interrupt
+S * @param  NewState[in]: new state of the QEP interrupts.
+S *                  - DISABLE:Function disable
+S *                  - ENABLE:Function enable  
+S * @retval None
+S */
+Svoid QEP_ITConfig(QEP_TypeDef* QEPx, uint16_t QEP_IT, FunctionalState NewState)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_QEP_ALL_PERIPH(QEPx));
+S  assert_param(IS_QEP_IT(QEP_IT));
+S  assert_param(IS_FUNCTIONAL_STATE(NewState));
+S
+S  if(NewState != DISABLE)
+S  {
+S    /* Enable the Interrupt sources */
+S    QEPx->QEP_IDE |= QEP_IT;
+S  }
+S  else
+S  {
+S    /* Disable the Interrupt sources */
+S    QEPx->QEP_IDE &= (uint32_t)~QEP_IT;
+S  }
+S}
+S
+S/**
+S * @brief  Checks whether the specified QEP flag is set or not.
+S * @param  QEPx[out]:where x only can be 0 or 1 to select QEP peripherals.
+S *               - QEPQ0: select the PCAP peripheral
+S *               - QEP1: select the PCAP peripheral
+S * @param  QEP_FLAG[in]: specifies the flag to check.
+S *               - QEP_Flag_PCU:Location counter underflow interrupted flag
+S *               - QEP_Flag_PCO:Location counter overflow interrupt flag 
+S *               - QEP_Flag_IER: Index event reset interrupt flag 
+S *               - QEP_Flag_UPEVNT: Unit location event flag 
+S *               - QEP_Flag_DQ: Orthogonal direction flag 
+S * @retval The new state of QEP_FLAG (SET or RESET).
+S *                  -  RESET:Flag reset
+S *                  -  SET :Flag up
+S */
+SFlagStatus QEP_GetFlagStatus(QEP_TypeDef* QEPx, uint16_t QEP_FLAG)
+S{
+S  ITStatus bitstatus = RESET;
+S  /* Check the parameters */
+S  assert_param(IS_QEP_ALL_PERIPH(QEPx));
+S  assert_param(IS_GET_QEP_FLAG(QEP_FLAG));
+S
+S  if((QEPx->QEP_STS & QEP_FLAG) != (uint16_t)RESET)
+S  {
+S    bitstatus = SET;
+S  }
+S  else
+S  {
+S    bitstatus = RESET;
+S  }
+S  return bitstatus;
+S}
+S
+S/**
+S * @brief  Clears the QEPx's pending flags.
+S * @param  QEPx[out]:where x only can be 0 or 1 to select QEP peripherals.
+S *               - QEPQ0: select the PCAP peripheral
+S *               - QEP1: select the PCAP peripheral
+S * @param  QEP_FLAG: specifies the flag bit to clear.
+S *               - QEP_Flag_PCU:Location counter underflow interrupted flag
+S *               - QEP_Flag_PCO:Location counter overflow interrupt flag 
+S *               - QEP_Flag_IER: Index event reset interrupt flag 
+S *               - QEP_Flag_UPEVNT: Unit location event flag 
+S *               - QEP_Flag_DQ: Orthogonal direction flag 
+S * @retval None
+S */
+Svoid QEP_ClearFlag(QEP_TypeDef* QEPx, uint16_t QEP_FLAG)
+S{
+S  /* Check the parameters */
+S  assert_param(IS_QEP_ALL_PERIPH(QEPx));
+S
+S  /* Clear the flags */
+S  QEPx->QEP_STS = (uint16_t)QEP_FLAG;
+S}
+N#endif
+N/**
+N * @}
+N */
+N/* End of QEP_Group3.	*/
+N
+N/**
+N * @}
+N */
+N
+N/**
+N * @}
+N */
+N
+N/**
+N * @}
+N */
+N
+N/************************ (C) COPYRIGHT SOC Microelectronics *****END OF FILE****/
+N

@@ -1,0 +1,245 @@
+L 1 "..\FWLib\SC32F1XXX_Lib\src\sc32f1xxx_dac.c"
+N/**
+N ******************************************************************************
+N * @file    sc32f1xxx_dac.c
+N * @author  SOC AE Team
+N * @version V1.9-BetaV0
+N * @date    2025-06-20
+N * @brief   DAC function module
+N ******************************************************************************
+N * @attention
+N *
+N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N *intended for use with SinOne products. No other uses are authorized. This 
+N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N *all applicable laws, including copyright laws. 
+N *2.The software which is for guidance only aims at providing customers with 
+N *coding information regarding their products in order for them to save time. 
+N *As a result, SinOne shall not be held liable for any direct, indirect or 
+N *consequential damages with respect to any claims arising from the content of 
+N *such software and/or the use made by customers of the coding information 
+N *contained herein in connection with their products.
+N *
+N *  COPYRIGHT 2025 SinOne Microelectronics
+N ******************************************************************************
+N */
+N
+N/* Includes ------------------------------------------------------------------*/
+N#if defined(SC32f15xx) || defined(SC32R601)
+X#if 0L || 0L
+S#include "sc32f1xxx_dac.h"
+S
+S
+S
+S/** @defgroup DAC_Exported_Functions_Group1 Configuration of the DAC computation unit functions
+S *  @brief   Configuration of the DAC computation unit functions.Common functions of motor
+S *
+S@verbatim
+S ===============================================================================
+S                     ##### DAC configuration functions #####
+S ===============================================================================
+S@endverbatim
+S  * @{
+S  */
+S
+S/**
+S * @brief  DeInitializes the DAC peripheral
+S * @param  DACx[in]: where can be to select the DAC peripheral.
+S * @retval None
+S */
+Svoid DAC_DeInit(DAC_TypeDef* DACx)
+S{
+S    /* Check the parameters */
+S    assert_param(IS_DAC_ALL_PERIPH(DACx));
+S
+S    /* Reset DAC register */
+S    DACx->DAC_CFG = 0x00;
+S    DACx->DAC_IN = 0x00;
+S    DACx->DAC_STS = 0x00;
+S}
+S
+S/**
+S * @brief  Enables or disables the specified DAC peripheral.
+S * @param  DACx[in]: where can be to select the DAC peripheral.
+S * @param  NewState[in]: new state of the DACx peripheral.
+S *                  - DISABLE:Function disable
+S *                  - ENABLE:Function enable  
+S * @retval None
+S */
+Svoid DAC_Cmd(DAC_TypeDef* DACx, FunctionalState NewState)
+S{
+S    /* Check the parameters */
+S    assert_param(IS_DAC_ALL_PERIPH(DACx));
+S    assert_param(IS_FUNCTIONAL_STATE(NewState));
+S
+S    if(NewState != DISABLE)
+S    {
+S        /* Enable the DAC Counter */
+S        DACx->DAC_CFG |= DAC_CFG_DACEN;
+S    }
+S    else
+S    {
+S        /* Disable the DAC Counter */
+S        DACx->DAC_CFG &= (uint32_t)~DAC_CFG_DACEN;
+S    }
+S}
+S
+S/**
+S * @brief  Sets the DAC output channel.
+S * @param  DACx[in]: where can be to select the DAC peripheral.
+S * @param  DAC_Channel[in]:select the DAC output channel
+S *         -DAC_Channel_0:DAC output channel 0 
+S *         -DAC_Channel_1:DAC output channel 1 
+S * @param  NewState[in]: new state of the DACx peripheral.
+S *         - DISABLE:Function disable
+S *         - ENABLE:Function enable  
+S */
+Svoid DAC_ChannelConfig(DAC_TypeDef* DACx, DAC_Channel_TypeDef DAC_Channel, FunctionalState NewState)
+S{
+S    /* Check the parameters */
+S    assert_param(IS_DAC_ALL_PERIPH(DACx));
+S    
+S    if(NewState != DISABLE)
+S    {
+S        if (DAC_Channel_0 == DAC_Channel)
+S        {
+S            DACx->DAC_CFG |= (uint8_t)DAC_CFG_OUT0EN;
+S        }
+S        else if (DAC_Channel_1 == DAC_Channel)
+S        {
+S            DACx->DAC_CFG |= (uint8_t)DAC_CFG_OUT1EN;
+S        }
+S    }
+S    else
+S    {
+S        if (DAC_Channel_0 == DAC_Channel)
+S        {
+S            DACx->DAC_CFG &= (uint8_t)~DAC_CFG_OUT0EN;
+S        }
+S        else if (DAC_Channel_1 == DAC_Channel)
+S        {
+S            DACx->DAC_CFG &= (uint8_t)~DAC_CFG_OUT1EN;
+S        }
+S    }
+S}
+S
+S/**
+S * @brief  Gets the DAC input channel.
+S * @param  DACx[in]: where can be to select the DAC peripheral.
+S * @param  DAC_REF[in]:Select DAC reference voltage 
+S *         - DAC_RefSource_VDD:DAC reference voltage is VDD    
+S *         - DAC_RefSource_VREF:DAC reference voltage is Vref
+S * @retval None
+S */
+Svoid DAC_VrefConfig(DAC_TypeDef* DACx, DAC_REF_TypeDef DAC_REF)
+S{
+S    uint32_t tmpreg;
+S
+S    /* Check the parameters */
+S    assert_param(IS_DAC_ALL_PERIPH(DACx));
+S    assert_param(IS_DAC_VREF(DAC_REF));
+S
+S    tmpreg = DACx->DAC_CFG;
+S    tmpreg &= ~DAC_CFG_REFSEL;
+S    tmpreg |= (uint32_t)DAC_REF;
+S    DACx->DAC_CFG = tmpreg;
+S
+S}
+S
+S/**
+S * @}
+S */
+S/* End of DAC_VREF_Group1.	*/
+S
+S
+S/** @defgroup DAC_Group2 Conversion management functions
+S *  @brief   Conversion management functions
+S *
+S@verbatim
+S ===============================================================================
+S                     ##### DAC Conversion management functions #####
+S ===============================================================================
+S@endverbatim
+S  * @{
+S  */
+S
+S/**
+S * @brief  Set DACx conversion result data for all channel.
+S * @param  DACx[in]: where can be to select the DAC peripheral.
+S * @param  DAC_Value[in]:DAC output voltage conversion value
+S * @retval None
+S */
+Svoid DAC_SetConversionValue(DAC_TypeDef* DACx, uint16_t DAC_Value)
+S{
+S    /* Check the parameters */
+S    assert_param(IS_DAC_ALL_PERIPH(DACx));
+S
+S    /* Set DACx conversion */
+S    DACx->DAC_IN = DAC_Value;
+S}
+S
+S/**
+S * @}
+S */
+S/* End of DAC_Group2.	*/
+S
+S/** @defgroup DAC_Group3 Interrupts, DMA and flags management functions
+S *  @brief    Interrupts, DMA and flags management functions
+S *
+S@verbatim
+S ===============================================================================
+S                     ##### Interrupts, DMA and flags management functions #####
+S ===============================================================================
+S@endverbatim
+S  * @{
+S  */
+S
+S/**
+S * @brief  Checks whether the specified DAC flag is set or not.
+S * @param  DACx[in]: where can be to select the DAC peripheral.
+S * @param  DAC_FLAG[in]: specifies the flag to check.
+S *             - DAC_DACSTA_Endconversion:DAC end conversion
+S *             - DAC_DACSTA_Inconversion:DAC is being converted
+S * @retval The new state of DAC_FLAG 
+S *                  -  RESET:Flag reset
+S *                  -  SET :Flag up
+S */
+SFlagStatus DAC_GetFlagStatus(DAC_TypeDef* DACx, uint16_t DAC_FLAG)
+S{
+S    ITStatus bitstatus = RESET;
+S    /* Check the parameters */
+S    assert_param(IS_DAC_ALL_PERIPH(DACx));
+S    assert_param(IS_GET_DAC_FLAG(DAC_FLAG));
+S
+S    if((DACx->DAC_STS & DAC_FLAG) != (uint16_t)RESET)
+S    {
+S        bitstatus = SET;
+S    }
+S    else
+S    {
+S        bitstatus = RESET;
+S    }
+S    return bitstatus;
+S}
+N#endif
+N/**
+N * @}
+N */
+N/* End of DAC_Group3.	*/
+N
+N
+N
+N/**
+N * @}
+N */
+N/* End of functions ---------------------------------------------------------*/
+N
+N/**
+N * @}
+N */
+N
+N/**
+N * @}
+N */
+N
+N/************************ (C) COPYRIGHT SOC Microelectronics *****END OF FILE****/

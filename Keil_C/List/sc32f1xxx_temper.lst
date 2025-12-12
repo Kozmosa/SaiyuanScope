@@ -1,0 +1,131 @@
+L 1 "..\FWLib\SC32F1XXX_Lib\src\sc32f1xxx_temper.c"
+N/**
+N ******************************************************************************
+N * @file    sc32f1xxx_TS.c
+N * @author  SOC AE Team
+N * @version V1.9-BetaV0
+N * @date    2025-06-20
+N * @brief   TS function module
+N ******************************************************************************
+N * @attention
+N *
+N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N *intended for use with SinOne products. No other uses are authorized. This 
+N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N *all applicable laws, including copyright laws. 
+N *2.The software which is for guidance only aims at providing customers with 
+N *coding information regarding their products in order for them to save time. 
+N *As a result, SinOne shall not be held liable for any direct, indirect or 
+N *consequential damages with respect to any claims arising from the content of 
+N *such software and/or the use made by customers of the coding information 
+N *contained herein in connection with their products.
+N *
+N *  COPYRIGHT 2025 SinOne Microelectronics
+N ******************************************************************************
+N */
+N 
+N/* Includes ------------------------------------------------------------------*/
+N#if defined(SC32f15xx)||defined(SC32R601)
+X#if 0L||0L
+S#include "sc32f1xxx_Temper.h"
+S
+S
+S/** @defgroup TS_Functions
+S * @{
+S */
+S
+S/** @defgroup TS_Group1 Initialization and Configuration functions
+S *  @brief Initialization and Configuration functions
+S *
+S@verbatim
+S ===============================================================================
+S                     ##### Initialization and Configuration functions #####
+S ===============================================================================
+S@endverbatim
+S  * @{
+S  */
+S
+S/**
+S * @brief  DeInitializes the TS peripheral
+S * @retval None
+S */
+Svoid TemperSensor_DeInit(void)
+S{
+S  /* Enable TS reset state */
+S   TS->TS_CFG = 0x00;
+S}
+S
+S/**
+S * @brief Enabled or Disable TS peripheral  
+S * @param  TSx[out]:where can to select the TS peripheral.
+S *                  - TS:Timer peripheral select TS
+S * @param  NewState[in]: new state of the TS .
+S *         - ENABLE: Function enable   
+S *         - DISABLE:Function disable
+S * @retval None
+S */
+Svoid TemperSensor_Cmd(TS_TypeDef* TSx, FunctionalState NewState)
+S{
+S  /* Enable TS reset state */
+S	 if(NewState != DISABLE)
+S  {
+S    /* Enable the TS  */
+S    TSx->TS_CFG |= TemperSensor_Enable;
+S  }
+S  else
+S  {
+S    /* Disable the TS  */
+S     TSx->TS_CFG &= (uint8_t)~TemperSensor_Enable;
+S  }
+S   
+S}
+S
+S/**
+S * @brief  The TS peripheral triggers the temperature reading
+S * @param  TSx[out]:where can to select the TS peripheral.
+S *                  - TS:Timer peripheral select TS
+S * @param  NewState[in]: new state of the TS Offset .
+S *         - ENABLE: Function enable   
+S *         - DISABLE:Function disable
+S * @retval None
+S */
+Svoid TemperSensor_OffSetCmd(TS_TypeDef* TSx)
+S{
+S  
+S 
+S    TSx->TS_CFG |= 0x01<<TS_CFG_CHOP_Pos;	
+S 
+S}
+S/**
+S * @brief  The TS peripheral triggers the temperature reading
+S * @param  TSx[out]:where can to select the TS peripheral.
+S *                  - TS:Timer peripheral select TS
+S * @param  NewState[in]: new state of the TS Offset .
+S *         - ENABLE: Function enable   
+S *         - DISABLE:Function disable
+S * @retval None
+S */
+Svoid TemperSensor_OffResetCmd(TS_TypeDef* TSx)
+S{ 
+S
+S    TSx->TS_CFG &=~ (0x01<<TS_CFG_CHOP_Pos);
+S
+S 
+S}
+S/**
+S * @brief  Return the TS check data.
+S * @param  None
+S * @retval the TS check data.
+S */
+Suint16_t TemperSensor_ReadValue(void)
+S{
+S	uint16_t TS_Value;
+S	TS_Value =((*(uint8_t*)0x8c00480)<<8)+(*(uint8_t*)0x8c00481);
+S	return TS_Value;
+S}
+N#endif
+N/**
+N * @}
+N */
+N
+N/************************ (C) COPYRIGHT SOC Microelectronics *****END OF FILE****/
